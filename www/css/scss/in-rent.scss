@@ -1,0 +1,61 @@
+.scooter-info {
+    margin: 1em;
+    padding: 1em;
+    border-radius: 1em;
+    border: 1px solid $color-scooter-info-border;
+
+    .header {
+        font-weight: bold;
+        font-size: 1.4em;
+    }
+
+    .time-description {
+        font-size: 1.2em;
+    }
+
+    .time {
+        font-size: 2em;
+    }
+}
+
+.battery-div {
+    position: relative;
+    border: 1px solid $color-scooter-info-border;
+
+    .battery-percent-div {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: $z-battery-percenteage-div;
+    }
+
+    .battery-percent-text {
+        z-index: $z-battery-percenteage-text;
+        padding: 0.2em 1em;
+    }
+
+    .max {
+        background-color: $color-battery-max;
+    }
+
+    .high {
+        background-color: $color-battery-high;
+    }
+
+    .middle {
+        background-color: $color-battery-middle;
+    }
+
+    .low {
+        background-color: $color-battery-low;
+    }
+
+    .critical {
+        background-color: $color-battery-critical;
+    }
+
+    .min {
+        background-color: $color-battery-min;
+    }
+}

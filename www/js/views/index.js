@@ -3,6 +3,7 @@
 import m from 'mithril';
 
 import scooterModel from './../models/scooter'
+import utilitiesModel from './../models/utilities'
 
 let rent = {
     view: function() {
@@ -34,15 +35,54 @@ let rent = {
 
 let inRent = {
     view: function() {
+        let curScooter = scooterModel.currentScooter;
+        let speed = curScooter.speed;
+        let battery = Math.floor(curScooter.battery * 100);
+        let scooterId = curScooter.id;
+        let timeRented = utilitiesModel.calculateTime(scooterModel.rentTime);
+        let batteryPercetageClass = utilitiesModel.batteryPercentage(battery);
+
+        setInterval(() => {
+            m.redraw();
+        }, 1000);
+
         return [
-            m("h1.title", "Uthyrning pågår"),
+            m("div.scooter-info", [
+                m('div.flex.row.between.allign-center', [
+                    m('span', `${speed}km/h`),
+                    m('div.flex.row.center.battery-div', [
+                        m(`div.battery-percent-div.${batteryPercetageClass}`, {
+                            style: {
+                                left: `${100-battery}%`
+                            }
+                        }),
+                        m('span.battery-percent-text', `${battery}%`)
+                    ])
+                ]),
+                m('div.flex.row.center',
+                    m('span.header', `Hyrd elsparkcykel ${scooterId}`)
+                ),
+                m('div.flex.row.center',
+                    m('span.time-description', 'Tid uthyrd')
+                ),
+                m('div.flex.row.center',
+                    m('span.time', `${timeRented}`)
+                )
+            ]),
+            m(
+                'button',
+                {
+                    onclick: ()=>{console.log('Start');}
+                },
+                'Start'
+            ),
             m(
                 'button',
                 {
                     onclick: scooterModel.unrent
                 },
                 'Lämna'
-            )
+            ),
         ]
     }
 };

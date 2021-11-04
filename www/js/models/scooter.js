@@ -4,7 +4,7 @@ let allScooters = [
         status: 'free',
         long: '',
         lat: '',
-        battery: 1.0,
+        battery: 0.3,
         speed: 0,
     },
     {
@@ -28,6 +28,7 @@ let allScooters = [
 var scooterModel = {
     id: '',
     inRent: false,
+    rentTime: null,
     currentScooter: {},
     allScooters: allScooters,
     getAllScooters: () => {
@@ -36,16 +37,20 @@ var scooterModel = {
     rent: () => {
         let foundScooter = scooterModel.allScooters.find(scooter => scooter.id === scooterModel.id);
 
+        console.log(foundScooter);
+
         if (foundScooter && foundScooter.status === 'free') {
             scooterModel.inRent = true;
             scooterModel.currentScooter = foundScooter;
             scooterModel.id = '';
+            scooterModel.rentTime = new Date();
         }
     },
     unrent: () => {
         scooterModel.inRent = false;
         scooterModel.currentScooter = {};
-    }
+        scooterModel.rentTime = null;
+    },
 }
 
 export default scooterModel;
