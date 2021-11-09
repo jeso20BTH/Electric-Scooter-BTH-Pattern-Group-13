@@ -5,10 +5,12 @@
     bottom: 0;
     z-index: $z-nav-bar;
     background-color: $background-color-nav-bar;
+    height: 3em;
 
     a {
         text-decoration: none;
         color: $color-nav-bar;
+        width: (100% / $nav-objects);
     }
 
     .active {

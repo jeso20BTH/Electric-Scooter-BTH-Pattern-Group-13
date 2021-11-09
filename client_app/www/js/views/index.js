@@ -8,27 +8,36 @@ import utilitiesModel from './../models/utilities'
 let rent = {
     view: function() {
         return [
-            m("h1.title", "Hyr en cykel"),
-            m("p.text", `Scanna en QR-kod eller skriv in cykelns ID för att hyra den.`),
-            m("input.cycle", {
-                placeholder: 'Ange cykel ID',
-                oninput: (event) => {
-                    scooterModel.id =event.target.value;
-                },
-                value: scooterModel.id
-            }),
-            m(
-                "button",
-                {
-                    onclick: scooterModel.rent
-                },
-                'Hyr'
-            ),
-            m("button", {onclick: ()=>{console.log("QR");}},
-                m(
-                    "i.material-icons", "qr_code_scanner"
+            m('div.column.flex.between.rent-div', [
+                m('div', [
+                    m("h1.title", "Hyr en cykel"),
+                    m("p.text", `Scanna en QR-kod eller skriv in cykelns ID för att hyra den.`),
+                ]),
+                m('div.rent-input-div', [
+                    m("input.cycle", {
+                        placeholder: 'Ange cykel ID',
+                        oninput: (event) => {
+                            scooterModel.id = event.target.value;
+                            console.log(event.target.value);
+                        },
+                        value: scooterModel.id
+                    }),
+                    m("button.flex.column.center.qr-btn", {onclick: ()=>{console.log("QR");}},
+                        m(
+                            "i.material-icons", "qr_code_scanner"
+                        )
+                    ),
+                ]),
+                m('div.flex.row.center',
+                    m(
+                        "button",
+                        {
+                            onclick: scooterModel.rent
+                        },
+                        'Hyr'
+                    )
                 )
-            )
+            ])
         ]
     }
 };
@@ -47,42 +56,47 @@ let inRent = {
         }, 1000);
 
         return [
-            m("div.scooter-info", [
+            m("div.flex.column.between.scooter-info", [
                 m('div.flex.row.between.allign-center', [
                     m('span', `${speed}km/h`),
                     m('div.flex.row.center.battery-div', [
                         m(`div.battery-percent-div.${batteryPercetageClass}`, {
                             style: {
-                                left: `${100-battery}%`
+                                right: `${100-battery}%`
                             }
                         }),
                         m('span.battery-percent-text', `${battery}%`)
                     ])
                 ]),
-                m('div.flex.row.center',
-                    m('span.header', `Hyrd elsparkcykel ${scooterId}`)
-                ),
-                m('div.flex.row.center',
-                    m('span.time-description', 'Tid uthyrd')
-                ),
-                m('div.flex.row.center',
-                    m('span.time', `${timeRented}`)
-                )
+                m('div', [
+                    m('div.flex.row.center',
+                        m('span.header', `Hyrd elsparkcykel ${scooterId}`)
+                    ),
+                    m('div.flex.row.center',
+                        m('span.time-description', 'Tid uthyrd')
+                    ),
+                    m('div.flex.row.center',
+                        m('span.time', `${timeRented}`)
+                    )
+                ]),
+                m('div.column.flex.center.button-div', [
+                    m(
+                        'button',
+                        {
+                            onclick: ()=>{console.log('Start');}
+                        },
+                        'Start'
+                    ),
+                    m(
+                        'button',
+                        {
+                            onclick: scooterModel.unrent
+                        },
+                        'Lämna'
+                    ),
+                ])
             ]),
-            m(
-                'button',
-                {
-                    onclick: ()=>{console.log('Start');}
-                },
-                'Start'
-            ),
-            m(
-                'button',
-                {
-                    onclick: scooterModel.unrent
-                },
-                'Lämna'
-            ),
+
         ]
     }
 };
