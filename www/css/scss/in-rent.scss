@@ -1,8 +1,9 @@
 .scooter-info {
-    margin: 1em;
+    box-sizing: border-box;
     padding: 1em;
     border-radius: 1em;
-    border: 1px solid $color-scooter-info-border;
+    // border: 1px solid $color-scooter-info-border;
+    height: 100%;
 
     .header {
         font-weight: bold;
@@ -26,7 +27,7 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        right: 0;
+        left: 0;
         z-index: $z-battery-percenteage-div;
     }
 

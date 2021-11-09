@@ -4,7 +4,7 @@ let allScooters = [
         status: 'free',
         long: '',
         lat: '',
-        battery: 0.3,
+        battery: 1,
         speed: 0,
     },
     {
@@ -34,9 +34,9 @@ var scooterModel = {
     getAllScooters: () => {
         scooterModel.allScooters = allScooters;
     },
-    rent: () => {
-        let foundScooter = scooterModel.allScooters.find(scooter => scooter.id === scooterModel.id);
-
+    rent: (e, scooterId=scooterModel.id) => {
+        let foundScooter = scooterModel.allScooters.find(scooter => scooter.id === scooterId);
+        console.log(scooterId);
         console.log(foundScooter);
 
         if (foundScooter && foundScooter.status === 'free') {

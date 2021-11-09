@@ -1,0 +1,38 @@
+.rent-div {
+    height: 100%;
+    box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 1em;
+    border-radius: 1em;
+    // border: 1px solid $color-rent-border;
+    text-align: center;
+}
+
+.rent-input-div {
+    position: relative;
+    width: 100%;
+    height: 3em;
+
+    .cycle {
+        box-sizing: border-box;
+        border-radius: 0.5em;
+        width: 100%;
+        padding-right: 2em;
+        position: absolute;
+        top: 0; bottom: 0; right: 0; left: 0;
+        text-align: center;
+    }
+
+    .qr-btn {
+        position: absolute;
+        right: 0; top: 0; bottom: 0;
+        background: none;
+        border: none;
+        height: 100%;
+        padding-right: 0 0 0 0.2em;
+        margin: 0;
+        width: auto;
+        z-index: $z-qr-btn;
+        color: $color-qr-btn;
+    }
+}

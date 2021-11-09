@@ -2,17 +2,25 @@
 $z-nav-bar: 2;
 $z-battery-percenteage-div: 1;
 $z-battery-percenteage-text: 2;
+$z-qr-btn: 5;
 
-//
+// Colors
 $background-color-body: #e7e7e7;
 $color-body: #2a2a2a;
+$background-color-btn: #423e3e;
+$color-btn: #e8e8e8;
+$color-qr-btn: #2a2a2a;
 $background-color-nav-bar: #423e3e;
-$color-nav-bar: #cac9cf;
+$color-nav-bar: #e8e8e8;
 $color-nav-bar-active: #ff5642;
 $color-scooter-info-border: #303030;
+$color-rent-border: #303030;
 $color-battery-max: #22c900;
 $color-battery-high: #199100;
 $color-battery-middle: #89a400;
 $color-battery-low: #c38100;
 $color-battery-critical: #c93600;
 $color-battery-min: #d60000;
+
+// Object
+$nav-objects: 3;
