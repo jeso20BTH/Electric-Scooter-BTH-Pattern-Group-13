@@ -1,0 +1,23 @@
+body {
+    background-color: lighten(#BCBBB6, 10%);
+    color: $color-body;
+    box-sizing: border-box;
+    height: 100vh;
+
+    .container {
+        box-sizing: border-box;
+        width: 70%;
+        margin: 0 auto;
+        padding: 17em 2em 2em;
+        background-color: #BCBBB6;
+        min-height: 100vh;
+    }
+
+    button {
+        box-sizing: border-box;
+        margin: 0.5em 0;
+        padding: 0.5em;
+        background-color: $background-color-btn;
+        color: $color-btn;
+    }
+}
