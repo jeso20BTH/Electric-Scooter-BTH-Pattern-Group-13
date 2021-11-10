@@ -4,6 +4,7 @@ const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const connectToDatabase = require("./db/database");
 const read = require("./src/read");
+const create = require("./src/create");
 const port = process.env.PORT || 1337;
 const {
     GraphQLSchema,
@@ -213,13 +214,6 @@ const {
     const schema = new GraphQLSchema({
         query: RootQueryType
     });
-
-
-
-
-
-
-
 
     app.use("/graphql", graphqlHTTP({
         schema: schema,
