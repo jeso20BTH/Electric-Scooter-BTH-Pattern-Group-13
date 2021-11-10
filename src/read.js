@@ -6,6 +6,20 @@ async function getFullTable(db, table) {
     return res;
 }
 
+async function findInTable(db, table, column, toMatch) {
+    let sql = `
+    SELECT 
+        * 
+    FROM ??
+    WHERE
+        ?? = ?
+    `;
+    const res = await db.query(sql, [table, column, toMatch]);
+
+    return res;
+}
+
 module.exports = {
     getFullTable: getFullTable,
+    findInTable: findInTable,
 }
