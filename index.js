@@ -112,6 +112,21 @@ const {
                     const city = await read.findInTable(db, "city", "id", parent.cityid);
                     return city[0];
                 }
+            },
+            bikes: {
+                type: new GraphQLList(BikeType),
+                resolve: async (parent) => {
+                    const b2p = await read.findInTable(db, "bike2parkingspace", "parkingspaceid", parent.id)
+
+                    let bikes = b2p.map(async (b2pi) => {
+                        let bike = await read.findInTable(db, "bike", "id", b2pi.bikeid);
+                        return bike[0]
+                    });
+
+                    bikes = await Promise.all(bikes);
+
+                    return bikes;
+                }
             }
         })
     });
@@ -203,7 +218,6 @@ const {
 
 
 
-    console.log(await read.findInTable(db, "customer", "id", 5));
 
 
 
