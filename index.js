@@ -262,6 +262,22 @@ const {
 
                     return newCustomer;
                 }
+            },
+            addBike2Parkingspace: {
+                type: Bike2ParkingspaceType,
+                description: "Add a customer",
+                args: {
+                    bikeid: { type: GraphQLInt },
+                    parkingspaceid: { type: GraphQLInt }
+                },
+                resolve: async (parent, args) => {
+                    const columns = ["bikeid", "parkingspaceid"];
+                    const values = [args.bikeid, args.parkingspaceid];
+                    const result = await create.insertIntoTable(db, "bike2parkingspace", columns, values);
+                    const newB2p = { id: result.insertId, bikeid: args.bikeid, parkingspaceid: args.parkingspaceid };
+
+                    return newB2p;
+                }
             }
         })
     });
