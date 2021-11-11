@@ -5,6 +5,7 @@ const { graphqlHTTP } = require("express-graphql");
 const connectToDatabase = require("./db/database");
 const read = require("./src/read");
 const create = require("./src/create");
+const update = require("./src/update");
 const port = process.env.PORT || 1337;
 const {
     GraphQLSchema,
@@ -265,7 +266,7 @@ const {
             },
             addBike2Parkingspace: {
                 type: Bike2ParkingspaceType,
-                description: "Add a customer",
+                description: "Add a bike2parkingspace connection",
                 args: {
                     bikeid: { type: GraphQLInt },
                     parkingspaceid: { type: GraphQLInt }
@@ -277,6 +278,51 @@ const {
                     const newB2p = { id: result.insertId, bikeid: args.bikeid, parkingspaceid: args.parkingspaceid };
 
                     return newB2p;
+                }
+            },
+            addHistory: {
+                type: HistoryType,
+                description: "Add a history-log",
+                args: {
+                    bikeid: { type: GraphQLInt },
+                    customerid: { type: GraphQLInt },
+                    startxcoord: { type: GraphQLFloat },
+                    startycoord: { type: GraphQLFloat },
+                    cityid: { type: GraphQLInt },
+                },
+                resolve: async (parent, args) => {
+                    const columns = ["bikeid", "customerid", "startxcoord", "startycoord", "cityid"];
+                    const values = [args.bikeid, args.customerid, args.startxcoord, args.startycoord, args.cityid];
+                    const result = await create.insertIntoTable(db, "history", columns, values);
+                    const newHistory = { 
+                        id: result.insertId, 
+                        bikeid: args.bikeid, 
+                        customerid: args.customerid,
+                        startxcoord: args.startxcoord,
+                        startycoord: args.startycoord,
+                        cityid: args.cityid
+                    };
+
+                    return newHistory;
+                }
+            },
+            updateHistory: {
+                type: HistoryType,
+                description: "Update a history-log",
+                args: {
+                    endxcoord: { type: GraphQLFloat },
+                    endycoord: { type: GraphQLFloat },
+                    payed: { type: GraphQLInt },
+                    columnToMatch: { type: GraphQLString },
+                    valueToMatch: { type: GraphQLString }
+                },
+                resolve: async (parent, args) => {
+                    const result = await update.updateTable(db, "history", args);
+                    const newHistory = { 
+                        id: result.changedRows, 
+                    };
+
+                    return newHistory;
                 }
             }
         })

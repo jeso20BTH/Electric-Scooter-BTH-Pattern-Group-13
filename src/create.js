@@ -15,7 +15,7 @@ async function insertIntoTable(db, table, columns, values) {
         VALUES (${valueString});
     `;
 
-    const res = db.query(sql, [table, columns, values].flat());
+    const res = await db.query(sql, [table, columns, values].flat());
 
     return res;
 }
