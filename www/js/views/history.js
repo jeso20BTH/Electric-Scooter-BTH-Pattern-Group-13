@@ -6,7 +6,7 @@ let index = {
     view: function() {
         return [
             m('h1', 'Historik'),
-            m('table', [
+            m('table.table', [
                 m('thead',
                     m('tr',
                         m('td', 'Datum'),

@@ -4,30 +4,25 @@ import m from 'mithril';
 
 let layout = {
     navElements: [
-            {name: "Hem", class: "home", ref: "/"},
-            {name: "Historik", class: "electric_scooter", ref: "/history"},
-            {name: "Konto", class: "person", ref: "/user"}
+            {name: "Hem",  ref: "/bank/"},
+            {name: "Konton", ref: "/bank/account"},
+            {name: "Överföring", ref: "/bank/transfer"}
     ],
     view: function(vnode) {
         return [
-            m('header.flex.row.between.header', [
-                m('img.hero-img', {
-                        src: 'www/img/hero_image.jpg'
-                    }
-                ),
-                m('div.flex.column.center', [
-                    m('a.site-title', {
-                            href: '#!/'
+            m('header.bank-header', [
+                m('div.flex.row.start', [
+                    m('a.flex.column.center.site-title', {
+                            href: '#!/bank'
                         },
                         [
-                            m('p.site-title-text', 'ELEKTRISKA'),
-                            m('p.site-title-text', 'SCOOTERS')
+                            m('p.site-title-text', 'FALSKA BANK'),
+                            m('p.site-slogan', 'Din otrygghet är vår ledstjärna')
                         ]
-
                     ),
                 ]),
                 m('div.flex.column.end', [
-                    m('nav.flex.row.end.nav', [
+                    m('nav.flex.row.center.nav', [
                         layout.navElements.map(function (element) {
                             let route = m.route.get();
 
@@ -41,7 +36,6 @@ let layout = {
 
                             return [
                                 m(object, { href: `#!${element.ref}` }, [
-                                    m(`i.material-icons`, element.class),
                                     m("span.nav-text", element.name)
                                 ])
                             ];
@@ -49,7 +43,10 @@ let layout = {
                     ])
                 ])
             ]),
-            m(`main.container`, vnode.children)
+            m('div.body', m(`main.bank-container`, vnode.children)),
+            m('footer.flex.row.center.allign-center.bank-footer', [
+                m('p', '© Skumma affärer sedan 2021')
+            ])
         ];
     }
 };
