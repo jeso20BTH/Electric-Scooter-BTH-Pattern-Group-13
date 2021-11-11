@@ -160,12 +160,42 @@ const {
         name: "Query",
         description: "Root Query",
         fields: () => ({
+            customer: {
+                type: CustomerType,
+                description: "A customer",
+                args: {
+                    id: { type: GraphQLInt },
+                    email: { type: GraphQLString }
+                },
+                resolve: async (parent, args) => {
+                    let customer;
+
+                    if (args.id) {
+                        customer = await read.findInTable(db, "customer", "id", args.id);
+                    } else if (args.email) {
+                        customer = await read.findInTable(db, "customer", "email", args.email);
+                    }
+
+                    return customer[0];
+                }
+            },
             customers: {
                 type: new GraphQLList(CustomerType),
                 description: "List of all customers",
                 resolve: async () => {
                     const customers = await read.getFullTable(db, "customer");
                     return customers;
+                }
+            },
+            bike: {
+                type: BikeType,
+                description: "A bike",
+                args: {
+                    id: { type: GraphQLInt }
+                },
+                resolve: async (parent, args) => {
+                    const bike = await read.findInTable(db, "bike", "id", args.id);
+                    return bike[0];
                 }
             },
             bikes: {
@@ -211,8 +241,34 @@ const {
         })
     });
 
+    const RootMutationType = new GraphQLObjectType({
+        name: "Mutation",
+        description: "Root Mutation",
+        fields: () => ({
+            addCustomer: {
+                type: CustomerType,
+                description: "Add a customer",
+                args: {
+                    firstname: { type: GraphQLString },
+                    lastname: { type: GraphQLString },
+                    email: { type: GraphQLString },
+                    balance: { type: GraphQLInt}
+                },
+                resolve: async (parent, args) => {
+                    const columns = ["firstname", "lastname", "email", "balance"];
+                    const values = [args.firstname, args.lastname, args.email, args.balance];
+                    const result = await create.insertIntoTable(db, "customer", columns, values);
+                    const newCustomer = { id: result.insertId, firstname: values[0], lastname: values[1], email: values[2], balance: values[3] };
+
+                    return newCustomer;
+                }
+            }
+        })
+    });
+
     const schema = new GraphQLSchema({
-        query: RootQueryType
+        query: RootQueryType,
+        mutation: RootMutationType
     });
 
     app.use("/graphql", graphqlHTTP({

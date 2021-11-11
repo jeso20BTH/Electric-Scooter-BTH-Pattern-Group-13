@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/2980d902-c019-4cb5-a12b-5dbf123cd169/resourceGroups/MyResourceGroup/providers/Microsoft.Web/sites/bikerentalapi",
+    "appService.deploySubpath": "."
+}
