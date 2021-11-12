@@ -6,6 +6,7 @@ const connectToDatabase = require("./db/database");
 const read = require("./src/read");
 const create = require("./src/create");
 const update = require("./src/update");
+const crudDelete = require("./src/delete");
 const port = process.env.PORT || 1337;
 const {
     GraphQLSchema,
@@ -14,7 +15,8 @@ const {
     GraphQLList,
     GraphQLInt,
     GraphQLNonNull,
-    GraphQLFloat
+    GraphQLFloat,
+    GraphQLInputObjectType
 } = require("graphql");
 
 (async function () {
@@ -242,6 +244,14 @@ const {
         })
     });
 
+    const DeleteType = new GraphQLObjectType({
+        name: "Delete",
+        description: "Delete mutation",
+        fields: () => ({
+            success: { type: GraphQLInt }
+        })
+    })
+
     const RootMutationType = new GraphQLObjectType({
         name: "Mutation",
         description: "Root Mutation",
@@ -333,7 +343,20 @@ const {
 
                     return updatedBike;
                 },
-            }
+            },
+            deleteCustomer: {
+                type: DeleteType,
+                description: "Delete a customer",
+                args: {
+                    columnToMatch: { type: GraphQLString },
+                    valueToMatch: { type: GraphQLString }
+                },
+                resolve: async (parent, args) => {
+                    const res = await crudDelete.deleteFromTable(db, "customer", args.columnToMatch, args.valueToMatch);
+
+                    return { success: res.affectedRows };
+                },
+            },
         })
     });
 
