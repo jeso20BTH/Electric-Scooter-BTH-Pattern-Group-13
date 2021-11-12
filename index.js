@@ -31,7 +31,15 @@ const {
             firstname: { type: GraphQLString },
             lastname: { type: GraphQLString },
             email: { type: GraphQLString },
-            balance: { type: GraphQLInt }
+            balance: { type: GraphQLInt },
+            historylogs: {
+                type: new GraphQLList(HistoryType),
+                resolve: async (parent) => {
+                    const logs = await read.findInTable(db, "history", "customerid", parent.id);
+
+                    return logs;
+                }
+            }
         })
     });
 
