@@ -154,6 +154,14 @@ All attributes are optional but at least one must be asked for.
       name,
       cityid,
       hascharger,
+      city {
+        id,
+        name,
+        startingfee,
+        penaltyfee,
+        fee,
+        discount
+      }
       bikes {
         id,
         available,
