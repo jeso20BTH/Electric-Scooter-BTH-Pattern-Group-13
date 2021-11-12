@@ -27,7 +27,7 @@ const {
         name: "Customer",
         description: "A customer",
         fields: () => ({
-            id: { type: new GraphQLNonNull(GraphQLInt) },
+            id: { type: GraphQLInt },
             firstname: { type: GraphQLString },
             lastname: { type: GraphQLString },
             email: { type: GraphQLString },
@@ -39,7 +39,7 @@ const {
         name: "Bike",
         description: "A bike",
         fields: () => ({
-            id: { type: new GraphQLNonNull(GraphQLInt) },
+            id: { type: GraphQLInt },
             available: { type: GraphQLInt },
             velocity: { type: GraphQLInt },
             battery: { type: GraphQLInt },
@@ -52,7 +52,7 @@ const {
         name: "City",
         description: "A city",
         fields: () => ({
-            id: { type: new GraphQLNonNull(GraphQLInt) },
+            id: { type: GraphQLInt },
             name: { type: GraphQLString },
             startingfee: { type: GraphQLInt },
             penaltyfee: { type: GraphQLInt },
@@ -65,7 +65,7 @@ const {
         name: "History",
         description: "A history log",
         fields: () => ({
-            id: { type: new GraphQLNonNull(GraphQLInt) },
+            id: { type: GraphQLInt },
             bikeid: { type: GraphQLInt },
             customerid: { type: GraphQLInt },
             starttime: { type: GraphQLString },
@@ -104,7 +104,7 @@ const {
         name: "Parkingspace",
         description: "A parkingspace",
         fields: () => ({
-            id: { type: new GraphQLNonNull(GraphQLInt) },
+            id: { type: GraphQLInt },
             xcoord: { type: GraphQLFloat },
             ycoord: { type: GraphQLFloat },
             name: { type: GraphQLString },
@@ -139,7 +139,7 @@ const {
         name: "Bike2Parkingspace",
         description: "A bike to parkingspace connection.",
         fields: () => ({
-            id: { type: new GraphQLNonNull(GraphQLInt) },
+            id: { type: GraphQLInt },
             bikeid: { type: GraphQLInt },
             parkingspaceid: { type: GraphQLInt },
             parkingspace: { 
@@ -348,11 +348,17 @@ const {
                 type: DeleteType,
                 description: "Delete a customer",
                 args: {
-                    columnToMatch: { type: GraphQLString },
-                    valueToMatch: { type: GraphQLString }
+                    id: { type: GraphQLInt },
+                    email: { type: GraphQLString }
                 },
                 resolve: async (parent, args) => {
-                    const res = await crudDelete.deleteFromTable(db, "customer", args.columnToMatch, args.valueToMatch);
+                    let res;
+
+                    if (args.id) {
+                        res = await crudDelete.deleteFromTable(db, "customer", "id", args.id);
+                    } else if (args.email) {
+                        res = await crudDelete.deleteFromTable(db, "customer", "email", args.email);
+                    }
 
                     return { success: res.affectedRows };
                 },
