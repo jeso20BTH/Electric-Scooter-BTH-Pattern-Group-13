@@ -7,6 +7,7 @@ This api has been developed for use in the course "pattern" by the group project
 ## Customer
 ### Get all customers
 All attributes are optional but at least one must be asked for.
+WARNING: It is NOT advisable to retrieve historylogs when requesting all customers. A query to the history-table will be made for every single customer which will take a long time.
 ```
 {
   customers {
@@ -14,7 +15,20 @@ All attributes are optional but at least one must be asked for.
     firstname,
     lastname,
     email,
-    balance
+    balance,
+    historylogs {
+      id,
+      bikeid,
+      customerid,
+      starttime,
+      endtime,
+      startxcoord,
+      startycoord,
+      endxcoord,
+      endycoord,
+      payed,
+      cityid
+    }
   }
 }
 ```
@@ -28,6 +42,19 @@ You can get a specific customer by providing either id or email. If both are pro
     lastname,
     email,
     balance
+    historylogs {
+      id,
+      bikeid,
+      customerid,
+      starttime,
+      endtime,
+      startxcoord,
+      startycoord,
+      endxcoord,
+      endycoord,
+      payed,
+      cityid
+    }
   }
 }
 ```
@@ -99,7 +126,7 @@ mutation {
 }
 ```
 
-## Cities
+## City
 ### Get all cities
 All attributes are optional but at least one must be asked for.
 ```
@@ -111,6 +138,168 @@ All attributes are optional but at least one must be asked for.
     penaltyfee,
     fee,
     discount
+  }
+}
+```
+
+## Parkingspace
+### Get all parkingspaces
+All attributes are optional but at least one must be asked for.
+```
+{
+  parkingspaces {
+      id,
+      xcoord,
+      ycoord,
+      name,
+      cityid,
+      hascharger,
+      bikes {
+        id,
+        available,
+        velocity,
+        battery,
+        xcoord,
+        ycoord
+    },
+  }
+}
+```
+
+## Bike2parkingspace
+There is no need to create, update or delete a b2p. The b2p-connections are handled entirely automatically by checking if the endposition of a bike is within 30 metres of a parkingspace.
+
+### Get all bike2parkingspaces
+All attributes are optional but at least one must be asked for.
+```
+{
+	bike2parkingspaces {
+    id,
+    bikeid,
+    parkingspaceid,
+    bike {
+      id,
+      available,
+      velocity,
+      battery,
+      xcoord,
+      ycoord
+    },
+    parkingspace  {
+      id,
+      xcoord,
+      ycoord,
+      name,
+      cityid,
+      hascharger
+    }
+  }
+}
+```
+
+## History
+"starttime" and "endtime" are received as a unix-timespamp in milliseconds.
+
+### Get all history-logs
+All attributes are optional but at least one must be asked for.
+```
+{
+  historylogs {
+    id,
+    bikeid,
+    customerid,
+    starttime,
+    endtime,
+    startxcoord,
+    startycoord,
+    endxcoord,
+    endycoord,
+    payed,
+    cityid
+    bike {
+      id,
+      available,
+      velocity,
+      battery,
+      xcoord,
+      ycoord
+    },
+    customer {
+      id,
+      firstname,
+      lastname,
+      email,
+      balance
+    }
+  }
+```
+
+### Add a history-log
+Make sure to provide all parameters when adding a history-log as these cant be updated later. Starttime is automatically generated in the database.
+```
+mutation {
+  addHistory (bikeid: 1, customerid: 5, startxcoord: 56.1610417, startycoord: 15.5871389, cityid: 1) {
+    id,
+    bikeid,
+    customerid,
+    starttime,
+    endtime,
+    startxcoord,
+    startycoord,
+    endxcoord,
+    endycoord,
+    payed,
+    cityid
+    bike {
+      id,
+      available,
+      velocity,
+      battery,
+      xcoord,
+      ycoord
+    },
+    customer {
+      id,
+      firstname,
+      lastname,
+      email,
+      balance
+    }
+  }
+}
+```
+
+### Update a history-log
+The required parameters for updating a history-log are "columnToMatch", "valueToMatch" and at least one of the optional parameters. "valueToMatch" always needs to be a string even if an integer value is provided. In the example below the history-log with the "id" of 10 is updated. The endtime is automatically generated in the database.
+```
+mutation {
+  updateHistory (endxcoord: 56.1610315, endycoord: 15.5871221, payed: 1, columnToMatch: "id", valueToMatch: "10") {
+    id,
+    bikeid,
+    customerid,
+    starttime,
+    endtime,
+    startxcoord,
+    startycoord,
+    endxcoord,
+    endycoord,
+    payed,
+    cityid
+    bike {
+      id,
+      available,
+      velocity,
+      battery,
+      xcoord,
+      ycoord
+    },
+    customer {
+      id,
+      firstname,
+      lastname,
+      email,
+      balance
+    }
   }
 }
 ```
