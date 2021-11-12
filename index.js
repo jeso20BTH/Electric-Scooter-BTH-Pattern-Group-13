@@ -259,25 +259,9 @@ const {
                     const columns = ["firstname", "lastname", "email", "balance"];
                     const values = [args.firstname, args.lastname, args.email, args.balance];
                     const result = await create.insertIntoTable(db, "customer", columns, values);
-                    const newCustomer = { id: result.insertId, firstname: values[0], lastname: values[1], email: values[2], balance: values[3] };
+                    const newCustomer = await read.findInTable(db, "customer", "id", result.insertId);
 
-                    return newCustomer;
-                }
-            },
-            addBike2Parkingspace: {
-                type: Bike2ParkingspaceType,
-                description: "Add a bike2parkingspace connection",
-                args: {
-                    bikeid: { type: GraphQLInt },
-                    parkingspaceid: { type: GraphQLInt }
-                },
-                resolve: async (parent, args) => {
-                    const columns = ["bikeid", "parkingspaceid"];
-                    const values = [args.bikeid, args.parkingspaceid];
-                    const result = await create.insertIntoTable(db, "bike2parkingspace", columns, values);
-                    const newB2p = { id: result.insertId, bikeid: args.bikeid, parkingspaceid: args.parkingspaceid };
-
-                    return newB2p;
+                    return newCustomer[0];
                 }
             },
             addHistory: {
@@ -294,16 +278,9 @@ const {
                     const columns = ["bikeid", "customerid", "startxcoord", "startycoord", "cityid"];
                     const values = [args.bikeid, args.customerid, args.startxcoord, args.startycoord, args.cityid];
                     const result = await create.insertIntoTable(db, "history", columns, values);
-                    const newHistory = { 
-                        id: result.insertId, 
-                        bikeid: args.bikeid, 
-                        customerid: args.customerid,
-                        startxcoord: args.startxcoord,
-                        startycoord: args.startycoord,
-                        cityid: args.cityid
-                    };
+                    const newHistory = await read.findInTable(db, "history", "id", result.insertId);
 
-                    return newHistory;
+                    return newHistory[0];
                 }
             },
             updateHistory: {
@@ -317,12 +294,10 @@ const {
                     valueToMatch: { type: GraphQLString }
                 },
                 resolve: async (parent, args) => {
-                    const result = await update.updateTable(db, "history", args);
-                    const newHistory = { 
-                        id: result.changedRows, 
-                    };
+                    await update.updateTable(db, "history", args);
+                    const updatedHistory = await read.findInTable(db, "history", args.columnToMatch, args.valueToMatch);
 
-                    return newHistory;
+                    return updatedHistory;
                 }
             }
         })
