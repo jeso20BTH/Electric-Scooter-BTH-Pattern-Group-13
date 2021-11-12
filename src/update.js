@@ -1,3 +1,5 @@
+const read = require("./read");
+
 async function updateTable(db, table, args) {
     if (args.endxcoord && args.endycoord) {
         manageB2p(db, args);
@@ -28,14 +30,15 @@ async function updateTable(db, table, args) {
         ;
     `;
 
-    const res = await db.query(sql, [table, columnsAndValues, columnToMatch, valueToMatch].flat());
+    await db.query(sql, [table, columnsAndValues, columnToMatch, valueToMatch].flat());
 
-    return res;
+    const updatedRow = await read.findInTable(db, table, columnToMatch, valueToMatch);
+
+    return updatedRow[0];
 }
 
 async function manageB2p (db, args) {
     let bikeid = await db.query("SELECT bikeid FROM history WHERE ?? = ?;", [args.columnToMatch, args.valueToMatch]);
-
     bikeid = bikeid[0].bikeid;
     await db.query("DELETE FROM bike2parkingspace WHERE bikeid = ?", [bikeid]);
     

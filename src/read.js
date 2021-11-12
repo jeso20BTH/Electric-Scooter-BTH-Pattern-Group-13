@@ -13,6 +13,7 @@ async function findInTable(db, table, column, toMatch) {
     WHERE
         ?? = ?
     `;
+
     const res = await db.query(sql, [table, column, toMatch]);
 
     return res;

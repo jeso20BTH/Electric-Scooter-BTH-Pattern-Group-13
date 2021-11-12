@@ -294,11 +294,45 @@ const {
                     valueToMatch: { type: GraphQLString }
                 },
                 resolve: async (parent, args) => {
-                    await update.updateTable(db, "history", args);
-                    const updatedHistory = await read.findInTable(db, "history", args.columnToMatch, args.valueToMatch);
-
+                    const updatedHistory = await update.updateTable(db, "history", args);
+                    
                     return updatedHistory;
-                }
+                },
+            },
+            updateCustomer: {
+                type: CustomerType,
+                description: "Update a customer",
+                args: {
+                    firstname: { type: GraphQLString },
+                    lastname: { type: GraphQLString },
+                    email: { type: GraphQLString },
+                    balance: { type: GraphQLInt },
+                    columnToMatch: { type: GraphQLString },
+                    valueToMatch: { type: GraphQLString }
+                },
+                resolve: async (parent, args) => {
+                    const updatedCustomer = await update.updateTable(db, "customer", args);
+
+                    return updatedCustomer;
+                },
+            },
+            updateBike: {
+                type: BikeType,
+                description: "Update a Bike",
+                args: {
+                    available: { type: GraphQLInt },
+                    velocity: { type: GraphQLInt },
+                    battery: { type: GraphQLInt },
+                    xcoord: { type: GraphQLFloat },
+                    ycoord: { type: GraphQLFloat },
+                    columnToMatch: { type: GraphQLString },
+                    valueToMatch: { type: GraphQLString }
+                },
+                resolve: async (parent, args) => {
+                    const updatedBike = await update.updateTable(db, "bike", args);
+
+                    return updatedBike;
+                },
             }
         })
     });
