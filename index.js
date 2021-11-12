@@ -14,9 +14,7 @@ const {
     GraphQLString,
     GraphQLList,
     GraphQLInt,
-    GraphQLNonNull,
     GraphQLFloat,
-    GraphQLInputObjectType
 } = require("graphql");
 
 (async function () {
