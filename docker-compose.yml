@@ -1,0 +1,30 @@
+version: "3"
+networks:
+    project13net:
+services:
+    server:
+        image: dundgren/bikerental-api:1.0
+        container_name: "bikerental-api"
+        ports:
+            - 1337:1337
+        networks:
+            project13net:
+        restart:
+            "always"
+
+    # client:
+    #     image: jeso20/vlinux-kmom10:client
+    #     container_name: kmom10_client
+    #     networks:
+    #         project:
+    #     links:
+    #         - server:myserver
+    # webbclient:
+    #     image: jeso20/vlinux-kmom10:webbclient
+    #     container_name: kmom10_webbclient
+    #     ports:
+    #         - 1338:1338
+    #     networks:
+    #         project:
+    #     links:
+    #         - server:log
