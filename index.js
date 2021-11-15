@@ -31,6 +31,7 @@ const {
             lastname: { type: GraphQLString },
             email: { type: GraphQLString },
             balance: { type: GraphQLInt },
+            paymentmethod: { type: GraphQLString },
             historylogs: {
                 type: new GraphQLList(HistoryType),
                 resolve: async (parent) => {
@@ -270,7 +271,8 @@ const {
                     firstname: { type: GraphQLString },
                     lastname: { type: GraphQLString },
                     email: { type: GraphQLString },
-                    balance: { type: GraphQLInt}
+                    balance: { type: GraphQLInt},
+                    paymentmethod: { type: GraphQLString }
                 },
                 resolve: async (parent, args) => {
                     const columns = ["firstname", "lastname", "email", "balance"];
@@ -324,6 +326,7 @@ const {
                     lastname: { type: GraphQLString },
                     email: { type: GraphQLString },
                     balance: { type: GraphQLInt },
+                    paymentmethod: { type: GraphQLString },
                     columnToMatch: { type: GraphQLString },
                     valueToMatch: { type: GraphQLString }
                 },

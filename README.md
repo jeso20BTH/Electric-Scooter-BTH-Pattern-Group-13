@@ -16,6 +16,7 @@ WARNING: It is NOT advisable to retrieve historylogs when requesting all custome
     lastname,
     email,
     balance,
+    paymentmethod,
     historylogs {
       id,
       bikeid,
@@ -41,7 +42,8 @@ You can get a specific customer by providing either id or email. If both are pro
     firstname,
     lastname,
     email,
-    balance
+    balance,
+    paymentmethod
     historylogs {
       id,
       bikeid,
@@ -64,12 +66,13 @@ You can get a specific customer by providing either id or email. If both are pro
 All parameters are optional but at least one must be provided.
 ```
 mutation {
-	addCustomer (firstname: "Daniel", lastname: "Lundgren", email: "kek@lol.se", balance: 99999) {
+	addCustomer (firstname: "Daniel", lastname: "Lundgren", email: "kek@lol.se", balance: 99999, paymentmethod: "Card") {
     id,
     firstname,
     lastname,
     email,
-    balance
+    balance,
+    paymentmethod
   }
 }
 ```
@@ -78,12 +81,13 @@ mutation {
 The required parameters for updating a customer are "columnToMatch", "valueToMatch" and at least one of the optional parameters. "valueToMatch" always needs to be a string even if an integer value is provided. In the example below the customer with the "email" "daniel@mail.com" is updated.
 ```
 mutation {
-	updateCustomer (firstname: "Daniel", lastname: "Lundgren", email: "kek@lol.se", balance: 99999, columnToMatch: "email", valueToMatch: "daniel@mail.com") {
+	updateCustomer (firstname: "Daniel", lastname: "Lundgren", email: "kek@lol.se", balance: 99999, paymentmethod: "Card", columnToMatch: "email", valueToMatch: "daniel@mail.com") {
     id,
     firstname,
     lastname,
     email,
-    balance
+    balance,
+    paymentmethod
   }
 }
 ```
@@ -253,7 +257,8 @@ All attributes are optional but at least one must be asked for.
       firstname,
       lastname,
       email,
-      balance
+      balance,
+      paymentmethod
     }
   }
 ```
@@ -287,7 +292,8 @@ mutation {
       firstname,
       lastname,
       email,
-      balance
+      balance,
+      paymentmethod
     }
   }
 }
@@ -322,7 +328,8 @@ mutation {
       firstname,
       lastname,
       email,
-      balance
+      balance,
+      paymentmethod
     }
   }
 }
