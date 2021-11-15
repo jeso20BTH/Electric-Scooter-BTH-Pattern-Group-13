@@ -1,6 +1,7 @@
 // const express = require("express");
 
 const express = require("express");
+const cors = require('cors');
 const { graphqlHTTP } = require("express-graphql");
 const connectToDatabase = require("./db/database");
 const read = require("./src/read");
@@ -376,6 +377,8 @@ const {
         query: RootQueryType,
         mutation: RootMutationType
     });
+
+    app.use(cors());
 
     app.use("/graphql", graphqlHTTP({
         schema: schema,
