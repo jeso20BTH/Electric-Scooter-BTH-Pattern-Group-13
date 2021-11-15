@@ -57,7 +57,23 @@ You can get a specific customer by providing either id or email. If both are pro
     }
   }
 }
+
 ```
+
+### Add a customer
+All parameters are optional but at least one must be provided.
+```
+mutation {
+	addCustomer (firstname: "Daniel", lastname: "Lundgren", email: "kek@lol.se", balance: 99999) {
+    id,
+    firstname,
+    lastname,
+    email,
+    balance
+  }
+}
+```
+
 ### Update a customer
 The required parameters for updating a customer are "columnToMatch", "valueToMatch" and at least one of the optional parameters. "valueToMatch" always needs to be a string even if an integer value is provided. In the example below the customer with the "email" "daniel@mail.com" is updated.
 ```
