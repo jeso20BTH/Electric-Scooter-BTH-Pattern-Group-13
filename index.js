@@ -1,7 +1,7 @@
 // const express = require("express");
 
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const { graphqlHTTP } = require("express-graphql");
 const connectToDatabase = require("./db/database");
 const read = require("./src/read");
