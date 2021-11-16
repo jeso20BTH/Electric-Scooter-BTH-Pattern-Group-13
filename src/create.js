@@ -1,4 +1,11 @@
 async function insertIntoTable(db, table, columns, values) {
+    if (table == "history") {
+        const isParked = await checkParking(db, values[0]);
+
+        columns.push("startparking");
+        values.push(isParked);
+    }
+
     let columnString = "";
     let valueString = "";
 
@@ -16,6 +23,19 @@ async function insertIntoTable(db, table, columns, values) {
     `;
 
     const res = await db.query(sql, [table, columns, values].flat());
+
+    return res;
+}
+
+async function checkParking(db, bikeid) {
+    const b2p = await db.query("SELECT * FROM bike2parkingspace WHERE bikeid = ?;", [bikeid]);
+    let res;
+
+    if (b2p === undefined || b2p.length == 0) {
+        res = "unparked";
+    } else {
+        res = "parked";
+    }
 
     return res;
 }

@@ -28,7 +28,9 @@ WARNING: It is NOT advisable to retrieve historylogs when requesting all custome
       endxcoord,
       endycoord,
       payed,
-      cityid
+      cityid,
+      startparking,
+      endparking
     }
   }
 }
@@ -55,7 +57,9 @@ You can get a specific customer by providing either id or email. If both are pro
       endxcoord,
       endycoord,
       payed,
-      cityid
+      cityid,
+      startparking,
+      endparking
     }
   }
 }
@@ -98,7 +102,7 @@ You can delete a customer by providing either an id or an email. If both are pro
 ```
 mutation {
   deleteCustomer (id: 6, email: "jgawkes2@bandcamp.com") {
-	success
+	  success
   }
 }
 ```
@@ -295,7 +299,9 @@ All attributes are optional but at least one must be asked for.
     endxcoord,
     endycoord,
     payed,
-    cityid
+    cityid,
+    startparking,
+    endparking,
     bike {
       id,
       available,
@@ -330,7 +336,8 @@ mutation {
     endxcoord,
     endycoord,
     payed,
-    cityid
+    cityid,
+    startparking,
     bike {
       id,
       available,
@@ -366,7 +373,9 @@ mutation {
     endxcoord,
     endycoord,
     payed,
-    cityid
+    cityid,
+    startparking,
+    endparking,
     bike {
       id,
       available,

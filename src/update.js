@@ -2,7 +2,9 @@ const read = require("./read");
 
 async function updateTable(db, table, args) {
     if (args.endxcoord && args.endycoord) {
-        manageB2p(db, args);
+        const isParked = await manageB2p(db, args);
+
+        args.endparking = isParked;
     }
 
     let setString = "";
@@ -39,18 +41,23 @@ async function updateTable(db, table, args) {
 
 async function manageB2p (db, args) {
     let bikeid = await db.query("SELECT bikeid FROM history WHERE ?? = ?;", [args.columnToMatch, args.valueToMatch]);
+    let isParked = "unparked";
+
     bikeid = bikeid[0].bikeid;
     await db.query("DELETE FROM bike2parkingspace WHERE bikeid = ?", [bikeid]);
-    
+
     const parkingspaces = await db.query("SELECT * FROM parkingspace;");
-    
-    parkingspaces.forEach(async parkingspace => {
+
+    for (let parkingspace of parkingspaces) {
         const distance = measureDistance(args.endxcoord, args.endycoord, parkingspace.xcoord, parkingspace.ycoord);
         
         if (distance <= 30) {
             await db.query("INSERT INTO bike2parkingspace (bikeid, parkingspaceid) VALUES (?, ?);", [bikeid, parkingspace.id]);
+            isParked = "parked";
         }
-    });
+    }
+
+    return isParked;
 }
 
 // Fancy math function borrowed from internet to calculate distance between two points.

@@ -100,6 +100,8 @@ const {
             endycoord: { type: GraphQLFloat },
             payed: { type: GraphQLInt },
             cityid: { type: GraphQLInt},
+            startparking: { type: GraphQLString },
+            endparking: { type: GraphQLString },
             bike: { 
                 type: BikeType,
                 resolve: async (parent) => {
