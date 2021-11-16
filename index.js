@@ -52,7 +52,15 @@ const {
             velocity: { type: GraphQLInt },
             battery: { type: GraphQLInt },
             xcoord: { type: GraphQLFloat },
-            ycoord: { type: GraphQLFloat }
+            ycoord: { type: GraphQLFloat },
+            cityid: { type: GraphQLInt },
+            city: { 
+                type: CityType,
+                resolve: async (parent) => {
+                    const city = await read.findInTable(db, "city", "id", parent.cityid);
+                    return city[0];
+                }
+            }
         })
     });
 
@@ -65,7 +73,15 @@ const {
             startingfee: { type: GraphQLInt },
             penaltyfee: { type: GraphQLInt },
             fee: { type: GraphQLInt },
-            discount: { type: GraphQLInt }
+            discount: { type: GraphQLInt },
+            bikes: {
+                type: new GraphQLList(BikeType),
+                resolve: async (parent) => {
+                    const bikes = await read.findInTable(db, "bike", "cityid", parent.id)
+
+                    return bikes;
+                }
+            }
         })
     });
 
@@ -217,6 +233,17 @@ const {
                     return bikes;
                 }
             },
+            city: {
+                type: CityType,
+                description: "A city",
+                args: {
+                    id: { type: GraphQLInt }
+                },
+                resolve: async (parent, args) => {
+                    const city = await read.findInTable(db, "city", "id", args.id);
+                    return city[0];
+                }
+            },
             cities: {
                 type: new GraphQLList(CityType),
                 description: "List of all cities",
@@ -275,8 +302,8 @@ const {
                     paymentmethod: { type: GraphQLString }
                 },
                 resolve: async (parent, args) => {
-                    const columns = ["firstname", "lastname", "email", "balance"];
-                    const values = [args.firstname, args.lastname, args.email, args.balance];
+                    const columns = ["firstname", "lastname", "email", "balance", "paymentmethod"];
+                    const values = [args.firstname, args.lastname, args.email, args.balance, args.paymentmethod];
                     const result = await create.insertIntoTable(db, "customer", columns, values);
                     const newCustomer = await read.findInTable(db, "customer", "id", result.insertId);
 
@@ -345,6 +372,7 @@ const {
                     battery: { type: GraphQLInt },
                     xcoord: { type: GraphQLFloat },
                     ycoord: { type: GraphQLFloat },
+                    cityd: { type: GraphQLInt },
                     columnToMatch: { type: GraphQLString },
                     valueToMatch: { type: GraphQLString }
                 },

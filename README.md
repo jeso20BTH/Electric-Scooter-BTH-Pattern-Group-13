@@ -106,6 +106,7 @@ mutation {
 ## Bike
 ### Get all bikes
 All attributes are optional but at least one must be asked for.
+WARNING: It is NOT advisable to retrieve city when requesting all bikes. A query to the city-table will be made for every single bike which will take a long time.
 ```
 {
   bikes {
@@ -114,7 +115,16 @@ All attributes are optional but at least one must be asked for.
     velocity,
     battery,
     xcoord,
-    ycoord
+    ycoord,
+    cityid,
+    city {
+      id,
+      name,
+      startingfee,
+      penaltyfee,
+      fee,
+      discount
+    }
   }
 }
 ```
@@ -127,7 +137,16 @@ All attributes are optional but at least one must be asked for.
     velocity,
     battery,
     xcoord,
-    ycoord
+    ycoord,
+    cityid,
+    city {
+      id,
+      name,
+      startingfee,
+      penaltyfee,
+      fee,
+      discount
+    }
   }
 }
 ```
@@ -135,18 +154,42 @@ All attributes are optional but at least one must be asked for.
 The required parameters for updating a bike are "columnToMatch", "valueToMatch" and at least one of the optional parameters. "valueToMatch" always needs to be a string even if an integer value is provided. In the example below the bike with the "id" of "3" is updated.
 ```
 mutation {
-  updateBike (available: 0, velocity: 42, battery: 99, xcoord: 56.1600575, ycoord: 15.5862748, columnToMatch: "id", valueToMatch: "3") {
+  updateBike (available: 0, velocity: 42, battery: 99, xcoord: 56.1600575, ycoord: 15.5862748, cityid=3 columnToMatch: "id", valueToMatch: "3") {
     id,
     available,
     velocity,
     battery,
     xcoord,
-    ycoord
+    ycoord,
+    cityid
   }
 }
 ```
 
 ## City
+### Get a specific city
+```
+{
+  city (id: 3) {
+    id,
+    name,
+    startingfee,
+    penaltyfee,
+    fee,
+    discount,
+    bikes {
+      id,
+      available,
+      velocity,
+      battery,
+      xcoord,
+      ycoord,
+      cityid
+    }
+  }
+}
+```
+
 ### Get all cities
 All attributes are optional but at least one must be asked for.
 ```
@@ -157,7 +200,16 @@ All attributes are optional but at least one must be asked for.
     startingfee,
     penaltyfee,
     fee,
-    discount
+    discount,
+    bikes {
+      id,
+      available,
+      velocity,
+      battery,
+      xcoord,
+      ycoord,
+      cityid
+    }
   }
 }
 ```
