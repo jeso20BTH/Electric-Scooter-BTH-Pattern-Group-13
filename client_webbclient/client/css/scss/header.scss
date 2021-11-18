@@ -1,0 +1,62 @@
+.header {
+    height: 15em;
+    width: 100%;
+    background-color: $background-color-header;
+    color: $color-header;
+    position: fixed;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+    .hero-img {
+        z-index: 1;
+        position: fixed;
+        top: 0;  left: 0; right: 0;
+        height: 15em;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .site-title-text {
+        text-align: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .site-title {
+        background-color: transparentize($background-color-nav, 0.7);
+        border-left: 2px solid $color-header;
+        border-top: 2px solid $color-header;
+        border-bottom: 2px solid $color-header;
+        border-radius: 0 2em 2em 0;
+        color: $background-color-header;
+        font-size: 2em;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    .site-title:hover {
+        cursor: pointer;
+    }
+
+    nav {
+        z-index: 2;
+        padding: 0 2em;
+        border-radius: 2em 0 0 0;
+        background-color: $background-color-nav;
+        border-left: 2px solid $color-header;
+        border-top: 2px solid $color-header;
+    }
+
+    a {
+        text-decoration: none;
+        padding: 0.2em 1em;
+        color: $color-header;
+    }
+
+    a.active {
+        background-color: darken($background-color-header, 10%);
+    }
+
+    nav a:hover {
+        background-color: lighten($background-color-nav, 20%);
+    }
+}
