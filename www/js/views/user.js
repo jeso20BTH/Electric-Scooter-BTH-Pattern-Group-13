@@ -17,13 +17,29 @@ let index = {
             m('fieldset.flex.column.start.allign-center', [
                 m('legend', 'Betalning'),
                 m('div.flex.row.start', [
-                    m('p', `Balans: ${userModel.currentUser.credits} SEK`),
-                    m('a.button', {href: '#!/bank/transfer'}, 'Fyll på')
+                    m('div.flex.column.center', [
+                        m('p.user-data', `Balans: ${userModel.currentUser.credits} SEK`),
+                    ]),
+                    m('a.button.user-data', {href: '#!/bank/transfer'}, 'Fyll på')
                 ]),
-                m('div.flex.row.start', [
-                    m('p', 'Betalningmetod: Direkt'),
-                    m('button', 'Ärdra')
-                ])
+
+                (userModel.changePayment) ?
+                    m('div.flex.row', [
+                        m('div.flex.column.center', [
+                            m('p', 'Betalningsmetod:')
+                        ]),
+                        m('select.user-data', {onchange: (e) => {userModel.selectedPaymentMethod = e.target.value}}, [
+                            m('option', {value: 'Direkt'}, 'Direkt'),
+                            m('option', {value: 'Månad'}, 'Månad')
+                        ]),
+                        m('button.user-data', {onclick: userModel.changePaymentMethod}, 'Bekräfta')
+                    ]):
+                    m('div.flex.row.start', [
+                        m('div.flex.column.center', [
+                            m('p.user-data', `Betalningmetod: ${userModel.currentUser.paymentmethod}`),
+                        ]),
+                        m('button.user-data', {onclick: () => {userModel.changePayment = true}}, 'Ändra')
+                    ])
             ])
         ]
     }
