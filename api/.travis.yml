@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+    - "node"
+
+sudo: false
+
+git:
+    submodules: false
+
+before_script:
+    - npm install
+
+after_success:
+    - npm run report-coveralls
+    - npm run report-codecov
