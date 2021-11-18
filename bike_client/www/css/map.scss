@@ -1,0 +1,26 @@
+#map {
+    width: 100%;
+    height: 100vh;
+}
+
+.leaflet-popup-content {
+    width: auto !important;
+}
+
+.location-label {
+    font-size: 1rem;
+}
+
+.popup {
+    list-style: none;
+    padding: 0;
+
+    .popup-info {
+        margin: 5px 0;
+
+        p {
+            font-size: 0.75rem;
+            margin: 5px 0;
+        }
+    }
+}
