@@ -1,0 +1,106 @@
+body {
+    font-family: $font-body;
+}
+
+
+h1,
+h2,
+h4 {
+    font-family: $font-header;
+}
+
+html {
+    font-size: 100%;
+}
+
+p {
+    font-size: $body-font-size;
+}
+
+h1 {
+    font-size: 2.4rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.6rem;
+}
+
+@media (min-width: 64em) {
+    html {
+        font-size: 112.5%;
+    }
+}
+
+h2 {
+    margin-bottom: 0.6rem;
+}
+
+h4 {
+    margin-bottom: 0.2rem;
+    margin-top: 1.8rem;
+    line-height: 1.4;
+}
+
+h4:first-of-type {
+    margin-top: 0.6rem;
+}
+
+p {
+    margin-top: 0.2rem;
+    line-height: 1.4;
+}
+
+a {
+    color: $blue;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.text-primary {
+    color: $blue;
+}
+
+.text-success,
+.packable {
+    color: $green;
+}
+
+.text-danger,
+.unpackable {
+    color: $red;
+}
+
+.push-t-1 {
+    margin-top: 1rem;
+}
+
+.status {
+    color: #fff;
+    padding: 0 10px;
+    border-radius: 50%;
+}
+.status-ny {
+    background-color: $blue;
+}
+.status-packad {
+    background-color: $green;
+}
+.status-skickad {
+    background-color: $dark-grey;
+}
+.status-fakturerad {
+    background-color: $black;
+}
+.status-retur {
+    background-color: $red;
+}
+.status-aterbetald {
+    background-color: $yellow;
+}

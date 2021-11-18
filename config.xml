@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="se.dbwebb.bikeapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Bike App</name>
+    <description>
+        Bike App for a system that handles the rental of electric scooters in Swedish cities.
+    </description>
+    <author email="beha20@gmail.com" href="http://cordova.io">
+        Benaris Hajduk
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+
+        <icon density="hdpi" src="www/res/icon/android/mipmap-hdpi/train_app_icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/mipmap-mdpi/train_app_icon.png" />
+        <icon density="xhdpi" src="www/res/icon/android/mipmap-xhdpi/train_app_icon.png" />
+        <icon density="xxhdpi" src="www/res/icon/android/mipmap-xxhdpi/train_app_icon.png" />
+        <icon density="xxxhdpi" src="www/res/icon/android/mipmap-xxxhdpi/train_app_icon.png" />
+
+        <splash density="port-ldpi" src="www/res/screen/android/splash-port-ldpi.png" /> 
+        <splash density="port-mdpi" src="www/res/screen/android/splash-port-mdpi.png" /> 
+        <splash density="port-hdpi" src="www/res/screen/android/splash-port-hdpi.png" /> 
+        <splash density="port-xhdpi" src="www/res/screen/android/splash-port-xhdpi.png" /> 
+        <splash density="port-xxhdpi" src="www/res/screen/android/splash-port-xxhdpi.png" /> 
+        <splash density="port-xxxhdpi" src="www/res/screen/android/splash-port-xxxhdpi.png" />
+
+        <splash density="land-ldpi" src="www/res/screen/android/splash-land-ldpi.png" /> 
+        <splash density="land-mdpi" src="www/res/screen/android/splash-land-mdpi.png" /> 
+        <splash density="land-hdpi" src="www/res/screen/android/splash-land-hdpi.png" /> 
+        <splash density="land-xhdpi" src="www/res/screen/android/splash-land-xhdpi.png" /> 
+        <splash density="land-xxhdpi" src="www/res/screen/android/splash-land-xxhdpi.png" /> 
+        <splash density="land-xxxhdpi" src="www/res/screen/android/splash-land-xxxhdpi.png" />
+    </platform>
+    <platform name="browser">
+        <preference name="SplashScreen" value="www/res/web_hi_res_512.png"/> 
+        <preference name="SplashScreenDelay" value="5000" />
+        <!-- <preference name="SplashScreenBackgroundColor" value="green" />-->
+        <preference name="ShowSplashScreen" value="true" />
+        <!-- <preference name="SplashScreenWidth" value="600" /> -->
+        <!-- <preference name="SplashScreenHeight" value="300" />-->
+        <icon src="www/res/web_hi_res_512.png" width="32" height="32" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+        <splash src="www/res/screen/ios/Default@2x~universal~anyany.png" />
+        <icon src="www/res/icon/ios/icon-60@2x.png" width="120" height="120" />
+        <icon src="www/res/icon/ios/icon-60@3x.png" width="180" height="180" />
+    </platform>
+</widget>
