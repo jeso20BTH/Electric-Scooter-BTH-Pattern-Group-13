@@ -97,11 +97,10 @@ mutation {
 ```
 
 ### Delete a customer
-If the customer to be deleted is referenced in any other table the query will fail. This mutation is almost useless but is kept anyways.
-You can delete a customer by providing either an id or an email. If both are provided customer is deleted using id.
+A customer is deleted using its id. Upon deletion every row referencing given customer in history will also be deleted. If the customer is successfully deleted succes will equal 1.
 ```
 mutation {
-  deleteCustomer (id: 6, email: "jgawkes2@bandcamp.com") {
+  deleteCustomer (id: 6) {
 	  success
   }
 }

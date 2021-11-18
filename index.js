@@ -389,16 +389,11 @@ const {
                 description: "Delete a customer",
                 args: {
                     id: { type: GraphQLInt },
-                    email: { type: GraphQLString }
                 },
                 resolve: async (parent, args) => {
                     let res;
 
-                    if (args.id) {
-                        res = await crudDelete.deleteFromTable(db, "customer", "id", args.id);
-                    } else if (args.email) {
-                        res = await crudDelete.deleteFromTable(db, "customer", "email", args.email);
-                    }
+                    res = await crudDelete.deleteFromTable(db, "customer", "id", args.id);
 
                     return { success: res.affectedRows };
                 },
