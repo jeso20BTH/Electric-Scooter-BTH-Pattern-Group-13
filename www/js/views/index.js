@@ -2,8 +2,9 @@
 
 import m from 'mithril';
 
-import scooterModel from './../models/scooter'
-import utilitiesModel from './../models/utilities'
+import scooterModel from './../models/scooter';
+import utilitiesModel from './../models/utilities';
+import authModel from './../models/auth';
 
 let rent = {
     view: function() {
@@ -45,10 +46,12 @@ let rent = {
 let inRent = {
     view: function() {
         let curScooter = scooterModel.currentScooter;
-        let speed = curScooter.speed;
-        let battery = Math.floor(curScooter.battery * 100);
+        let speed = curScooter.velocity;
+        let battery = curScooter.battery;
         let scooterId = curScooter.id;
-        let timeRented = utilitiesModel.calculateTime(scooterModel.rentTime);
+        let timeRented = utilitiesModel.calculateTime(
+            new Date(parseInt(scooterModel.currentLog.starttime))
+        );
         let batteryPercetageClass = utilitiesModel.batteryPercentage(battery);
 
         setInterval(() => {
@@ -80,13 +83,6 @@ let inRent = {
                     )
                 ]),
                 m('div.column.flex.center.button-div', [
-                    m(
-                        'button',
-                        {
-                            onclick: ()=>{console.log('Start');}
-                        },
-                        'Start'
-                    ),
                     m(
                         'button',
                         {

@@ -1,7 +1,6 @@
 let utilities = {
-    calculateTime: (startTime) => {
-        let curTime = new Date();
-        let difference = curTime - startTime;
+    calculateTime: (startTime, endTime=new Date()) => {
+        let difference = endTime - startTime;
 
         let ms2s = 1000;
         let s2m = 60;
@@ -33,6 +32,31 @@ let utilities = {
                         (currentBatteryPercentage > 5) ? 'critical' : 'min'
 
         return className;
+    },
+    calculatePrice: (data) => {
+        console.log(data);
+        let totalPrice = 0;
+        let ms2s = 1000;
+        let s2m = 60;
+
+        totalPrice += data.startingfee;
+
+        let startTime = new Date(parseInt(data.startTime));
+        let endTime = new Date(parseInt(data.endTime));
+
+        let duration = Math.ceil((endTime - startTime) / ms2s / s2m);
+
+        totalPrice += duration * data.fee;
+
+        if (data.startPosition === 'unparked' && data.endPosition === 'parked') {
+            totalPrice -= data.discount;
+        }
+
+        if (data.endPosition === 'unparked') {
+            totalPrice += data.penaltyfee;
+        }
+
+        return totalPrice;
     }
 }
 
