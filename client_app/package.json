@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
+    "axios": "^0.24.0",
     "cordova-android": "9.1.0",
     "cordova-browser": "6.0.0",
     "mithril": "^2.0.4",

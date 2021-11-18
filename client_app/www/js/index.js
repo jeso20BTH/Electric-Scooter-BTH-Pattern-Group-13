@@ -51,6 +51,18 @@ function onDeviceReady() {
             render: function() {
                 return m(layout, m(login));
             }
-        }
+        },
+        "/success/:id": {
+            onmatch: function(args) {
+                let userId = args.id
+                console.log(userId);
+
+                authModel.login(userId);
+
+                authModel.authorized = true;
+
+                m.route.set('/')
+            }
+        },
     });
 }
