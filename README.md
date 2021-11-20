@@ -3,10 +3,9 @@ This application is a part of a system for handle electric scooters. It was made
 
 # Techniques
 This application is with [Cordova](https://cordova.apache.org/), which makes running it able just with these simple commands.
-```
-npm run browser - Which will run the application in the browser
-npm run android - Which will run the application in an android emulator or connected android phone.
-```
+```npm run browser``` Which will run the application in the browser
+```npm run android``` Which will run the application in an android emulator or connected android phone.
+
 As an framework it run on [Mithril](https://mithril.js.org/), which is an lightweight, client-side framework for an single page application.   
 To compile the code to it's production and develop state webpack is used for the JavaScript code and for the CSS is SASS used to compile the SCSS files.
 
