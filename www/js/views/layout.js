@@ -13,7 +13,7 @@ let layout = {
     view: function(vnode) {
         return [
             (authModel.authorized) ?
-            m('nav.flex.row.between.nav', [
+            m('nav.flex.row.between.nav.blink', [
                 layout.navElements.map(function (element) {
                     let route = m.route.get();
 

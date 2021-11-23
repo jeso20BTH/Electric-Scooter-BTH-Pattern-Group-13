@@ -11,6 +11,7 @@
     "webpack": "webpack --config webpack.dev.config.js",
     "webpack-build": "webpack --config webpack.prod.config.js",
     "start": "npm run webpack && npm run style-min && cordova run browser",
+    "android": "npm run webpack && npm run style-min && cordova run android",
     "build": "npm run webpack-build-watch && style-min-watch"
   },
   "keywords": [
@@ -19,12 +20,23 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "devDependencies": {
+    "cordova-plugin-device": "^2.0.3",
+    "cordova-plugin-geolocation": "^4.1.0",
+    "cordova-plugin-qrscanner": "^3.0.1",
     "cordova-plugin-whitelist": "^1.3.5",
+    "css-loader": "^6.5.1",
+    "file-loader": "^6.2.0",
+    "style-loader": "^3.3.1",
     "webpack-cli": "^4.9.1"
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-qrscanner": {},
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      },
+      "cordova-plugin-device": {}
     },
     "platforms": [
       "android",
@@ -36,6 +48,7 @@
     "axios": "^0.24.0",
     "cordova-android": "9.1.0",
     "cordova-browser": "6.0.0",
+    "leaflet": "^1.7.1",
     "mithril": "^2.0.4",
     "sass": "^1.43.4",
     "webpack": "^5.61.0"

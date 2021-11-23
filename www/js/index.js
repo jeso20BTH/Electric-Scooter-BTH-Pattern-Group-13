@@ -55,7 +55,6 @@ function onDeviceReady() {
         "/success/:id": {
             onmatch: function(args) {
                 let userId = args.id
-                console.log(userId);
 
                 authModel.login(userId);
 

@@ -113,32 +113,20 @@ let dbModel = {
         return user.updateCustomer;
     },
     getBikes: async () => {
-        return [
-            {
-                id: '1',
-                status: 'free',
-                long: '',
-                lat: '',
-                battery: 1,
-                speed: 0,
-            },
-            {
-                id: '2',
-                status: 'rented',
-                long: '',
-                lat: '',
-                battery: 0.6,
-                speed: 12,
-            },
-            {
-                id: '3',
-                status: 'service',
-                long: '',
-                lat: '',
-                battery: 0.1,
-                speed: 0,
+        let query = `{
+            bikes {
+                id
+                available
+                velocity
+                battery
+                xcoord
+                ycoord
             }
-        ]
+        }`;
+
+        let bikes = await dbModel.callDatabase(query);
+
+        return bikes.bikes;
     },
     getBike: async (id) => {
         let query =  `{
@@ -153,11 +141,7 @@ let dbModel = {
             }
         }`;
 
-        console.log(query);
-
         let bike = await dbModel.callDatabase(query);
-
-        console.log(bike);
 
         return bike.bike;
     },
@@ -357,6 +341,38 @@ let dbModel = {
         let log = await dbModel.callDatabase(query);
 
         return log.updateHistory;
+    },
+    getParkings: async () => {
+        let query = `{
+            parkingspaces {
+                id,
+                xcoord,
+                ycoord,
+                name,
+                cityid,
+                hascharger,
+                city {
+                    id,
+                    name,
+                    startingfee,
+                    penaltyfee,
+                    fee,
+                    discount
+                }
+                bikes {
+                    id,
+                    available,
+                    velocity,
+                    battery,
+                    xcoord,
+                    ycoord
+                },
+            }
+        }`;
+
+        let parking = await dbModel.callDatabase(query);
+
+        return parking.parkingspaces;
     }
 };
 

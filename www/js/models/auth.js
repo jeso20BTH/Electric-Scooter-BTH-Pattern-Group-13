@@ -9,7 +9,6 @@ var authModel = {
     authorized: false,
     currentUser: {},
     login: async (id) => {
-        console.log('get data');
         let data = await axios({
             method: 'post',
             url: 'http://localhost:666/data',
@@ -22,15 +21,10 @@ var authModel = {
         })
 
         data = data.data;
-        console.log(data);
-        console.log(data.name.split(' ')[0], data.name.split(' ')[1]);
 
         let user = await dbModel.getUser(data.email);
 
-        console.log(user);
         if (!user) {
-            console.log('not defined');
-
             await dbModel.addUser({
                 email: data.email,
                 firstname: data.name.split(' ')[0],
@@ -38,8 +32,6 @@ var authModel = {
             });
 
             user = await dbModel.getUser(data.email);
-
-            console.log(user);
         }
 
         authModel.currentUser = user;

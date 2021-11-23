@@ -15,14 +15,17 @@ var scooterModel = {
     rentTime: null,
     currentScooter: {},
     allScooters: [],
+    allParkings: [],
     getAllScooters: async () => {
         scooterModel.allScooters = await dbModel.getBikes();
+        m.redraw();
+    },
+    getAllParkings: async () => {
+        scooterModel.allParkings = await dbModel.getParkings();
+        m.redraw();
     },
     rent: async (e, scooterId=scooterModel.id) => {
-        console.log(scooterId);
         scooterModel.currentScooter = await dbModel.getBike(scooterId);
-
-        console.log(scooterModel.currentScooter);
 
         if (scooterModel.currentScooter && scooterModel.currentScooter.available === 1) {
             let log = await dbModel.addLogEntry({
@@ -34,8 +37,6 @@ var scooterModel = {
             });
 
             await dbModel.getUser(authModel.currentUser.email);
-
-            console.log(authModel.currentUser);
 
             scooterModel.currentLog = log;
 
@@ -67,8 +68,6 @@ var scooterModel = {
                 ycoord: scooterModel.currentScooter.ycoord
             });
 
-            console.log(log);
-
             let city = await dbModel.getCity(1);
             let totalPrice = utilitiesModel.calculatePrice({
                 startingfee: city.startingfee,
@@ -81,15 +80,11 @@ var scooterModel = {
                 endPosition: log.endparking,
             });
 
-            console.log(totalPrice);
-
             if (user.balance >= totalPrice) {
                 log = await dbModel.updateLogPayed({
                     id: scooterModel.currentLog.id,
                     payed: 1
                 });
-
-                console.log(log);
 
                 await dbModel.updateUser({balance: authModel.currentUser.balance -= totalPrice});
             } else {
@@ -97,8 +92,6 @@ var scooterModel = {
                     id: scooterModel.currentLog.id,
                     payed: 0
                 });
-
-                console.log(log);
             }
         } else if (user.paymentmethod === 'Monthly') {
             log = await dbModel.updateLogPositionAndPayed({
@@ -115,6 +108,26 @@ var scooterModel = {
         scooterModel.currentScooter = {};
         scooterModel.currentLog = {};
         scooterModel.rentTime = null;
+    },
+    handleScan: (err, text) => {
+        let element = document.getElementsByClassName('blink');
+
+        for (var i = 0; i < element.length; i++) {
+            element[i].classList.remove('gone');
+        }
+
+        document.getElementsByTagName("BODY")[0].removeAttribute('style');
+        document.getElementsByClassName('qr-buttons')[0].setAttribute('style', 'visibility: hidden;')
+
+        window.QRScanner.disableLight();
+
+        if (err) {
+            console.log(err);
+        } else {
+            scooterModel.id = text;
+
+            m.redraw();
+        }
     }
 }
 
