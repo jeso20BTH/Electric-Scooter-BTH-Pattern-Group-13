@@ -40,7 +40,7 @@ A common denominator despite what plugin you like to add is that you use the fol
 
 ### Cordova barcode scanner
 It can handle numerous types of barcodes, QR code is one among them. It is simple plugin with just one method. That method is `scan()`, it will depending on if the scan is successful or not handle an error or an result. In this plugin you get an predefined layout for the barcode without any options. Bellow is an example of how you run an scan.   
-```
+``` js
 cordova.plugins.barcodeScanner.scan(
       function (result) {
           alert("We got a barcode\n" +
@@ -55,7 +55,7 @@ cordova.plugins.barcodeScanner.scan(
 ```
 
 Worth notice is if you like to use it on an android application, are you needed to specify somethings about permissions and the hardware, in it's manifext `platforms/android/app/src/main/AndroidMainfest.xml`. The things you need to specify can be found bellow.
-```
+``` xml
 <config-file target="AndroidManifest.xml" parent="/*" mode="merge">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" />
@@ -83,7 +83,7 @@ The difference from the barcode scanner is that you got a lot more functions but
 Step by step setup from when you click an button starting the process.
 ##### 1. Hide elements
 Hide the elements that are inside your body because the camera preview is placed in the background. I made that part with giving them an class and then add another class that had the following style `display: none;`. The bellow code example is the way is how I did it.
-```
+``` js
 let element = document.getElementsByClassName('<class of the elements you wanna hide>');
 
 for (var i = 0; i < element.length; i++) {
@@ -93,11 +93,11 @@ for (var i = 0; i < element.length; i++) {
 
 You also need to make the background of the body transparent in order to make the preview visual.
 i made it with
-```
+``` js
 document.getElementsByTagName("BODY")[0].setAttribute('style','background-color: transparent');
 ```
 That is what is needed to set up the scan. If you have buttons you wanna show, this is a good point to make them visible as well. In my example did I put my buttons in an div with the class `qr-buttons`, with the standard style `visability: hidden;`. Making it easy to toggle its visibility. with the following line of code.
-```
+``` js
 document.getElementsByClassName('qr-buttons')[0].setAttribute('style', 'visibility: visible;')
 ```
 
@@ -108,7 +108,7 @@ When you have made the correct elements visible you need to call the method to s
 As stated above am I using an callback function to handle the result of the scan. The scan function will either return an error or the text, I therefore setup my callbackfunction according to that. `callbackFunction(err, text)`. My function reverse the style from above, by the following steps
 
 First does I remove the class that had `display: none;` with the following steps.
-```
+``` js
 let element = document.getElementsByClassName('<class of the hidden elements>');
 
 for (var i = 0; i < element.length; i++) {
@@ -116,11 +116,11 @@ for (var i = 0; i < element.length; i++) {
 }
 ```
 The you need to bring the background of the body back.
-```
+``` js
 document.getElementsByTagName("BODY")[0].removeAttribute('style');
 ```
 Lastly I hide the buttons for the scanner
- ```
+ ``` js
 document.getElementsByClassName('qr-buttons')[0].setAttribute('style', 'visibility: hidden;')
  ```
 
