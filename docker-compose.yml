@@ -11,7 +11,13 @@ services:
             project13net:
         restart:
             "always"
-
+    oauth:
+        image: jeso20/bikerental-oauth:1.0
+        container_name: "bikerental-oauth"
+        ports:
+            - 666:666
+        networks:
+            project13net:
     # client:
     #     image: jeso20/vlinux-kmom10:client
     #     container_name: kmom10_client
