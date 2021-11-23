@@ -174,6 +174,12 @@ let utilitiesModel = {
             paymentAccount: corporationId
         }
 
+    },
+    calculateCenter: (start, end) => {
+        let lat = (start[0] + end[0]) / 2
+        let long = (start[1] + end[1]) / 2
+
+        return [lat, long];
     }
 }
 

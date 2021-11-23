@@ -16,7 +16,26 @@ Object.keys(process.env).filter(key => key.startsWith('MITHRIL_')).forEach(key =
 plugins.push(new webpack.DefinePlugin(envs));
 
 let app = ['./client/js/index.js'];
-let rules = [];
+let rules = [
+    {
+        test: /\.css$/,
+        use: [
+            'style-loader',
+            'css-loader'
+        ]
+    },
+    {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                },
+            },
+        ]
+    }
+];
 // if (babel) {
 //   // app.unshift('@babel/polyfill');
 //   rules.push({

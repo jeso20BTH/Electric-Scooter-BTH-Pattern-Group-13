@@ -11,6 +11,7 @@ import index from './views/index.js';
 import history from './views/history.js';
 import user from './views/user.js';
 import invoice from './views/invoice.js';
+import ride from './views/ride.js';
 import bankLayout from './views/bank_layout.js';
 import bankIndex from './views/bank_index.js';
 import bankAccount from './views/bank_account.js';
@@ -98,6 +99,18 @@ m.route(document.body, "/", {
             return m(layout, vnode);
         }
     },
+    "/history/ride/:id": {
+        onmatch: () => {
+            if (userModel.authorized) {
+                return ride
+            }
+
+            m.route.set('/login')
+        },
+        render: function(vnode) {
+            return m(layout, vnode);
+        }
+    },
     "/bank/pay/:id": {
         onmatch: () => {
             if (userModel.authorized) {
@@ -121,13 +134,14 @@ m.route(document.body, "/", {
         }
     },
     "/success/:id": {
-        onmatch: function(args) {
+        onmatch: async (args) => {
             let userId = args.id
             console.log(userId);
 
-            userModel.login(userId);
+            await userModel.login(userId);
 
             userModel.authorized = true;
+
 
             m.route.set('/')
         }

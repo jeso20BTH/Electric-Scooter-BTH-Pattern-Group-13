@@ -11,6 +11,7 @@ let bank = {
         let invoice = userModel.filteredHistory[invoiceId];
         let sumary = utilitiesModel.getSumary(invoice, invoiceId, userModel.currentUser.id);
         return [
+            m('a.return', {href: '#!/history'}, '< Tillbaka'),
             m('div.flex.column.between.invoice-div', [
                 m('div.flex.column.start', [
                     m('div.flex.column.center.invoice-info-div', [

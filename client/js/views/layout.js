@@ -2,13 +2,17 @@
 
 import m from 'mithril';
 
+import userModel from './../models/user';
+
 let layout = {
     navElements: [
             {name: "Hem", class: "home", ref: "/"},
             {name: "Historik", class: "electric_scooter", ref: "/history"},
             {name: "Konto", class: "person", ref: "/user"}
     ],
+    loginNavElements: [{name: "Logga in", class: "lock", ref: "/login"}],
     view: function(vnode) {
+        let navElements = (userModel.authorized) ? layout.navElements : layout.loginNavElements;
         return [
             m('header.flex.row.between.header', [
                 m('img.hero-img', {
@@ -28,7 +32,7 @@ let layout = {
                 ]),
                 m('div.flex.column.end', [
                     m('nav.flex.row.end.nav', [
-                        layout.navElements.map(function (element) {
+                        navElements.map(function (element) {
                             let route = m.route.get();
 
                             route = (route) ? route : "/";

@@ -16,9 +16,12 @@ let login = {
     view: () => {
         return [
             m('h1', 'Logga in'),
-            m('a', {
+            m('a.flex.row.start.allign-center.login-btn', {
                 href: `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user:email&&redirect_uri=http://localhost:666/github/callback?callback=userclient`
-            }, 'Logga in med github')
+            }, [
+                m('p', 'Logga in med github'),
+                m('i.fab.fa-github')
+            ])
         ]
     }
 }

@@ -41,13 +41,15 @@ let historyTable = {
 
                         let date = utilitiesModel.formatDate(
                             new Date(parseInt(history.starttime))
-                            );
+                        );
 
                         console.log(city, duration, price);
 
                         if (history.endtime) {
                             return m('tr', [
-                                m('td', date),
+                                m('td',
+                                    m('a', { href: `#!/history/ride/${history.id}`}, date)
+                                ),
                                 m('td', duration),
                                 m('td', `${price || 0} SEK`),
                                 m('td',

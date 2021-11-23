@@ -150,32 +150,24 @@ let dbModel = {
         return user.updateCustomer;
     },
     getBikes: async () => {
-        return [
-            {
-                id: '1',
-                status: 'free',
-                long: '',
-                lat: '',
-                battery: 1,
-                speed: 0,
-            },
-            {
-                id: '2',
-                status: 'rented',
-                long: '',
-                lat: '',
-                battery: 0.6,
-                speed: 12,
-            },
-            {
-                id: '3',
-                status: 'service',
-                long: '',
-                lat: '',
-                battery: 0.1,
-                speed: 0,
+        let query = `{
+            bikes {
+                id
+                available
+                velocity
+                battery
+                xcoord
+                ycoord
             }
-        ]
+        }`;
+
+        console.log(query);
+
+        let bikes = await dbModel.callDatabase(query);
+
+        console.log(bikes);
+
+        return bikes.bikes;
     },
     getBike: async (id) => {
         let query =  `{
