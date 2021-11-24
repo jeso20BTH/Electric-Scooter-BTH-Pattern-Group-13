@@ -35,7 +35,7 @@ This is an explanation of how you could use OAuth for authorization.
         - `scope=user:email` - specifies what data you are allowed to access, in this case the public and the users email.
         - `redirect_uri=<redirecturl>` - Is where you should go once you have been authorized.
         - `callback=<urlwhenauthorized>` - Is where you shall go after the authorization has been done. It is used to be able to use the same OAuth service with multiple services.
-    - Lets take a look at an real example given as the second anchor tag above.
+- Lets take a look at an real example given as the second anchor tag above.
         - The first three parts is the same, with authrization-url, client id and scope
         - `redirect_uri=http://localhost:666/github/callback` - Takes you to an route in your OAuth service if it is setup as above, with port 666.
         - `callback=http://localhost:8000!/success/` - Is where on your service you shall go once you are authorized. In this case you while be sent to a service on port 8000, with the route /success. If you look closer there is an `!` in the route `!/success/` that way the service can handle both routing with and without shebang. the route it will take you to in this case is not `http://localhost:8000!/success/` but instead `http://localhost:8000#!/success/`. If you use an route without an `!` it will send you to that route.
@@ -54,9 +54,10 @@ Bellow you can find an example for how the callback route could be setup through
     }
 }
 ```
-    - In this case you can get the id with the help of `args`
-    - Next step is to fetch the actual data for the user. In this case it is done by the help of the login function.
-    - Then you are authorized and an new route is set
+
+- In this case you can get the id with the help of `args`
+- Next step is to fetch the actual data for the user. In this case it is done by the help of the login function.
+- Then you are authorized and an new route is set
 4. Lets take an look on how you could fetch data.
 ```js
 let data = await axios({
