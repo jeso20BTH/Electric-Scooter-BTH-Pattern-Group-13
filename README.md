@@ -28,7 +28,7 @@ This is an explanation of how you could use OAuth for authorization.
 <a href="https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user:email&&redirect_uri=http://localhost:666/github/callback?callback=http://localhost:8000!/success/"></a>
 ```
 
-    - The first one is an common example of the URL parts
+- The first one is an common example of the URL parts
     `https://github.com/login/oauth/authorize?client_id=<clientID>&scope=user:email&&redirect_uri=<redirecturl>?callback=<urlwhenauthorized>`
         - `https://github.com/login/oauth/authorize` - is where github authorizes you
         - `client_id=<clientID>` - is the client id for your OAuth service
