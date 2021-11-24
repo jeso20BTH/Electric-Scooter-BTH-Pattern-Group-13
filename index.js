@@ -72,9 +72,23 @@ app.get('/success', async function(req, res) {
 
     data[userId] = user;
 
-    console.log(redirectRoutes, redirectRoutes[req.query.callback]);
+    console.log(req.query.callback);
+    console.log(`${req.query.callback}#!/success/${userId}`);
 
-    res.redirect(`${redirectRoutes[req.query.callback]}${userId}`);
+    let url = req.query.callback
+
+    if (url.includes('!')) {
+        let splittingIndex = url.indexOf('!');
+        let host = url.substring(0, splittingIndex);
+        let route = url.substring(splittingIndex);
+        url = `${host}#${route}`;
+    }
+
+    console.log(url);
+
+    // console.log(redirectRoutes, redirectRoutes[req.query.callback]);
+
+    res.redirect(`${url}${userId}`);
 });
 
 app.use(cors());
