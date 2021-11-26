@@ -133,7 +133,9 @@ WARNING: It is NOT advisable to retrieve city when requesting all bikes. A query
       startingfee,
       penaltyfee,
       fee,
-      discount
+      discount,
+      xcoord,
+      ycoord
     }
   }
 }
@@ -155,7 +157,9 @@ WARNING: It is NOT advisable to retrieve city when requesting all bikes. A query
       startingfee,
       penaltyfee,
       fee,
-      discount
+      discount,
+      xcoord,
+      ycoord
     }
   }
 }
@@ -187,6 +191,8 @@ mutation {
     penaltyfee,
     fee,
     discount,
+    xcoord,
+    ycoord
     bikes {
       id,
       available,
@@ -211,6 +217,8 @@ All attributes are optional but at least one must be asked for.
     penaltyfee,
     fee,
     discount,
+    xcoord,
+    ycoord
     bikes {
       id,
       available,
@@ -242,7 +250,9 @@ All attributes are optional but at least one must be asked for.
         startingfee,
         penaltyfee,
         fee,
-        discount
+        discount,
+        xcoord,
+        ycoord
       }
       bikes {
         id,

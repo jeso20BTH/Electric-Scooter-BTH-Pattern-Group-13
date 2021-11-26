@@ -91,6 +91,8 @@ const fs = require("fs");
             penaltyfee: { type: GraphQLInt },
             fee: { type: GraphQLInt },
             discount: { type: GraphQLInt },
+            xcoord: { type: GraphQLFloat },
+            ycoord: { type: GraphQLFloat },
             bikes: {
                 type: new GraphQLList(BikeType),
                 resolve: async (parent) => {
