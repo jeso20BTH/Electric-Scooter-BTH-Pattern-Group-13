@@ -4,6 +4,13 @@
 
 This api has been developed for use in the course "pattern" by the group project 13. This api utilizes graphql which means all entities can be found under the "/graphql" endpoint and are retrieved or manipulated by sending queries via post. To view a graphical interface go to "/graphql" in your browser. To query the api from your app use method "POST" and send your query by placing it inside the body-object with the key "query".
 
+## Json web token
+To receive your token send a post-request to "/register". Your body must contain an email adress with the key "mail" e.g { mail: myexamplemail@mail.com }. Save the token that is
+returned as you will not be able to retrieve it again. To use your token place it in "headers" when making a request to "/graphql". Make sure the token has the key "jwt".
+
+## Logging
+When making a request to "/graphql" a new row containing your email, query and a timestamp will be added to a logfile. To read this logfile go to "/log"
+
 ## Customer
 ### Get all customers
 All attributes are optional but at least one must be asked for.
