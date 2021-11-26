@@ -21,7 +21,6 @@ const {
     GraphQLInt,
     GraphQLFloat,
 } = require("graphql");
-const registerRouter = require("./routes/register");
 const fs = require("fs");
 
 (async function () {
