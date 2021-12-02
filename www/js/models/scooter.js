@@ -24,51 +24,47 @@ var scooterModel = {
         scooterModel.allParkings = await dbModel.getParkings();
         m.redraw();
     },
-    rent: async (e, scooterId=scooterModel.id) => {
-        scooterModel.currentScooter = await dbModel.getBike(scooterId);
-
-        if (scooterModel.currentScooter && scooterModel.currentScooter.available === 1) {
+    rent: async (data) => {
+        if (data.currentScooter && data.currentScooter.available === 1) {
             let log = await dbModel.addLogEntry({
-                scooterId: scooterModel.currentScooter.id,
-                userId: authModel.currentUser.id,
-                xcoord: scooterModel.currentScooter.xcoord,
-                ycoord: scooterModel.currentScooter.ycoord,
-                city: scooterModel.currentScooter.cityid
+                scooterId: data.currentScooter.id,
+                userId: data.id,
+                xcoord: data.currentScooter.xcoord,
+                ycoord: data.currentScooter.ycoord,
+                city: data.currentScooter.cityid
             });
 
-            await dbModel.getUser(authModel.currentUser.email);
+            await dbModel.getUser(data.email);
 
             scooterModel.currentLog = log;
 
             await dbModel.updateBike({
-                id: scooterModel.currentScooter.id,
+                id: data.currentScooter.id,
                 status: 0
             });
             scooterModel.inRent = true;
             scooterModel.id = '';
-
-            m.redraw();
+            return log;
         }
     },
-    unrent: async () => {
-        scooterModel.currentScooter = await dbModel.getBike(scooterModel.currentScooter.id);
+    unrent: async (data) => {
+        scooterModel.inRent = false;
 
         await dbModel.updateBike({
-            id: scooterModel.currentScooter.id,
+            id: data.currentScooter.id,
             status: 1
         });
 
-        let user = await dbModel.getUser(authModel.currentUser.email);
         let log;
 
-        if (user.paymentmethod === 'Direct') {
+        if (data.paymentmethod === 'Direct') {
             log = await dbModel.updateLogPosition({
-                id: scooterModel.currentLog.id,
-                xcoord: scooterModel.currentScooter.xcoord,
-                ycoord: scooterModel.currentScooter.ycoord
+                id: data.currentLog.id,
+                xcoord: data.currentScooter.xcoord,
+                ycoord: data.currentScooter.ycoord
             });
 
-            let city = await dbModel.getCity(1);
+            let city = await dbModel.getCity(data.currentLog.cityid);
             let totalPrice = utilitiesModel.calculatePrice({
                 startingfee: city.startingfee,
                 fee: city.fee,
@@ -80,31 +76,35 @@ var scooterModel = {
                 endPosition: log.endparking,
             });
 
-            if (user.balance >= totalPrice) {
+            if (data.currentUser.balance >= totalPrice) {
                 log = await dbModel.updateLogPayed({
-                    id: scooterModel.currentLog.id,
+                    id: data.currentLog.id,
                     payed: 1
                 });
 
-                await dbModel.updateUser({balance: authModel.currentUser.balance -= totalPrice});
+                await dbModel.updateUser({
+                    email: data.currentUser.email,
+                    firstname: data.currentUser.firstname,
+                    lastname: data.currentUser.lastname,
+                    balance: data.currentUser.balance -= totalPrice,
+                });
             } else {
                 log = await dbModel.updateLogPayed({
-                    id: scooterModel.currentLog.id,
+                    id: data.currentLog.id,
                     payed: 0
                 });
             }
-        } else if (user.paymentmethod === 'Monthly') {
+        } else if (data.paymentmethod === 'Monthly') {
             log = await dbModel.updateLogPositionAndPayed({
-                id: scooterModel.currentLog.id,
-                xcoord: scooterModel.currentScooter.xcoord,
-                ycoord: scooterModel.currentScooter.ycoord,
+                id: data.currentLog.id,
+                xcoord: data.currentScooter.xcoord,
+                ycoord: data.currentScooter.ycoord,
                 payed: 0
             });
         }
 
-        authModel.currentUser = await dbModel.getUser(authModel.currentUser.email);
+        authModel.currentUser = await dbModel.getUser(data.currentUser.email);
 
-        scooterModel.inRent = false;
         scooterModel.currentScooter = {};
         scooterModel.currentLog = {};
         scooterModel.rentTime = null;
@@ -117,12 +117,17 @@ var scooterModel = {
         }
 
         document.getElementsByTagName("BODY")[0].removeAttribute('style');
-        document.getElementsByClassName('qr-buttons')[0].setAttribute('style', 'visibility: hidden;')
+        if (document.getElementsByClassName('qr-buttons')[0]) {
+            document.getElementsByClassName('qr-buttons')[0].setAttribute('style', 'visibility: hidden;')
+        }
 
-        window.QRScanner.disableLight();
+        if (window.QRScanner) {
+            window.QRScanner.disableLight();
+        }
+
 
         if (err) {
-            console.log(err);
+            return err;
         } else {
             scooterModel.id = text;
 

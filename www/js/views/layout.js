@@ -8,7 +8,7 @@ let layout = {
     navElements: [
             {name: "Hem", class: "home", ref: "/"},
             {name: "Karta", class: "map", ref: "/map"},
-            {name: "Användare", class: "person", ref: "/user"}
+            {name: "Info", class: "person", ref: "/user"}
     ],
     view: function(vnode) {
         return [

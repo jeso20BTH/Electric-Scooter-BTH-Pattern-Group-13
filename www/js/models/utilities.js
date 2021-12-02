@@ -34,7 +34,6 @@ let utilities = {
         return className;
     },
     calculatePrice: (data) => {
-        console.log(data);
         let totalPrice = 0;
         let ms2s = 1000;
         let s2m = 60;

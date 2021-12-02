@@ -1,0 +1,29 @@
+.city-nav {
+    background-color: $background-color-nav-bar;
+    color: $color-nav-bar;
+
+    .city-nav-element {
+        margin: 0; padding: 1em;
+    }
+}
+
+.selected-city {
+    color: $color-nav-bar-active;
+    background-color: $background-color-nav-bar-active;
+    font-weight: bold;
+}
+
+.fine-line {
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.price {
+    font-weight: bold;
+}
+
+.credits {
+    border-bottom: 1px solid #423e3e;
+    margin-bottom: 4em;
+    padding-bottom: 2em;
+}

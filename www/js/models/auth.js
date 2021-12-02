@@ -8,7 +8,7 @@ const dbURL = 'http://localhost:1337/graphql'
 var authModel = {
     authorized: false,
     currentUser: {},
-    login: async (id) => {
+    getLoginData: async (id) => {
         let data = await axios({
             method: 'post',
             url: 'http://localhost:666/data',
@@ -20,7 +20,10 @@ var authModel = {
             },
         })
 
-        data = data.data;
+        return data.data
+    },
+    login: async (id) => {
+        let data = await authModel.getLoginData(id);
 
         let user = await dbModel.getUser(data.email);
 

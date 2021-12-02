@@ -1,22 +1,59 @@
 const axios = require('axios');
 import m from 'mithril';
 
+let config;
 
+try {
+    config = require('./config.json');
+} catch (e) {
+    console.log(e);
+}
+
+let token = config.dbToken;
 let dbURL = 'http://localhost:1337/graphql';
 
 import authModel from './auth';
 
 let dbModel = {
     callDatabase: async (query) => {
+        console.log(token);
         let res = await axios({
             method: 'post',
             url: dbURL,
             data: {
                 query: query
+            },
+            headers: {
+                jwt: token
             }
         });
 
         return res.data.data;
+    },
+    getCities: async () => {
+        let query = `{
+            cities {
+                id,
+                name,
+                startingfee,
+                penaltyfee,
+                fee,
+                discount,
+                bikes {
+                    id,
+                    available,
+                    velocity,
+                    battery,
+                    xcoord,
+                    ycoord,
+                    cityid
+                }
+            }
+        }`;
+
+        let cities = await dbModel.callDatabase(query);
+
+        return cities.cities;
     },
     getCity: async (id) => {
         let query = `{
@@ -88,17 +125,21 @@ let dbModel = {
                 balance,
                 paymentmethod
             }
-        }`
+        }`;
+
+        let user = await dbModel.callDatabase(query);
+
+        return user.addCustomer;
     },
     updateUser: async (data) => {
         let query = `mutation {
             updateCustomer(
                 email: "${data.email || authModel.currentUser.email}",
-                firstname: "${data.firstname || authModel.currentUser.fisrtname}",
+                firstname: "${data.firstname || authModel.currentUser.firstname}",
                 lastname: "${data.lastname || authModel.currentUser.lastname}",
                 balance: ${data.balance || authModel.currentUser.balance},
                 columnToMatch: "email",
-                valueToMatch: "${authModel.currentUser.email}"
+                valueToMatch: "${data.email || authModel.currentUser.email}"
             ) {
                 id,
                 firstname,

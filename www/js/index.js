@@ -53,10 +53,10 @@ function onDeviceReady() {
             }
         },
         "/success/:id": {
-            onmatch: function(args) {
+            onmatch: async function(args) {
                 let userId = args.id
 
-                authModel.login(userId);
+                await authModel.login(userId);
 
                 authModel.authorized = true;
 

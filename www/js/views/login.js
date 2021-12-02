@@ -20,7 +20,7 @@ let login = {
             m('div.flex.column.center.login-div',
                 m('h1', 'Logga in'),
                 m('a.display.flex.row.center.allign-center', {
-                        href: `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user:email&&redirect_uri=http://localhost:666/github/callback?callback=userapp`
+                        href: `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user:email&&redirect_uri=http://localhost:666/github/callback?callback=http://localhost:8000!/success/`
                         // href: '#!success/1'
                     }, [
                         m('p', 'Logga in med github'),
