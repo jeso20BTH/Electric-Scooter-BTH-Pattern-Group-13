@@ -30,5 +30,4 @@ jobs:
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
             flags: unittests
-            directory: ./coverage/
-            files: ./cobertura-coverage.xml
+            files: ./coverage/cobertura-coverage.xml
