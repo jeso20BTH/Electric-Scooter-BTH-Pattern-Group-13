@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Build
 
 on:
   push:
@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: '12.x'
       - run: npm install
+      - run: npm build
       - name: Run tests
         run: npm test
       - name: Codecov
