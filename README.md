@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/jeso20BTH/pattern-user-app/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-user-app/actions/workflows/testing.yml)
+
 # Introduction
 This application is a part of a system for handle electric scooters. It was made for the course Webbased frameworks and design patterns at [BTH](https://www.bth.se/). It is made as an group work with different members contribute with different parts of the system.
 

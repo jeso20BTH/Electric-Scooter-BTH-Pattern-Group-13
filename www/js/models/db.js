@@ -1,6 +1,5 @@
 const axios = require('axios');
 import m from 'mithril';
-console.log(process.env.DBTOKEN);
 
 let config;
 
