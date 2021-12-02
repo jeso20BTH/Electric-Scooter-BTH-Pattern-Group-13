@@ -1,5 +1,6 @@
 const axios = require('axios');
 import m from 'mithril';
+console.log(process.env);
 
 let config;
 
@@ -8,7 +9,6 @@ try {
 } catch (e) {
     console.log(e);
 }
-
 let token = process.env.DBTOKEN || config.dbToken;
 let dbURL = 'http://localhost:1337/graphql';
 
