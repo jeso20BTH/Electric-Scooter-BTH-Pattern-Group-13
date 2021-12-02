@@ -13,14 +13,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup env variables
-        env:
-            - CLIENTID: ${{ secrets.CLIENTID}}
-            - DBSECRET: ${{ secrets.DBSECRET}}
-            - LOCALHOST: ${{ secrets.LOCALHOST}}
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
       - run: npm install
-      - run: npm test
+      - name: Run tests
+        env:
+          - CLIENTID: ${{ secrets.CLIENTID}}
+          - DBSECRET: ${{ secrets.DBSECRET}}
+          - LOCALHOST: ${{ secrets.LOCALHOST}}
+        run: npm test
