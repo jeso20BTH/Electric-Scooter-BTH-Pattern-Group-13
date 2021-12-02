@@ -8,7 +8,7 @@ on:
 
 env:
     CLIENTID: ${{ secrets.CLIENTID}}
-    DBSECRET: ${{ secrets.DBSECRET}}
+    DBTOKEN: ${{ secrets.DBSECRET}}
     LOCALHOST: ${{ secrets.LOCALHOST}}
 
 jobs:
