@@ -9,7 +9,7 @@ try {
     console.log(e);
 }
 
-let token = config.dbToken;
+let token = process.env.DBTOKEN || config.dbToken;
 let dbURL = 'http://localhost:1337/graphql';
 
 import authModel from './auth';

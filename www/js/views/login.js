@@ -10,7 +10,7 @@ try {
     console.log(e);
 }
 
-const clientID = config.clientID;
+const clientID = process.env.CLIENTID || config.clientID;
 
 import authModel from './../models/auth';
 
