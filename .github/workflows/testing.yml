@@ -8,7 +8,10 @@ on:
 
 jobs:
   build:
-
+    env:
+        CLIENTID: ${{ secrets.CLIENTID}}
+        DBSECRET: ${{ secrets.DBSECRET}}
+        LOCALHOST: ${{ secrets.LOCALHOST}}
     runs-on: ubuntu-latest
 
     steps:
@@ -19,8 +22,5 @@ jobs:
           node-version: '12.x'
       - run: npm install
       - name: Run tests
-        env:
-          CLIENTID: ${{ secrets.CLIENTID}}
-          DBSECRET: ${{ secrets.DBSECRET}}
-          LOCALHOST: ${{ secrets.LOCALHOST}}
+
         run: npm test
