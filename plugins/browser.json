@@ -1,0 +1,22 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "se.dbwebb.lager"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "se.dbwebb.lager"
+    },
+    "cordova-plugin-geolocation": {
+      "GPS_REQUIRED": "true",
+      "PACKAGE_NAME": "se.dbwebb.lager"
+    }
+  },
+  "dependent_plugins": {}
+}
