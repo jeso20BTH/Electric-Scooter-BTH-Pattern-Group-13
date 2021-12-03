@@ -1,0 +1,14 @@
+{
+    "all": true,
+    "include": [
+        "www/js/models/*.js"
+    ],
+    "exclude": [
+        "setup.js"
+    ],
+    "reporter": [
+        "cobertura",
+        "text",
+        "text-summary"
+    ]
+}

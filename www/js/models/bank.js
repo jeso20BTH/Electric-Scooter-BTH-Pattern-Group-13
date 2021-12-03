@@ -1,8 +1,13 @@
 import m from 'mithril';
 
 import userModel from './user';
+import dbModel from './db';
 
 let bankModel = {
+    paymentMethods: [
+        { value: 'Direct', text: 'Direkt' },
+        { value: 'Monthly', text: 'Månad' },
+    ],
     accounts: [
         {
             name: 'Lönekonto',
@@ -28,18 +33,20 @@ let bankModel = {
     currentAmount: null,
     currentAccount: 0,
     errorMessage: null,
-    transfer: () => {
+    transfer: async () => {
         let transferSum = parseInt(bankModel.transferAmount) + bankModel.transferPrice;
 
-        console.log(parseInt(bankModel.transferAmount));
+        userModel.currentUser =await dbModel.getUser(userModel.currentUser.email);
+
+        let balance = userModel.currentUser.balance;
+
         if (
             transferSum <= bankModel.accounts[bankModel.currentAccount].amount &&
             parseInt(bankModel.transferAmount) > 0
         ) {
             bankModel.accounts[bankModel.currentAccount].amount -= transferSum;
-            userModel.currentUser.credits += parseInt(bankModel.transferAmount);
-
-            console.log(bankModel.accounts);
+            await dbModel.updateUser({balance: balance += parseInt(bankModel.transferAmount)});
+            userModel.currentUser =await dbModel.getUser(userModel.currentUser.email);
 
             bankModel.transferAmount = '';
 
@@ -49,11 +56,9 @@ let bankModel = {
                 m.route.set('/user');
             }, 2000)
         } else {
-            console.log(bankModel.accounts[bankModel.currentAccount].amount - bankModel.transferPrice);
             bankModel.accounts[bankModel.currentAccount].amount -= bankModel.transferPrice;
 
             if (bankModel.accounts[bankModel.currentAccount].amount < 0) {
-                console.log(bankModel.accounts[bankModel.currentAccount].amount);
                 bankModel.accounts[bankModel.currentAccount].amount = 0;
             }
 
@@ -98,6 +103,25 @@ let bankModel = {
             }, 5000)
         }
 
+    },
+    pay: async (invoice) => {
+        let totalPrice = 0;
+        await invoice.map(async (trip) => {
+            totalPrice += trip.price;
+
+            await dbModel.updateLogPayed({
+                id: trip.id,
+                payed: 1
+            });
+        })
+
+        bankModel.accounts[bankModel.currentAccount].amount -= totalPrice;
+
+        m.route.set('/bank/proccessing');
+
+        setTimeout(() => {
+            m.route.set('/history');
+        }, 2000)
     }
 }
 

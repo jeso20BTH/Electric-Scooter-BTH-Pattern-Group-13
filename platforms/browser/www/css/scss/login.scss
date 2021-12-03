@@ -1,0 +1,17 @@
+.login-btn {
+    text-decoration: none;
+    padding: 1em;
+    background-color: #4F4A4A;
+    width: fit-content;
+    color: #E8E8E8;
+    border: 2em;
+    border-left: 4px solid #E8E8E8;
+    border-top: 4px solid #E8E8E8;
+    border-right: 4px solid darken(#E8E8E8, 40%);
+    border-bottom: 4px solid darken(#E8E8E8, 40%);
+
+    p,
+    i {
+        padding: 0 0.5em;
+    }
+}

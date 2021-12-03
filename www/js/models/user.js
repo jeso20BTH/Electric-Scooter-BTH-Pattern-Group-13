@@ -1,51 +1,108 @@
+import m from 'mithril';
+const axios = require('axios');
+
+let dbURL = 'http://localhost:1337/graphql';
+
+import dbModel from './db';
+import cityModel from './city';
+import utilitiesModel from './utilities';
+
 let userModel = {
-    currentUser: {
-        firstname: 'John',
-        lastname: 'Doe',
-        phone: '070 - 123 45 78',
-        email: 'john.doe@john.doe',
-        credits: 666,
-        id: '1',
-        paymentmethod: 'Direkt'
-    },
+    historyMode: 'history',
+    currentUser: {},
+    filteredHistory: {},
+    authorized: false,
     changePayment:false,
-    selectedPaymentMethod: 'Direkt',
-    allHistory: [
-        {
-            date: '2021-11-03 05:23:06',
-            duration: '00:10:53',
-            price: 28,
-            paid: true,
-            bikeid: '1'
-        },
-        {
-            date: '2021-11-04 11:27:48',
-            duration: '00:23:54',
-            price: 47,
-            paid: false,
-            bikeid: '3'
-        },
-        {
-            date: '2021-11-07 21:32:10',
-            duration: '00:29:01',
-            price: 58,
-            paid: false,
-            bikeid: '666'
-        },
-        {
-            date: '2021-11-09 13:37:00',
-            duration: '00:48:54',
-            price: 99,
-            paid: true,
-            bikeid: '23'
-        },
-    ],
-    changePaymentMethod: (e) => {
-        console.log(e);
-        userModel.currentUser.paymentmethod = userModel.selectedPaymentMethod;
+    selectedPaymentMethod: 'Direct',
+    changeHistoryMode: () => {
+        userModel.historyMode = (userModel.historyMode === 'history') ? 'invoice' : 'history';
+    },
+    changePaymentMethod: async () => {
+        let user = await dbModel.updateUser({paymentmethod: userModel.selectedPaymentMethod});
+        userModel.currentUser = await dbModel.getUser(userModel.currentUser.email);
+
         userModel.changePayment = false;
-        userModel.selectedPaymentMethod = 'Direkt';
-    }
+        userModel.selectedPaymentMethod = 'Direct';
+        m.redraw();
+    },
+    getLoginData: async (id) => {
+        let data = await axios({
+            method: 'post',
+            url: 'http://localhost:666/data',
+            headers: {
+                token: 'test'
+            },
+            data: {
+                id: id
+            },
+        })
+
+        return data.data
+    },
+    login: async (id) => {
+        let data = await userModel.getLoginData(id);
+
+        let user = await dbModel.getUser(data.email);
+
+        if (!user) {
+            await dbModel.addUser({
+                email: data.email,
+                firstname: data.name.split(' ')[0],
+                lastname: data.name.split(' ')[1],
+            });
+
+            user = await dbModel.getUser(data.email);
+        }
+
+        userModel.currentUser = user;
+    },
+    filterLog: (log) => {
+        let filteredLog = {};
+
+        log.map((entry) => {
+            if (entry.payed === 0 && entry.endtime) {
+                let city = cityModel.getCity(entry.cityid);
+                let logYear = utilitiesModel.getYear(entry.endtime);
+                let logMonth = utilitiesModel.getMonth(entry.endtime);
+                let logDay = utilitiesModel.getDay(entry.endtime);
+                let logId = `${logYear}-${logMonth}`;
+                let price = utilitiesModel.calculatePrice({
+                    startingfee: city.startingfee,
+                    fee: city.fee,
+                    discount: city.discount,
+                    penaltyfee: city.penaltyfee,
+                    startTime: entry.starttime,
+                    endTime: entry.endtime,
+                    startPosition: entry.startparking,
+                    endPosition: entry.endparking
+                });
+                let duration = utilitiesModel.calculateDuration(entry.starttime, entry.endtime);
+                let expDate = utilitiesModel.getExpDate(
+                    logYear, logMonth
+                );
+
+                let logEntry = {
+                    id: entry.id,
+                    year: logYear,
+                    month: logMonth,
+                    day: logDay,
+                    expDate: expDate,
+                    price: price,
+                    duration: duration,
+                    city: city.name
+                }
+
+                if (filteredLog[logId]) {
+                    filteredLog[logId].push(logEntry);
+                } else {
+                    filteredLog[logId] = [];
+                    filteredLog[logId].push(logEntry);
+                }
+            }
+        })
+
+        return filteredLog;
+    },
 }
 
 export default userModel;

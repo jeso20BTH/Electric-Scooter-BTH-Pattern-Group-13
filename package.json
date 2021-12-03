@@ -4,21 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nyc mocha --require setup.js --require @babel/register -r jsdom-global/register --exit",
     "webpack": "webpack --config webpack.dev.config.js",
-    "style-min": "sass client/css/base.scss public/style.min.css  --no-source-map --style compressed",
+    "style-min": "sass client/css/base.scss www/css/style.min.css  --no-source-map --style compressed",
     "start": "npm run webpack && npm run style-min && index.html",
     "update": "npm run webpack&& npm run style-min",
-    "dev": "npm run style-min && webpack-dev-server --config webpack.dev.config.js"
+    "dev": "npm run style-min && npm run webpack && cordova run browser"
   },
-  "keywords": [],
+  "keywords": [
+    "ecosystem:cordova"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
+    "chai": "^4.3.4",
     "core-js": "^3.17.2",
     "leaflet": "^1.7.1",
     "mithril": "^2.0.4",
+    "mocha": "^9.1.3",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.43.4"
   },
@@ -28,14 +32,29 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
     "@babel/plugin-transform-react-jsx": "^7.14.9",
     "@babel/preset-env": "^7.15.4",
+    "@babel/register": "^7.16.0",
     "babel-loader": "^8.2.2",
+    "cordova-browser": "^6.0.0",
+    "cordova-plugin-whitelist": "^1.3.4",
     "css-loader": "^6.5.1",
     "dotenv": "^10.0.0",
     "file-loader": "^6.2.0",
     "fsbin": "^1.0.10",
+    "jsdom": "^19.0.0",
+    "jsdom-global": "^3.0.2",
+    "nyc": "^15.1.0",
+    "sinon": "^12.0.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.51.2",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.1.0"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": [
+      "browser"
+    ]
   }
 }
