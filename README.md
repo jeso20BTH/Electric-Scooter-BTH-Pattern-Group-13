@@ -28,7 +28,7 @@ This is the startup screen of the program, as you can see this application uses 
 When you are logged in to the application you face the screen where you are able to rent an electric scooter. You will be left with the choices of manually entering the id of the scooter or scan an QR-code by the plugin that Cordova offers.
 
 ### QR scanner
-![QR scanner](https://raw.githubusercontent.com/jeso20BTH/pattern-user-app/main/git_images/qr_scanner.png?raw=true)
+![QR scanner](https://raw.githubusercontent.com/jeso20BTH/pattern-user-app/main/git_images/qr_scanner.jpg?raw=true)
 The app is equiped with a QR-scanner to help read the id of the bicycle. When the scan is complete it auto fill the id och the bike for you. You can activate the flashlight of the phone och change between your cameras.
 
 ## In rent
