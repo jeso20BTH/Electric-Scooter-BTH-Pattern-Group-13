@@ -14,11 +14,11 @@ describe("Utilities", () => {
             expect(time).to.equal('02:46:39');
         })
 
-        it('Date shall be formated 2021-12-03 09:41:16', () => {
+        it('Date shall be formated 2021-12-03 08:41:16', () => {
             let date = u.formatDate(new Date(1638520876288));
 
             expect(date).to.be.an('string');
-            expect(date).to.be.equal('2021-12-03 09:41:16')
+            expect(date).to.be.equal('2021-12-03 08:41:16')
         })
 
         it('Shall return full year 2021', () =>{
