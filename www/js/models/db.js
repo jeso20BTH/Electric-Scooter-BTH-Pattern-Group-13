@@ -1,3 +1,4 @@
+/*global process*/
 const axios = require('axios');
 import m from 'mithril';
 
