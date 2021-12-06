@@ -14,7 +14,6 @@ exclude_patterns:
     - "www/css/"
     - "www/dist/"
     - "webpack.dev.config.js"
-    - "webpack.prod.config.js"
 checks:
     method-lines:
         enabled: true
