@@ -23,6 +23,8 @@ jobs:
           node-version: '12.x'
       - run: npm install
       - run: npm build
+      - name: Run ESLint
+        run: npm run lint
       - name: Run tests
         run: npm test
       - name: Codecov

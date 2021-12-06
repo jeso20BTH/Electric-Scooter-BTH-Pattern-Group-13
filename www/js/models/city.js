@@ -1,8 +1,8 @@
-let cityModel = {
-    allCities: [],
-    getCity: (id) => {
-        return cityModel.allCities.find(city => city.id === id);
-    }
+const cityModel = {
+  allCities: [],
+  getCity: (id) => {
+    return cityModel.allCities.find(city => city.id === id)
+  }
 }
 
-export default cityModel;
+export default cityModel

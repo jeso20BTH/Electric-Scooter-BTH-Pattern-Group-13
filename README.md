@@ -1,5 +1,7 @@
 [![Build](https://github.com/jeso20BTH/pattern-user-webbclient/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-user-webbclient/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/jeso20BTH/pattern-user-webbclient/branch/main/graph/badge.svg?token=YOSC1TFXCB)](https://codecov.io/gh/jeso20BTH/pattern-user-webbclient)
+[![Maintainability](https://api.codeclimate.com/v1/badges/cd81d3d9b25f924230d0/maintainability)](https://codeclimate.com/github/jeso20BTH/pattern-user-webbclient/maintainability)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 # Views
 This part of the document will cover the different views of the application.
