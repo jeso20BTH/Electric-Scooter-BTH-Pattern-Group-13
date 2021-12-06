@@ -2,12 +2,16 @@
 
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const secret = require("./db/config.json").secret;
 const { graphqlHTTP } = require("express-graphql");
 const connectToDatabase = require("./db/database");
 const read = require("./src/read");
 const create = require("./src/create");
 const update = require("./src/update");
 const crudDelete = require("./src/delete");
+const register = require("./routes/register");
 const port = process.env.PORT || 1337;
 const {
     GraphQLSchema,
@@ -17,10 +21,22 @@ const {
     GraphQLInt,
     GraphQLFloat,
 } = require("graphql");
+const fs = require("fs");
 
 (async function () {
     const db = await connectToDatabase();
     const app = express();
+
+    fs.writeFile("log.txt", "user, query, timestamp <br>", { encoding: "utf-8" }, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+
+    const stream = fs.createWriteStream("log.txt", { flags: "a" });
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     const CustomerType = new GraphQLObjectType({
         name: "Customer",
@@ -74,6 +90,8 @@ const {
             penaltyfee: { type: GraphQLInt },
             fee: { type: GraphQLInt },
             discount: { type: GraphQLInt },
+            xcoord: { type: GraphQLFloat },
+            ycoord: { type: GraphQLFloat },
             bikes: {
                 type: new GraphQLList(BikeType),
                 resolve: async (parent) => {
@@ -406,7 +424,30 @@ const {
         mutation: RootMutationType
     });
 
+    app.use("/", register);
+
     app.use(cors());
+
+    app.use("/log", (req, res) => {
+        fs.readFile("./log.txt", "utf-8", (err, data) => {
+            res.send(data);
+        });
+    });
+
+    app.use("/graphql", (req, res, next) => {
+        const token = req.headers["jwt"];
+
+        jwt.verify(token, secret, (err) => {
+            if (err) {
+                next(err);
+            } else {
+                const user = jwt.decode(token).mail;
+                const currentDate = new Date().toISOString();
+                stream.write(`${user}, ${req.body.query}, ${currentDate} <br>`);
+                next();
+            }
+        });
+    });
 
     app.use("/graphql", graphqlHTTP({
         schema: schema,
