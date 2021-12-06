@@ -1,25 +1,60 @@
-const axios = require('axios');
-import m from 'mithril';
+/* global process */
+import authModel from './auth'
+const axios = require('axios')
 
+let config
 
-let dbURL = 'http://localhost:1337/graphql';
+try {
+  config = require('./config.json')
+} catch (e) {
+  console.log(e)
+}
+const token = process.env.DBTOKEN || config.dbToken
+const dbURL = 'http://localhost:1337/graphql'
 
-import authModel from './auth';
+const dbModel = {
+  callDatabase: async (query) => {
+    console.log(token)
+    const res = await axios({
+      method: 'post',
+      url: dbURL,
+      data: {
+        query: query
+      },
+      headers: {
+        jwt: token
+      }
+    })
 
-let dbModel = {
-    callDatabase: async (query) => {
-        let res = await axios({
-            method: 'post',
-            url: dbURL,
-            data: {
-                query: query
+    return res.data.data
+  },
+  getCities: async () => {
+    const query = `{
+            cities {
+                id,
+                name,
+                startingfee,
+                penaltyfee,
+                fee,
+                discount,
+                bikes {
+                    id,
+                    available,
+                    velocity,
+                    battery,
+                    xcoord,
+                    ycoord,
+                    cityid
+                }
             }
-        });
+        }`
 
-        return res.data.data;
-    },
-    getCity: async (id) => {
-        let query = `{
+    const cities = await dbModel.callDatabase(query)
+
+    return cities.cities
+  },
+  getCity: async (id) => {
+    const query = `{
             city (id: ${id}) {
                 id,
                 name,
@@ -37,14 +72,14 @@ let dbModel = {
                     cityid
                 }
             }
-        }`;
+        }`
 
-        let city = await dbModel.callDatabase(query);
+    const city = await dbModel.callDatabase(query)
 
-        return city.city;
-    },
-    getUser: async (email) => {
-        let query = `{
+    return city.city
+  },
+  getUser: async (email) => {
+    const query = `{
             customer(email: "${email}") {
                 id,
                 firstname,
@@ -66,14 +101,14 @@ let dbModel = {
                     cityid
                 }
             }
-        }`;
+        }`
 
-        let user = await dbModel.callDatabase(query);
+    const user = await dbModel.callDatabase(query)
 
-        return user.customer;
-    },
-    addUser: async (data) => {
-        let query = `mutation {
+    return user.customer
+  },
+  addUser: async (data) => {
+    const query = `mutation {
             addCustomer(
                 email: "${data.email}",
                 firstname: "${data.firstname}",
@@ -89,16 +124,20 @@ let dbModel = {
                 paymentmethod
             }
         }`
-    },
-    updateUser: async (data) => {
-        let query = `mutation {
+
+    const user = await dbModel.callDatabase(query)
+
+    return user.addCustomer
+  },
+  updateUser: async (data) => {
+    const query = `mutation {
             updateCustomer(
                 email: "${data.email || authModel.currentUser.email}",
-                firstname: "${data.firstname || authModel.currentUser.fisrtname}",
+                firstname: "${data.firstname || authModel.currentUser.firstname}",
                 lastname: "${data.lastname || authModel.currentUser.lastname}",
                 balance: ${data.balance || authModel.currentUser.balance},
                 columnToMatch: "email",
-                valueToMatch: "${authModel.currentUser.email}"
+                valueToMatch: "${data.email || authModel.currentUser.email}"
             ) {
                 id,
                 firstname,
@@ -106,42 +145,30 @@ let dbModel = {
                 email,
                 balance
             }
-        }`;
+        }`
 
-        let user = await dbModel.callDatabase(query);
+    const user = await dbModel.callDatabase(query)
 
-        return user.updateCustomer;
-    },
-    getBikes: async () => {
-        return [
-            {
-                id: '1',
-                status: 'free',
-                long: '',
-                lat: '',
-                battery: 1,
-                speed: 0,
-            },
-            {
-                id: '2',
-                status: 'rented',
-                long: '',
-                lat: '',
-                battery: 0.6,
-                speed: 12,
-            },
-            {
-                id: '3',
-                status: 'service',
-                long: '',
-                lat: '',
-                battery: 0.1,
-                speed: 0,
+    return user.updateCustomer
+  },
+  getBikes: async () => {
+    const query = `{
+            bikes {
+                id
+                available
+                velocity
+                battery
+                xcoord
+                ycoord
             }
-        ]
-    },
-    getBike: async (id) => {
-        let query =  `{
+        }`
+
+    const bikes = await dbModel.callDatabase(query)
+
+    return bikes.bikes
+  },
+  getBike: async (id) => {
+    const query = `{
             bike (id: ${id}) {
                 id,
                 available,
@@ -151,18 +178,14 @@ let dbModel = {
                 ycoord,
                 cityid
             }
-        }`;
+        }`
 
-        console.log(query);
+    const bike = await dbModel.callDatabase(query)
 
-        let bike = await dbModel.callDatabase(query);
-
-        console.log(bike);
-
-        return bike.bike;
-    },
-    updateBike: async (data) => {
-        let query = `mutation {
+    return bike.bike
+  },
+  updateBike: async (data) => {
+    const query = `mutation {
             updateBike (
                 available: ${data.status},
                 columnToMatch: "id",
@@ -175,20 +198,20 @@ let dbModel = {
                 xcoord,
                 ycoord
             }
-        }`;
+        }`
 
-        let bike = await dbModel.callDatabase(query);
+    const bike = await dbModel.callDatabase(query)
 
-        return bike.updateBike;
-    },
-    addLogEntry: async (data) => {
-        let query =  `mutation {
+    return bike.updateBike
+  },
+  addLogEntry: async (data) => {
+    const query = `mutation {
             addHistory (
-                bikeid: ${ data.scooterId },
-                customerid: ${ data.userId },
-                startxcoord: ${ data.xcoord },
-                startycoord: ${ data.ycoord },
-                cityid: ${ data.city }
+                bikeid: ${data.scooterId},
+                customerid: ${data.userId},
+                startxcoord: ${data.xcoord},
+                startycoord: ${data.ycoord},
+                cityid: ${data.city}
             ) {
                 id,
                 bikeid,
@@ -220,14 +243,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let logEntery = await dbModel.callDatabase(query);
+    const logEntery = await dbModel.callDatabase(query)
 
-        return logEntery.addHistory;
-    },
-    updateLogPositionAndPayed: async (data) => {
-        let query = `mutation {
+    return logEntery.addHistory
+  },
+  updateLogPositionAndPayed: async (data) => {
+    const query = `mutation {
             updateHistory (
                 endxcoord: ${data.xcoord},
                 endycoord: ${data.ycoord},
@@ -265,14 +288,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let log = await dbModel.callDatabase(query);
+    const log = await dbModel.callDatabase(query)
 
-        return log.updateHistory;
-    },
-    updateLogPosition: async (data) => {
-        let query = `mutation {
+    return log.updateHistory
+  },
+  updateLogPosition: async (data) => {
+    const query = `mutation {
             updateHistory (
                 endxcoord: ${data.xcoord},
                 endycoord: ${data.ycoord},
@@ -309,14 +332,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let log = await dbModel.callDatabase(query);
+    const log = await dbModel.callDatabase(query)
 
-        return log.updateHistory;
-    },
-    updateLogPayed: async (data) => {
-        let query = `mutation {
+    return log.updateHistory
+  },
+  updateLogPayed: async (data) => {
+    const query = `mutation {
             updateHistory (
                 payed: ${data.payed},
                 columnToMatch: "id",
@@ -352,12 +375,44 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let log = await dbModel.callDatabase(query);
+    const log = await dbModel.callDatabase(query)
 
-        return log.updateHistory;
-    }
-};
+    return log.updateHistory
+  },
+  getParkings: async () => {
+    const query = `{
+            parkingspaces {
+                id,
+                xcoord,
+                ycoord,
+                name,
+                cityid,
+                hascharger,
+                city {
+                    id,
+                    name,
+                    startingfee,
+                    penaltyfee,
+                    fee,
+                    discount
+                }
+                bikes {
+                    id,
+                    available,
+                    velocity,
+                    battery,
+                    xcoord,
+                    ycoord
+                },
+            }
+        }`
 
-export default dbModel;
+    const parking = await dbModel.callDatabase(query)
+
+    return parking.parkingspaces
+  }
+}
+
+export default dbModel

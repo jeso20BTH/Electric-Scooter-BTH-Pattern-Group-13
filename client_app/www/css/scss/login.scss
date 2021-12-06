@@ -7,8 +7,15 @@
         text-align: center;
     }
 
-    button {
+    a {
         font-size: 1.2em;
+        background-color: $background-color-btn;
+        text-decoration: none;
+        color: $color-btn;
+        border-top: 3px solid #909090;
+        border-left: 3px solid #909090;
+        border-right: 3px solid #4e4e4e;
+        border-bottom: 3px solid #4e4e4e;
 
         * {
             margin: 0.5em;

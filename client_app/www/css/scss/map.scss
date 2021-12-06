@@ -1,0 +1,44 @@
+.map {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 93vh;
+    width: 100vw;
+
+    .bike-max {
+        filter: invert(58%) sepia(63%) saturate(3093%) hue-rotate(70deg) brightness(99%) contrast(114%);
+    }
+
+    .bike-high {
+        filter: invert(31%) sepia(98%) saturate(1641%) hue-rotate(79deg) brightness(94%) contrast(103%);
+    }
+
+    .bike-middle {
+        filter: invert(53%) sepia(91%) saturate(1883%) hue-rotate(38deg) brightness(97%) contrast(101%);
+    }
+
+    .bike-low {
+        filter: invert(46%) sepia(68%) saturate(936%) hue-rotate(12deg) brightness(94%) contrast(102%);
+    }
+
+    .bike-critical {
+        filter: invert(25%) sepia(84%) saturate(2053%) hue-rotate(4deg) brightness(91%) contrast(107%);
+    }
+
+    .bike-min {
+        filter: invert(14%) sepia(65%) saturate(7258%) hue-rotate(7deg) brightness(81%) contrast(123%);
+    }
+}
+
+.center-button {
+    position: absolute;
+    bottom: 8vh;
+    left: 0.4em;
+    z-index: 3;
+    padding: 0.4em;
+    background-color: white;
+    color: #737373;
+    border-radius: 5px;
+    border: 1px solid transparentize(black, 0.5);
+}
