@@ -1,42 +1,51 @@
-let allBikes = [
-  {
-    id: 1,
-    available: 0,
-    velocity: 10,
-    battery: 55,
-    xcoord: 56.1600575,
-    ycoord: 15.5862748,
-    cityid: 3
-  },
-  {
-    id: 2,
-    available: 1,
-    velocity: 0,
-    battery: 100,
-    xcoord: 56.1600575,
-    ycoord: 15.5862748,
-    cityid: 2
-  },
-  {
-    id: 3,
-    available: 1,
-    velocity: 0,
-    battery: 99,
-    xcoord: 56.1600575,
-    ycoord: 15.5862748,
-    cityid: 1
-  },
-]
+import { request, gql } from 'graphql-request';
+
+const endpoint = 'http://localhost:1337/graphql';
 
 var bikeModel = {
   id: null,
   inRent: false,
   rentTime: null,
   currentBike: {},
-  allBikes: allBikes,
+  allBikes: null,
   getAllBikes: () => {
-    bikeModel.allBikes = allBikes;
-    // bikeModel.rent(2);
+    
+  },
+  getBike: async (bikeId) => {
+    const query = gql`
+        query getBike($bikeId: Int!) {
+          bike (id: $bikeId) {
+            id,
+            available,
+            velocity,
+            battery,
+            xcoord,
+            ycoord,
+            cityid,
+            city {
+              id,
+              name,
+              startingfee,
+              penaltyfee,
+              fee,
+              discount
+            }
+          }
+        }
+      `
+      const variables = {
+        bikeId: bikeId,
+      }
+      const getData = () => {
+        return new Promise(resolve => {
+          request(endpoint, query, variables).then((res) => {
+            resolve(res.bike);
+          }).catch((error) => { console.log(error); });
+        })
+      }
+      
+      bikeModel.currentBike = await getData();
+      return bikeModel.currentBike;
   },
   rent: (bikeId = bikeModel.id) => {
       let foundBike = bikeModel.allBikes.find(bike => bike.id === bikeId);
