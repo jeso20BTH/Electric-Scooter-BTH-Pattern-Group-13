@@ -14,9 +14,11 @@ exclude_patterns:
     - "webpack.dev.config.js"
     - "webpack.prod.config.js"
 checks:
-  method-lines:
-    config:
-      threshold: 100
+    method-lines:
+        enabled: true
+        config:
+            threshold: 100
     file-lines:
+        enabled: true
         config:
             threshold: 500
