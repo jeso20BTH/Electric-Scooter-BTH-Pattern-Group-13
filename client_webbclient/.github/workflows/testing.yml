@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+    CLIENTID: ${{ secrets.CLIENTID}}
+    DBTOKEN: ${{ secrets.DBSECRET}}
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm install
+      - run: npm build
+      - name: Run ESLint
+        run: npm run lint
+      - name: Run tests
+        run: npm test
+      - name: Codecov
+        uses: codecov/codecov-action@v2
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            flags: unittests
+            files: ./coverage/cobertura-coverage.xml

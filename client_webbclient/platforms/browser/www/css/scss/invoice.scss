@@ -1,0 +1,78 @@
+.invoice-div {
+    background-color: white;
+    min-height: 40em;
+    padding: 0 1em 1em;
+    max-width: 600px;
+    margin: 0 auto;
+
+    .invoice-info-div {
+        margin-bottom: 2em;
+        padding-bottom: 0.5em;
+        border-bottom: 2px solid black;
+    }
+
+    .invoice-header {
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+    .invoice-payment-info {
+        border-top: 2px dashed black;
+        padding-top: 1em;
+    }
+
+    .invoice-payment-info p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .payment-header-text {
+        font-weight: bold;
+    }
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        border-bottom: 1px solid black;
+    }
+
+    td {
+        text-align: center;
+    }
+
+    td:first-of-type {
+        text-align: left;
+        padding-left: 0.5em;
+    }
+
+    td:last-of-type {
+        text-align: right;
+        padding-right: 1em;
+    }
+
+    thead {
+        font-weight: bold;
+    }
+
+    thead td:last-of-type {
+        padding-right: 0.5em;
+    }
+
+    thead td:first-of-type {
+        padding-left: 0.5em;
+    }
+
+    tbody tr:last-of-type td {
+        padding-bottom: 2em;
+    }
+
+    tfoot {
+        border-top: 2px solid black;
+        font-weight: bold;
+    }
+
+
+}

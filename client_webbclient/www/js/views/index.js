@@ -1,15 +1,27 @@
-"use strict";
+'use strict'
 
-import m from 'mithril';
+import m from 'mithril'
 
-let index = {
-    view: function() {
-        return [
-            m('h1', 'Välkommen'),
-            m('p', 'Vi på Svenska Elsparkscyklar AB, erbjuder dig en modern upplevelse gällande uthyrning av cyklar.'),
-            m('p', 'Vi finns i nuläget i tre städer med vision att udvidga oss.')
-        ]
+import dbModel from './../models/db'
+import cityModel from './../models/city'
+import userModel from './../models/user'
+
+const index = {
+  oninit: async () => {
+    cityModel.allCities = await dbModel.getCities()
+    if (userModel.currentUser) {
+      userModel.currentUser = await dbModel.getUser(userModel.currentUser.email)
     }
-};
 
-export default index;
+    console.log(cityModel.allCities)
+  },
+  view: function () {
+    return [
+      m('h1', 'Välkommen'),
+      m('p', 'Vi på Svenska Elsparkscyklar AB, erbjuder dig en modern upplevelse gällande uthyrning av cyklar.'),
+      m('p', 'Vi finns i nuläget i tre städer med vision att udvidga oss.')
+    ]
+  }
+}
+
+export default index

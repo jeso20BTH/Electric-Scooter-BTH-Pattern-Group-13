@@ -1,0 +1,25 @@
+exclude_patterns:
+    - "test/"
+    - "spec/"
+    - "**/vendor/"
+    - "node_modules"
+    - ".git/"
+    - ".github/"
+    - ".nyc_output/"
+    - "coverage/"
+    - "platforms/"
+    - "plugins/"
+    - "public/"
+    - "static/"
+    - "www/css/"
+    - "www/dist/"
+    - "webpack.dev.config.js"
+checks:
+    method-lines:
+        enabled: true
+        config:
+            threshold: 100
+    file-lines:
+        enabled: true
+        config:
+            threshold: 500

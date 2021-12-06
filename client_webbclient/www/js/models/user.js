@@ -1,51 +1,106 @@
-let userModel = {
-    currentUser: {
-        firstname: 'John',
-        lastname: 'Doe',
-        phone: '070 - 123 45 78',
-        email: 'john.doe@john.doe',
-        credits: 666,
-        id: '1',
-        paymentmethod: 'Direkt'
-    },
-    changePayment:false,
-    selectedPaymentMethod: 'Direkt',
-    allHistory: [
-        {
-            date: '2021-11-03 05:23:06',
-            duration: '00:10:53',
-            price: 28,
-            paid: true,
-            bikeid: '1'
-        },
-        {
-            date: '2021-11-04 11:27:48',
-            duration: '00:23:54',
-            price: 47,
-            paid: false,
-            bikeid: '3'
-        },
-        {
-            date: '2021-11-07 21:32:10',
-            duration: '00:29:01',
-            price: 58,
-            paid: false,
-            bikeid: '666'
-        },
-        {
-            date: '2021-11-09 13:37:00',
-            duration: '00:48:54',
-            price: 99,
-            paid: true,
-            bikeid: '23'
-        },
-    ],
-    changePaymentMethod: (e) => {
-        console.log(e);
-        userModel.currentUser.paymentmethod = userModel.selectedPaymentMethod;
-        userModel.changePayment = false;
-        userModel.selectedPaymentMethod = 'Direkt';
+import m from 'mithril'
+
+import dbModel from './db'
+import cityModel from './city'
+import utilitiesModel from './utilities'
+const axios = require('axios')
+
+const userModel = {
+  historyMode: 'history',
+  currentUser: {},
+  filteredHistory: {},
+  authorized: false,
+  changePayment: false,
+  selectedPaymentMethod: 'Direct',
+  changeHistoryMode: () => {
+    userModel.historyMode = (userModel.historyMode === 'history') ? 'invoice' : 'history'
+  },
+  changePaymentMethod: async () => {
+    await dbModel.updateUser({ paymentmethod: userModel.selectedPaymentMethod })
+    userModel.currentUser = await dbModel.getUser(userModel.currentUser.email)
+
+    userModel.changePayment = false
+    userModel.selectedPaymentMethod = 'Direct'
+    m.redraw()
+  },
+  getLoginData: async (id) => {
+    const data = await axios({
+      method: 'post',
+      url: 'http://localhost:666/data',
+      headers: {
+        token: 'test'
+      },
+      data: {
+        id: id
+      }
+    })
+
+    return data.data
+  },
+  login: async (id) => {
+    const data = await userModel.getLoginData(id)
+
+    let user = await dbModel.getUser(data.email)
+
+    if (!user) {
+      await dbModel.addUser({
+        email: data.email,
+        firstname: data.name.split(' ')[0],
+        lastname: data.name.split(' ')[1]
+      })
+
+      user = await dbModel.getUser(data.email)
     }
+
+    userModel.currentUser = user
+  },
+  filterLog: (log) => {
+    const filteredLog = {}
+
+    log.forEach((entry) => {
+      if (entry.payed === 0 && entry.endtime) {
+        const city = cityModel.getCity(entry.cityid)
+        const logYear = utilitiesModel.getYear(entry.endtime)
+        const logMonth = utilitiesModel.getMonth(entry.endtime)
+        const logDay = utilitiesModel.getDay(entry.endtime)
+        const logId = `${logYear}-${logMonth}`
+        const price = utilitiesModel.calculatePrice({
+          startingfee: city.startingfee,
+          fee: city.fee,
+          discount: city.discount,
+          penaltyfee: city.penaltyfee,
+          startTime: entry.starttime,
+          endTime: entry.endtime,
+          startPosition: entry.startparking,
+          endPosition: entry.endparking
+        })
+        const duration = utilitiesModel.calculateDuration(entry.starttime, entry.endtime)
+        const expDate = utilitiesModel.getExpDate(
+          logYear, logMonth
+        )
+
+        const logEntry = {
+          id: entry.id,
+          year: logYear,
+          month: logMonth,
+          day: logDay,
+          expDate: expDate,
+          price: price,
+          duration: duration,
+          city: city.name
+        }
+
+        if (filteredLog[logId]) {
+          filteredLog[logId].push(logEntry)
+        } else {
+          filteredLog[logId] = []
+          filteredLog[logId].push(logEntry)
+        }
+      }
+    })
+
+    return filteredLog
+  }
 }
 
-export default userModel;
+export default userModel
