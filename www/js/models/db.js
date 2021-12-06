@@ -1,37 +1,35 @@
-/*global process*/
-const axios = require('axios');
-import m from 'mithril';
+/* global process */
+import authModel from './auth'
+const axios = require('axios')
 
-let config;
+let config
 
 try {
-    config = require('./config.json');
+  config = require('./config.json')
 } catch (e) {
-    console.log(e);
+  console.log(e)
 }
-let token = process.env.DBTOKEN || config.dbToken;
-let dbURL = 'http://localhost:1337/graphql';
+const token = process.env.DBTOKEN || config.dbToken
+const dbURL = 'http://localhost:1337/graphql'
 
-import authModel from './auth';
+const dbModel = {
+  callDatabase: async (query) => {
+    console.log(token)
+    const res = await axios({
+      method: 'post',
+      url: dbURL,
+      data: {
+        query: query
+      },
+      headers: {
+        jwt: token
+      }
+    })
 
-let dbModel = {
-    callDatabase: async (query) => {
-        console.log(token);
-        let res = await axios({
-            method: 'post',
-            url: dbURL,
-            data: {
-                query: query
-            },
-            headers: {
-                jwt: token
-            }
-        });
-
-        return res.data.data;
-    },
-    getCities: async () => {
-        let query = `{
+    return res.data.data
+  },
+  getCities: async () => {
+    const query = `{
             cities {
                 id,
                 name,
@@ -49,14 +47,14 @@ let dbModel = {
                     cityid
                 }
             }
-        }`;
+        }`
 
-        let cities = await dbModel.callDatabase(query);
+    const cities = await dbModel.callDatabase(query)
 
-        return cities.cities;
-    },
-    getCity: async (id) => {
-        let query = `{
+    return cities.cities
+  },
+  getCity: async (id) => {
+    const query = `{
             city (id: ${id}) {
                 id,
                 name,
@@ -74,14 +72,14 @@ let dbModel = {
                     cityid
                 }
             }
-        }`;
+        }`
 
-        let city = await dbModel.callDatabase(query);
+    const city = await dbModel.callDatabase(query)
 
-        return city.city;
-    },
-    getUser: async (email) => {
-        let query = `{
+    return city.city
+  },
+  getUser: async (email) => {
+    const query = `{
             customer(email: "${email}") {
                 id,
                 firstname,
@@ -103,14 +101,14 @@ let dbModel = {
                     cityid
                 }
             }
-        }`;
+        }`
 
-        let user = await dbModel.callDatabase(query);
+    const user = await dbModel.callDatabase(query)
 
-        return user.customer;
-    },
-    addUser: async (data) => {
-        let query = `mutation {
+    return user.customer
+  },
+  addUser: async (data) => {
+    const query = `mutation {
             addCustomer(
                 email: "${data.email}",
                 firstname: "${data.firstname}",
@@ -125,14 +123,14 @@ let dbModel = {
                 balance,
                 paymentmethod
             }
-        }`;
+        }`
 
-        let user = await dbModel.callDatabase(query);
+    const user = await dbModel.callDatabase(query)
 
-        return user.addCustomer;
-    },
-    updateUser: async (data) => {
-        let query = `mutation {
+    return user.addCustomer
+  },
+  updateUser: async (data) => {
+    const query = `mutation {
             updateCustomer(
                 email: "${data.email || authModel.currentUser.email}",
                 firstname: "${data.firstname || authModel.currentUser.firstname}",
@@ -147,14 +145,14 @@ let dbModel = {
                 email,
                 balance
             }
-        }`;
+        }`
 
-        let user = await dbModel.callDatabase(query);
+    const user = await dbModel.callDatabase(query)
 
-        return user.updateCustomer;
-    },
-    getBikes: async () => {
-        let query = `{
+    return user.updateCustomer
+  },
+  getBikes: async () => {
+    const query = `{
             bikes {
                 id
                 available
@@ -163,14 +161,14 @@ let dbModel = {
                 xcoord
                 ycoord
             }
-        }`;
+        }`
 
-        let bikes = await dbModel.callDatabase(query);
+    const bikes = await dbModel.callDatabase(query)
 
-        return bikes.bikes;
-    },
-    getBike: async (id) => {
-        let query =  `{
+    return bikes.bikes
+  },
+  getBike: async (id) => {
+    const query = `{
             bike (id: ${id}) {
                 id,
                 available,
@@ -180,14 +178,14 @@ let dbModel = {
                 ycoord,
                 cityid
             }
-        }`;
+        }`
 
-        let bike = await dbModel.callDatabase(query);
+    const bike = await dbModel.callDatabase(query)
 
-        return bike.bike;
-    },
-    updateBike: async (data) => {
-        let query = `mutation {
+    return bike.bike
+  },
+  updateBike: async (data) => {
+    const query = `mutation {
             updateBike (
                 available: ${data.status},
                 columnToMatch: "id",
@@ -200,20 +198,20 @@ let dbModel = {
                 xcoord,
                 ycoord
             }
-        }`;
+        }`
 
-        let bike = await dbModel.callDatabase(query);
+    const bike = await dbModel.callDatabase(query)
 
-        return bike.updateBike;
-    },
-    addLogEntry: async (data) => {
-        let query =  `mutation {
+    return bike.updateBike
+  },
+  addLogEntry: async (data) => {
+    const query = `mutation {
             addHistory (
-                bikeid: ${ data.scooterId },
-                customerid: ${ data.userId },
-                startxcoord: ${ data.xcoord },
-                startycoord: ${ data.ycoord },
-                cityid: ${ data.city }
+                bikeid: ${data.scooterId},
+                customerid: ${data.userId},
+                startxcoord: ${data.xcoord},
+                startycoord: ${data.ycoord},
+                cityid: ${data.city}
             ) {
                 id,
                 bikeid,
@@ -245,14 +243,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let logEntery = await dbModel.callDatabase(query);
+    const logEntery = await dbModel.callDatabase(query)
 
-        return logEntery.addHistory;
-    },
-    updateLogPositionAndPayed: async (data) => {
-        let query = `mutation {
+    return logEntery.addHistory
+  },
+  updateLogPositionAndPayed: async (data) => {
+    const query = `mutation {
             updateHistory (
                 endxcoord: ${data.xcoord},
                 endycoord: ${data.ycoord},
@@ -290,14 +288,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let log = await dbModel.callDatabase(query);
+    const log = await dbModel.callDatabase(query)
 
-        return log.updateHistory;
-    },
-    updateLogPosition: async (data) => {
-        let query = `mutation {
+    return log.updateHistory
+  },
+  updateLogPosition: async (data) => {
+    const query = `mutation {
             updateHistory (
                 endxcoord: ${data.xcoord},
                 endycoord: ${data.ycoord},
@@ -334,14 +332,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let log = await dbModel.callDatabase(query);
+    const log = await dbModel.callDatabase(query)
 
-        return log.updateHistory;
-    },
-    updateLogPayed: async (data) => {
-        let query = `mutation {
+    return log.updateHistory
+  },
+  updateLogPayed: async (data) => {
+    const query = `mutation {
             updateHistory (
                 payed: ${data.payed},
                 columnToMatch: "id",
@@ -377,14 +375,14 @@ let dbModel = {
                     paymentmethod
                 }
             }
-        }`;
+        }`
 
-        let log = await dbModel.callDatabase(query);
+    const log = await dbModel.callDatabase(query)
 
-        return log.updateHistory;
-    },
-    getParkings: async () => {
-        let query = `{
+    return log.updateHistory
+  },
+  getParkings: async () => {
+    const query = `{
             parkingspaces {
                 id,
                 xcoord,
@@ -409,12 +407,12 @@ let dbModel = {
                     ycoord
                 },
             }
-        }`;
+        }`
 
-        let parking = await dbModel.callDatabase(query);
+    const parking = await dbModel.callDatabase(query)
 
-        return parking.parkingspaces;
-    }
-};
+    return parking.parkingspaces
+  }
+}
 
-export default dbModel;
+export default dbModel
