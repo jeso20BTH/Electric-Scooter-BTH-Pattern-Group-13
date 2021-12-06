@@ -1,0 +1,13 @@
+version: "3"
+networks:
+    project13net:
+services:
+    server:
+        image: dundgren/bikerental-api:1.4
+        container_name: "bikerental-api"
+        ports:
+            - 1337:1337
+        networks:
+            project13net:
+        restart:
+            "always"
