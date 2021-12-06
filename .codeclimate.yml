@@ -1,15 +1,22 @@
 exclude_patterns:
-- "test/"
-- "spec/"
-- "**/vendor/"
-- "node_modules"
-- ".git/"
-- ".github/"
-- ".nyc_output/"
-- "coverage/"
-- "platforms/"
-- "plugins/"
-- "www/css/"
-- "www/dist/"
-- "webpack.dev.config.js"
-- "webpack.prod.config.js"
+    - "test/"
+    - "spec/"
+    - "**/vendor/"
+    - "node_modules"
+    - ".git/"
+    - ".github/"
+    - ".nyc_output/"
+    - "coverage/"
+    - "platforms/"
+    - "plugins/"
+    - "www/css/"
+    - "www/dist/"
+    - "webpack.dev.config.js"
+    - "webpack.prod.config.js"
+checks:
+  method-lines:
+    config:
+      threshold: 100
+    file-lines:
+        config:
+            threshold: 500
