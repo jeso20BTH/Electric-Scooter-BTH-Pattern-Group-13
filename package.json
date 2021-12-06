@@ -5,7 +5,7 @@
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint www/js/**.js www/js/**/**.js"
+    "lint": "eslint www/js/**.js www/js/**/**.js",
     "test": "nyc --reporter=cobertura mocha --coverage --require setup.js --require @babel/register -r jsdom-global/register --exit",
     "style-min": "sass www/css/base.scss www/css/style.min.css  --no-source-map --style compressed",
     "style-min-watch": "sass www/css/base.scss www/css/style.min.css  --no-source-map --watch --style",
