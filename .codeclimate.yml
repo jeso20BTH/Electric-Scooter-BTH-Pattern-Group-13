@@ -18,7 +18,7 @@ checks:
     method-lines:
         enabled: true
         config:
-            threshold: 99
+            threshold: 100
     file-lines:
         enabled: true
         config:
