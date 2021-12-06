@@ -1,5 +1,6 @@
 [![Node.js CI](https://github.com/jeso20BTH/pattern-user-app/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-user-app/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/jeso20BTH/pattern-user-app/branch/main/graph/badge.svg?token=CP23P4OIEI)](https://codecov.io/gh/jeso20BTH/pattern-user-app)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9ab83e4b6945a935896f/maintainability)](https://codeclimate.com/github/jeso20BTH/pattern-user-app/maintainability)
 
 # Introduction
 This application is a part of a system for handle electric scooters. It was made for the course Webbased frameworks and design patterns at [BTH](https://www.bth.se/). It is made as an group work with different members contribute with different parts of the system.
