@@ -7,8 +7,9 @@ import park from "./views/park.js";
 import city from "./views/cities.js";
 import move_bike from "./views/move_bike.js";
 import omd from "./views/omdirigering.js";
-
+import login from "./views/login.js";
 import customers from "./views/customer.js";
+import userModel from './models/user';
 
 
 
@@ -20,6 +21,9 @@ m.route(document.body, "/", {
     },
     "/stader": {
         render: function() {
+            console.log(userModel.authorized)
+            console.log(userModel.currentUser)
+
             return m(city);
         }
     },
@@ -53,5 +57,28 @@ m.route(document.body, "/", {
             );
         }
     },
+    "/login": {
+        render: function() {
+            return m(layout, m(login),
+            );
+        }
+    },
+    "/success/:id": {
+        onmatch: async function(args) {
+            let userId = args.id
+            
+            await userModel.login(userId);
     
+            userModel.authorized = true;
+    
+            m.route.set('/')
+        }
+    },
+    "/logout": {
+        onmatch: async function(args) {
+            userModel.authorized = false;
+    
+            m.route.set('/')
+        }
+    }
 });

@@ -11,3 +11,10 @@ services:
             project13net:
         restart:
             "always"
+    oauth:
+        image: jeso20/bikerental-oauth:1.1
+        container_name: "bikerental-oauth"
+        ports:
+            - 666:666
+        networks:
+            project13net:

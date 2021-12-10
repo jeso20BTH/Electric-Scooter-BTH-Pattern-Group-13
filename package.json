@@ -28,9 +28,7 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-whitelist": {}
     },
     "platforms": [
       "browser"
@@ -41,6 +39,8 @@
     "cordova-browser": "6.0.0",
     "cordova-ios": "6.2.0",
     "cordova-plugin-splashscreen": "6.0.0",
+    "core-js": "^3.17.2",
+    "cors": "^2.8.5",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.3.2",
     "mithril": "^2.0.4",

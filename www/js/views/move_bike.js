@@ -16,6 +16,7 @@ let bx;
 let by;
 let parkings;
 let bikes;
+let name;
 let cityidBike;
 
 
@@ -29,8 +30,8 @@ let moveBike = {
         let bikeid = ((vnode.attrs.id).substring(1))
 
         return m("main.container", [
-            m("h1", `Meddela om flytt av elcykel ${bikeid}`),
-            m("p", `Välj vart cyklen ${bikeid} ska flyttas.`),
+            m("h1", `Meddela servicepersonal om flytt av elcykel ${bikeid}`),
+            m("p", `Välj vart cyklen ${bikeid} ska flyttas:`),
             m("form", {
                 onsubmit: function(event) {
                     event.preventDefault();
@@ -58,14 +59,17 @@ let moveBike = {
                     m.route.set(`/flytt_cykel:${allCities.cityId}`);
                 }
             }, [
+                
                 m("select.input", {
                     onchange: function (e) {
-                        moveToPark = parseInt(e.target.value);
+                        moveToPark = parseInt(e.target.value)
                     }
                 }, parkings.map(function (p) {
-                    return m("option", { value: p.id }, p.name + ", " + p.city.name);
+                    p.city.name == allCities.cityName ? [
+                        name = p.city.name
+                ] : null;
+                    return m("option", { value: p.id }, p.name + ", " + name)
                 })),
-                 
                 m("input[type=submit][value=Meddela service om flytt].Btn", "Spara")
             ]),
         ]);

@@ -11,7 +11,7 @@ let layout = {
                 m("a", { href: `#!/karta:${allCities.cityId}` }, "Visa kartvy"),
                 m("a", { href: "#!/kunder" }, "Visa kunder "),
                 m("a", { href: "#!/stader" }, "Byt stad "),
-                m("a.off", { href: "#!/" }, "Logout "),
+                m("a.off", { href: "#!/logout" }, "Logout "),
             ]),
             m("main.container", vnode.children)
         ];
