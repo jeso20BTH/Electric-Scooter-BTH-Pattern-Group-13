@@ -7,35 +7,72 @@ body {
   line-height: 1.4;
   text-align: center;
   overflow-x: hidden;
-  background-color: #D4D4D1;
+  background-color: #d4d2d1;
 }
 
-.bottom-nav {
+.parks {
+  margin-bottom: 3em;
+}
+
+table.park {
+  background-color: cadetblue;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+table.park th {
+  padding: 0 1em;
+}
+
+.navbar {
+  /* border-bottom: 1px solid black; */
+  text-align: right;
+  padding: 1em 0;
+
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+  padding: 0.7em;
+  border: 1px solid rgb(82, 80, 80);
+  margin: 0 0.3em;
+}
+
+.navbar a:hover {
+  background-color: #e4dfdc;
+  /* color: white; */
+}
+
+.navbar a.off:hover {
+  background-color: black;
+  color: white;
+}
+
+.input {
+  display: block;
+  margin: 1em auto;
   background-color: white;
-  color: black;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
-  border-top: 1px solid grey;
-  width: 100%;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
+  padding: 1em;
 }
 
-.bottom-nav {
-  text-align: center;
-  color: black;
+.Btn {
+  background-color: burlywood;
+  padding: 0.7em;
+  border: 1px solid rgb(94, 94, 94);
+  cursor: pointer;
 }
+
+.Btn:hover {
+  background-color: rgb(226, 167, 89);
+}
+
 
 .map {
   margin: 0 auto;
   width: 85%;
-  min-height: 500px;
+  min-height: 580px;
+  border: 1px solid black;
 }
 
 .popup {
@@ -43,51 +80,36 @@ body {
 }
 
 
-/* .cities {
-  width: 40em;
-  height: fit-content;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  border: 1px solid rgb(66, 66, 66);
+.container_city {
+  padding-top: 7em;
+
 }
 
+h3 {
+  font-style: italic;
+}
 
 .cities a {
+  width: 30%;
   display: block;
   text-decoration: none;
-  color: white;
-  padding: 3em 0;
-  background-color: rgba(0, 0, 0, 0.788);
-  font-size: large;
-  border: 1px solid rgba(0, 0, 0, 0);
+  color: black;
+  padding: 1em 0;
+  margin: 1.5em auto;
+  font-size: 22px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: #dfdbd9;
 
 }
 
 .cities a:hover {
-  border: 1px solid rgb(66, 66, 66);
-
+  border: 1px solid rgb(0, 0, 0);
   background-color: rgb(0, 0, 0);
+  color: white;
 
 }
 
 .cities_body {
   width: 100%;
-  height: 100%;
-  background-image: url(img/6.jpg);
-  background-blend-mode: overlay;
-  background-color: rgba(37, 37, 37, 0.795);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-} */
+  margin: auto 0;
+}

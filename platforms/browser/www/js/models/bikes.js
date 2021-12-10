@@ -1,18 +1,9 @@
 'use strict';
 import axios from 'axios';
-// import allCities from '../models/city';
 
 
 
-// let x = 1;
-// // console.log(bikesInCity.cityId)
-// allCities.then(function(result) {
-//     console.log(result) // "Some User token"
-//  })
-
-console.log("1")
-
-let bikesInCity = 
+let allBikes = 
     axios({
     url: "http://localhost:1337/graphql",
     method: "POST",
@@ -20,20 +11,19 @@ let bikesInCity =
         query: `
         query {
             bikes {
-                id
-                xcoord
-                ycoord
+                  id,
+                  available,
+                  velocity,
+                  battery,
+                  xcoord,
+                  ycoord,
+                  cityid,
+                }
             }
-        }
         `
     })
-    }).then((result) => {
-        console.log("2")
+}).then((result) => {
+    return result.data.data.bikes
+});
 
-        return result.data.data.city
-    });
-
-
-
-export default bikesInCity;
-
+export default allBikes;

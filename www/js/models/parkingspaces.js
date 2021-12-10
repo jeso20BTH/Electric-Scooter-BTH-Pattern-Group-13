@@ -1,8 +1,6 @@
 'use strict';
 import axios from 'axios';
 
-console.log("5")
-
 let parkingspaceInCity = 
     axios({
     url: "http://localhost:1337/graphql",
@@ -17,15 +15,28 @@ let parkingspaceInCity =
                 name,
                 cityid,
                 hascharger,
+                city {
+                    id,
+                    name,
+                    startingfee,
+                    penaltyfee,
+                    fee,
+                    discount,
+                },
+                bikes {
+                    id,
+                    available,
+                    velocity,
+                    battery,
+                    xcoord,
+                    ycoord
+                }
             }
         }
         `
     })
 }).then((result) => {
-    console.log("6")
     return result.data.data.parkingspaces
-
-
 });
 
 export default parkingspaceInCity;

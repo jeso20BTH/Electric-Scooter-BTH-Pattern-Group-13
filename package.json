@@ -43,6 +43,7 @@
     "cordova-plugin-splashscreen": "6.0.0",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.3.2",
-    "mithril": "^2.0.4"
+    "mithril": "^2.0.4",
+    "watch": "^1.0.2"
   }
 }
