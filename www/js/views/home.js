@@ -3,14 +3,16 @@
 import m from 'mithril';
 import { bikeModel } from '../models/bike';
 import { customerModel } from '../models/customer';
+import position from '../models/position.js';
 
 let homeView = {
     title: "Home",
     bikeId: null,
-    customerEmail: null,
+    customerEmail: "jgawkes2@bandcamp.com",
     rented: false,
     oninit: function() {
-    
+      // position.getPosition();
+      position.watch();
     },
     view: function() {
         return m("div.container", [
@@ -33,8 +35,10 @@ let homeView = {
                       m('td[data-title="Bike ID"]', bikeModel.currentBike.id),
                       m('td[data-title="Lat"]', bikeModel.currentBike.xcoord),
                       m('td[data-title="Lng"]', bikeModel.currentBike.ycoord),
-                      m('td[data-title="Velocity"]', bikeModel.currentBike.velocity),
-                      m('td[data-title="Battery"]', bikeModel.currentBike.battery),
+                      m('td[data-title="Velocity"]', bikeModel.currentBike.velocity + ' km/h'),
+                      m('td[data-title="Battery"]', [
+                        m('span[class=' + bikeModel.batteryColor + ']', bikeModel.currentBike.battery + ' %')
+                      ]),
                       m('td[data-title="City"]', bikeModel.currentBike.city.name)
                     ])
                   ])
@@ -42,6 +46,9 @@ let homeView = {
               // m("p.text-primary", "Please choose the bike to rent."),
 
             m("hr"),
+
+            this.rented ? m("p.text-danger.app-notification", bikeModel.batteryNotification) : '',
+            this.rented ? m("p.app-notification." + bikeModel.switchColor, bikeModel.switchNotification) : '',
 
             //control inputs and buttons
             !this.rented ? m("label.input-label", "Your Email") : '',
@@ -96,9 +103,9 @@ let homeView = {
 
                     homeView.rented = true;
 
-                    bikeModel.inRent = true;
-                    bikeModel.rentTime = new Date();
-                    console.log(bikeModel);
+                    bikeModel.rent();
+
+                    console.log("bikeModel:", bikeModel);
                     m.redraw();
                   }
                 },
@@ -120,7 +127,7 @@ let homeView = {
               m("button.button.green-button.full-width-button",
                 { 
                   onclick: function() {
-                    alert("I'm switch on/off button!");
+                    bikeModel.startEngine();
                   } 
                 },
                 "Switch ON/OFF"
@@ -129,7 +136,7 @@ let homeView = {
               m("button.button.green-button.full-width-button",
                 { 
                   onclick: function() {
-                    alert("I'm charge button!");
+                    bikeModel.charge();
                   } 
                 },
                 "Charge Battery"
