@@ -13,11 +13,17 @@ let test;
 let px;
 let py;
 let bx;
+let id;
 let by;
 let parkings;
 let bikes;
+
 let name;
+let ladd;
+let available = 1;
 let cityidBike;
+let standard = [];
+
 
 
 let moveBike = {
@@ -25,9 +31,25 @@ let moveBike = {
         parkings = await parkingspaceInCity
         bikes = await allBikes
         m.redraw();
+        
     })(),
     view: function (vnode) {
         let bikeid = ((vnode.attrs.id).substring(1))
+        let parkering = [];
+        parkings.map(function (p) {
+            p.hascharger == 0 ? [
+                ladd = "Nej"
+            ] : ladd = "Ja";
+            p.city.name == allCities.cityName ? [
+                !parkering.includes(`${p.name}, Laddstation: ${ladd}`) ? [
+                    parkering.push(`${p.name}, Laddstation: ${ladd}`)
+                ] : null,
+                standard.length == 0 ? [
+                    console.log("hej"),
+                    standard.push(`${p.name}, Laddstation: ${ladd}`)
+                ] : null,
+                // console.log(standard),
+        ] : null });
 
         return m("main.container", [
             m("h1", `Meddela servicepersonal om flytt av elcykel ${bikeid}`),
@@ -35,14 +57,29 @@ let moveBike = {
             m("form", {
                 onsubmit: function(event) {
                     event.preventDefault();
+                    // console.log(moveToPark)
+                    
+
                     moveToPark == null ? [
-                        moveToPark = 1
+                        // console.log(standard),
+                        moveToPark = standard.join(),
                     ] : null
-                    // form.success = 'Inleveransen är skapad';
+
+                    // console.log(moveToPark.slice(-1))
+                    moveToPark.slice(-1) == "a" ? [
+                        moveToPark = moveToPark.slice(0, -17)
+                    ] : moveToPark = moveToPark.slice(0, -18)
+
+                    // console.log(moveToPark)
+
+
                     parkings.map(function (p) {
-                        p.id == moveToPark ? [
+                        p.name == moveToPark ? [
                             px = p.xcoord,
-                            py = p.ycoord
+                            py = p.ycoord,
+                            p.hascharger == 1 ? [
+                                available = 0
+                            ] : null,
                     ] : null;
                     });
                     bikes.map(function (b) {
@@ -52,8 +89,9 @@ let moveBike = {
                             cityidBike = b.cityid
                     ] : null;
                     });
+                    // console.log(bikeid, cityidBike, bx, by, px, py, available)
                     (async () => {
-                        await createBikeLog(bikeid, cityidBike, bx, by, px, py);
+                        await createBikeLog(bikeid, cityidBike, bx, by, px, py, available);
                     })();
                     allCities.refresh = 0;
                     m.route.set(`/flytt_cykel:${allCities.cityId}`);
@@ -62,15 +100,12 @@ let moveBike = {
                 
                 m("select.input", {
                     onchange: function (e) {
-                        moveToPark = parseInt(e.target.value)
-                    }
-                }, parkings.map(function (p) {
-                    p.city.name == allCities.cityName ? [
-                        name = p.city.name
-                ] : null;
-                    return m("option", { value: p.id }, p.name + ", " + name)
+                        moveToPark = e.target.value
+                    },
+                }, parkering.map(function (p) {
+                    return m("option", { value: p }, p);
                 })),
-                m("input[type=submit][value=Meddela service om flytt].Btn", "Spara")
+                m("input[type=submit][value=Meddela servicepersonal om flytt].Btn", "Spara")
             ]),
         ]);
     },

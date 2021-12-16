@@ -6,14 +6,16 @@ import allCities from '../models/city';
 let cityId;
 
 
+
 let omd = {
     view: function (vnode) {
+        console.log(vnode)
         cityId = ((vnode.attrs.id).substring(1)),
         allCities.cityId = cityId
 
         return m("main.container", [
             m("h1", "Flytten lyckades!"),
-            m("p", "Vänligen vänta medans service flyttar cyklen..."),
+            m("p", "Vänligen vänta medans servicepersonalen flyttar cyklen..."),
         ])
     },
     oncreate: function() {
@@ -22,10 +24,8 @@ let omd = {
 }
 
 function refreshPage(){
-    console.log(allCities.refresh)
     allCities.refresh == 0 ? [
         allCities.refresh++,
-        console.log(allCities.refresh),
         window.location.reload()
     ] : console.log("har refresh")
 } 

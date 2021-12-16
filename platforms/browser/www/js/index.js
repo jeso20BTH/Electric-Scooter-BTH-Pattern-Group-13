@@ -77,6 +77,7 @@ m.route(document.body, "/", {
     "/logout": {
         onmatch: async function(args) {
             userModel.authorized = false;
+            userModel.currentUser = {};
     
             m.route.set('/')
         }

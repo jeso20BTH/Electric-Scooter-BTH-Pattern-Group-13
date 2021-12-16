@@ -5,15 +5,16 @@ let historyID;
 let bikeidS;
 
 
-function createBikeLog(bikeid, cityid, startx, starty, endx, endy) {
+function createBikeLog(bikeid, cityid, startx, starty, endx, endy, available) {
     bikeidS = bikeid.toString()
+    console.log(available)
     axios({
         url: "http://localhost:1337/graphql",
         method: 'POST',
         data: ({
             query: `
                 mutation {
-                    updateBike (xcoord: ${endx}, ycoord: ${endy}, columnToMatch: "id", valueToMatch: "${bikeidS}") {
+                    updateBike (available: ${available}, xcoord: ${endx}, ycoord: ${endy}, columnToMatch: "id", valueToMatch: "${bikeidS}") {
                     id,
                     available,
                     velocity,

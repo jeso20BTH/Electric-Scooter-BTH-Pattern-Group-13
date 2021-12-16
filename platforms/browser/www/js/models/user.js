@@ -25,18 +25,10 @@ const userModel = {
     return data.data
   },
   login: async (id) => {
-      console.log(id)
-      console.log("hej")
-
       const data = await userModel.getLoginData(id)
-
-      // console.log(data.email)
-      // console.log(data.login)
-      // console.log(data.html_url)
-
       const user = [data.email, data.login, data.html_url]
 
-    userModel.currentUser = user
+      userModel.currentUser = user
 
   }
 }

@@ -39,32 +39,44 @@ table.park th {
   margin: 0 0.3em;
 }
 
+
+
 .navbar a:hover {
   background-color: #e4dfdc;
   /* color: white; */
 }
 
+.navbar a.off {
+  padding: 0.7em 1.3em;
+  margin-left: 1.3em;
+  background-color: #FD7038;
+  color: white;
+}
+
 .navbar a.off:hover {
-  background-color: black;
+  background-color: rgb(36, 33, 33);
   color: white;
 }
 
 .input {
   display: block;
-  margin: 1em auto;
+  margin: 2em auto;
   background-color: white;
   padding: 1em;
 }
 
 .Btn {
-  background-color: burlywood;
-  padding: 0.7em;
+  /* margin-top: 1em; */
+  background-color: #fcab8c;
+  padding: 1em;
   border: 1px solid rgb(94, 94, 94);
   cursor: pointer;
+  color: black;
 }
 
 .Btn:hover {
-  background-color: rgb(226, 167, 89);
+  background-color: #FD7038;
+  color: white;
 }
 
 
@@ -104,7 +116,7 @@ h3 {
 
 .cities a:hover {
   border: 1px solid rgb(0, 0, 0);
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(36, 33, 33);
   color: white;
 
 }
