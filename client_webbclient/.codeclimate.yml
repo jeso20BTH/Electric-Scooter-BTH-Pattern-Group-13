@@ -6,6 +6,8 @@ exclude_patterns:
     - ".git/"
     - ".github/"
     - ".nyc_output/"
+    - "client/"
+    - "build/"
     - "coverage/"
     - "platforms/"
     - "plugins/"

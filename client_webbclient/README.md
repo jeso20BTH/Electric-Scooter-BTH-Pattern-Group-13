@@ -1,6 +1,6 @@
 [![Build](https://github.com/jeso20BTH/pattern-user-webbclient/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-user-webbclient/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/jeso20BTH/pattern-user-webbclient/branch/main/graph/badge.svg?token=YOSC1TFXCB)](https://codecov.io/gh/jeso20BTH/pattern-user-webbclient)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/6998a0d7113c461480cfe08a94fe7c96)](https://www.codacy.com/gh/jeso20BTH/pattern-user-webbclient/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jeso20BTH/pattern-user-webbclient&amp;utm_campaign=Badge_Grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a3305e6f9efcbee72215/maintainability)](https://codeclimate.com/github/jeso20BTH/pattern-user-webbclient/maintainability)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 # Views
