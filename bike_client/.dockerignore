@@ -1,0 +1,5 @@
+#docker ignorfile
+/node_modules
+/platforms
+/plugins
+*.zip

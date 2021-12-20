@@ -67,6 +67,10 @@ a:hover {
     color: $blue;
 }
 
+.text-warning {
+    color: $warning;
+}
+
 .text-success,
 .packable {
     color: $green;
@@ -103,4 +107,9 @@ a:hover {
 }
 .status-aterbetald {
     background-color: $yellow;
+}
+
+.app-notification {
+    font-size: $notification-font-size;
+    font-weight: bold;
 }
