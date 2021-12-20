@@ -2,7 +2,6 @@
 import axios from 'axios';
 
 
-console.log("3")
 
 let allCities = 
     axios({
@@ -12,16 +11,16 @@ let allCities =
         query: `
         query {
             cities {
-                id
-                name
+                id,
+                name,
             }
         }
         `
     })
 }).then((result) => {
-    console.log("4")
     return result.data
 });
+
 
 
 

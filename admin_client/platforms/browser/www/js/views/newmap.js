@@ -18,6 +18,7 @@ import orange from "../../img/orange.png";
 
 
 let map;
+let ladd;
 let parks;
 let bikes;
 let xcoord;
@@ -26,24 +27,32 @@ let zoom;
 let locationMarker = showIcon(locationIcon)
 
 
-
 let mapViews = {
     oninit: (async () => {
         parks = await parkingspaceInCity
         m.redraw();
     })(),
-    view: function() {
+    view: function (vnode) {
+        let cityId = ((vnode.attrs.id).substring(1))
+        console.log(parks)
+        allCities.cityId = cityId
+        allCities.cityId == 1 ? [
+            allCities.cityName = "Karlskrona"
+        ] : allCities.cityId == 3 ? [
+            allCities.cityName = "Luleå"
+        ] : allCities.cityId == 2 ? [
+            allCities.cityName = "Stockholm"
+        ] : null
         return [
-            m("h1", "Map " + allCities.oneCity + allCities.cityId),
+            m("h1", allCities.cityName),
             m("div#map.map", "")
         ];
-        
     },
     oncreate: function() {
         showMap()
     }
-
 };
+
 
 function showMap() {
     axios({
@@ -67,24 +76,20 @@ function showMap() {
     })
     }).then((result) => {
         bikes = result.data.data.city.bikes
-        // console.log(result.data.data.city.bikes)
-
-        allCities.oneCity == "Karlskrona" ? [
+        allCities.cityId == 1 ? [
             xcoord = 56.160817,
             ycoord = 15.586703,
             zoom = 14.5
-        ] : allCities.oneCity == "Luleå" ? [
+        ] : allCities.cityId == 3 ? [
             xcoord = 65.5855652,
             ycoord = 22.1481566,
             zoom = 13.5
-        ] : allCities.oneCity == "Stockholm" ? [
+        ] : allCities.cityId == 2 ? [
             xcoord = 59.324150,
             ycoord = 18.072689,
             zoom = 13
         ] : null
 
-
-        
 
         map = L.map('map').setView([xcoord, ycoord], zoom);
 
@@ -96,55 +101,31 @@ function showMap() {
         bikes !== null  ? 
         [ 
             m("div", bikes.map(function (bike) {
-                // let y = bike.id
-                // console.log(bike.battery)
-                bike.battery < 20 ? [
-                    locationMarker = showIcon(red)
-                ] : bike.battery < 80 ? [
-                    locationMarker = showIcon(orange)
-                ] : locationMarker = showIcon(ms)
-
+                locationMarker = showIcon(ms)
                 L.marker(
                     [bike.xcoord, bike.ycoord], {icon: locationMarker},
-                    // console.log(bike.id)
-                    
-                ).addTo(map).bindPopup(`<a class="popup" href="#!/test">CykelId: ${bike.id}<br>Flytta cykel`).on('click', onClick);
-            })),
+                ).addTo(map).bindPopup(`<span>CykelId: <b>${bike.id}</b><br>Batteri: <b>${bike.battery}</b><br><a class="popup" href="#!/cykel:${bike.id}">Flytta cykel</a></span>`);
+                })),
             m("div", parks.map(function (park) {
                     park.hascharger == 0 ? [
-                        locationMarker = showIcon(locationIcon)
-                    ] : locationMarker = showIcon(red),
+                        ladd = "Nej"
+                    ] : ladd = "Ja"
+                    locationMarker = showIcon(locationIcon)
                 L.marker(
                     [park.xcoord, park.ycoord], {icon: locationMarker}
-                ).addTo(map).bindPopup("parkering");
+                ).addTo(map).bindPopup(`<span><b>${park.name}</b><br>Laddningsstation: <b>${ladd}</b><br>Antal parkerade cyklar: <b>${(park.bikes).length}</b><br><a class="popup" href="#!/parkeringar">Visa parkeringar</a></span>`);
             }))
-        ]: m("p", "Det finns inga inleveranser.");   
+        ]: m("p", "Det finns inga städer registrerade.");   
     });
 }
 
 function showIcon(x) {
     return L.icon({
     iconUrl: x,
-    iconSize:     [10, 10],
-    iconAnchor:   [5, 5],
+    iconSize:     [14, 14],
+    iconAnchor:   [12, 12],
     popupAnchor:  [0, 0]
-});
+    });
 }
-
-function onClick(e) {
-    // var test = e.target.innerText;
-    // console.log(test);
-
-    var popup = e.target.getPopup();
-    // console.log(popup);
-    var content = popup.getContent();
- 
-    // console.log(content);
-    allCities.bikeId = content;
-    // console.log(allCities.bikeId)
-    // m.route.set("#!/");
- };
-
-
 
 export default mapViews;
