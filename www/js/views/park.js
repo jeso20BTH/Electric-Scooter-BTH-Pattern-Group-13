@@ -7,9 +7,7 @@ import allCities from '../models/city';
 
 
 let parkings;
-let bikes;
 let ladd;
-let response = null;
 
 let park = {
     oninit: (async () => {

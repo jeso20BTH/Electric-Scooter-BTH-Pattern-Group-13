@@ -11,9 +11,6 @@ import "leaflet/dist/images/marker-icon.png";
 import "leaflet/dist/images/marker-shadow.png";
 import locationIcon from "../../img/location.png";
 import ms from "../../img/ms.png";
-import green from "../../img/green.png";
-import red from "../../img/red.png";
-import orange from "../../img/orange.png";
 
 
 
@@ -34,7 +31,6 @@ let mapViews = {
     })(),
     view: function (vnode) {
         let cityId = ((vnode.attrs.id).substring(1))
-        console.log(parks)
         allCities.cityId = cityId
         allCities.cityId == 1 ? [
             allCities.cityName = "Karlskrona"
@@ -113,7 +109,7 @@ function showMap() {
                     locationMarker = showIcon(locationIcon)
                 L.marker(
                     [park.xcoord, park.ycoord], {icon: locationMarker}
-                ).addTo(map).bindPopup(`<span><b>${park.name}</b><br>Laddningsstation: <b>${ladd}</b><br>Antal parkerade cyklar: <b>${(park.bikes).length}</b><br><a class="popup" href="#!/parkeringar">Visa parkeringar</a></span>`);
+                ).addTo(map).bindPopup(`<span><b>${park.name}</b><br>Laddningsstation: <b>${ladd}</b><br>Antal parkerade cyklar: <b>${(park.bikes).length}</b><br><a class="popup" href="#!/parkeringar">Visa samtliga parkeringar</a></span>`);
             }))
         ]: m("p", "Det finns inga städer registrerade.");   
     });

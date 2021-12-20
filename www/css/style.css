@@ -14,14 +14,47 @@ body {
   margin-bottom: 3em;
 }
 
+h4 {
+  font-weight: 100px;
+}
+
 table.park {
-  background-color: cadetblue;
   margin: 0 auto;
-  padding: 0 1em;
+  padding: 1em 4em;
+  border-spacing: 0px;
+  
+}
+
+table.park thead {
+  background-color: cadetblue;
+}
+
+table.park tbody {
+  padding: 1em 4em;
+}
+
+table.park a {
+  color: rgb(36, 33, 33);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+table.park a:hover {
+  color: #FD7038;
 }
 
 table.park th {
-  padding: 0 1em;
+  padding: 0.5em 2.5em;
+  margin: 1em;
+}
+
+td {
+  margin: 0.5em;
+  border-spacing: 5em;
+}
+
+h2 {
+  color: rgb(43, 112, 114);
 }
 
 .navbar {
@@ -53,10 +86,64 @@ table.park th {
   color: white;
 }
 
+.navbar a.user {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: fit-content;
+  border: 1px solid rgba(82, 80, 80, 0);
+  cursor: unset;
+  font-weight: bold;
+}
+
+.navbar a.user:hover {
+  background-color: transparent;
+}
+
+
+
 .navbar a.off:hover {
   background-color: rgb(36, 33, 33);
   color: white;
 }
+
+
+.sign-in a{
+  border: 1px solid rgb(36, 33, 33);
+  border-radius: 4px;
+  padding: 1em 2em;
+  margin: 0 auto;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(43, 112, 114);
+
+}
+
+.admin {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.start {
+  margin: 8em;
+}
+
+.sign-in i {
+  margin-right: 1em;
+}
+
+.sign-in a:hover {
+  background-color: #b9b4b2;
+}
+
+.fab {
+  padding-top: 1em;
+  font-size: 24px;
+  display: flex;
+  margin: auto 0;
+}
+
 
 .input {
   display: block;
@@ -67,15 +154,15 @@ table.park th {
 
 .Btn {
   /* margin-top: 1em; */
-  background-color: #fcab8c;
+  background-color: #FD7038;
   padding: 1em;
   border: 1px solid rgb(94, 94, 94);
   cursor: pointer;
-  color: black;
+  color: white;
 }
 
 .Btn:hover {
-  background-color: #FD7038;
+  background-color: #ff9f7a;
   color: white;
 }
 

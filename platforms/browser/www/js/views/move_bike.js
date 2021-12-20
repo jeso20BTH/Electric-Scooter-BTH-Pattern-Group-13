@@ -1,24 +1,20 @@
 "use strict";
 import m from 'mithril';
 import allCities from '../models/city';
-import axios from "axios";
-
-import createBikeLog from '../models/func';
 import parkingspaceInCity from '../models/parkingspaces';
 import allBikes from '../models/bikes';
+import userModel from '../models/user';
+import createBikeLog from '../models/func';
+
 
 
 let moveToPark;
-let test;
 let px;
 let py;
 let bx;
-let id;
 let by;
 let parkings;
 let bikes;
-
-let name;
 let ladd;
 let available = 1;
 let cityidBike;
@@ -45,10 +41,8 @@ let moveBike = {
                     parkering.push(`${p.name}, Laddstation: ${ladd}`)
                 ] : null,
                 standard.length == 0 ? [
-                    console.log("hej"),
                     standard.push(`${p.name}, Laddstation: ${ladd}`)
                 ] : null,
-                // console.log(standard),
         ] : null });
 
         return m("main.container", [
@@ -57,22 +51,12 @@ let moveBike = {
             m("form", {
                 onsubmit: function(event) {
                     event.preventDefault();
-                    // console.log(moveToPark)
-                    
-
                     moveToPark == null ? [
-                        // console.log(standard),
                         moveToPark = standard.join(),
                     ] : null
-
-                    // console.log(moveToPark.slice(-1))
                     moveToPark.slice(-1) == "a" ? [
                         moveToPark = moveToPark.slice(0, -17)
                     ] : moveToPark = moveToPark.slice(0, -18)
-
-                    // console.log(moveToPark)
-
-
                     parkings.map(function (p) {
                         p.name == moveToPark ? [
                             px = p.xcoord,
@@ -89,15 +73,14 @@ let moveBike = {
                             cityidBike = b.cityid
                     ] : null;
                     });
-                    // console.log(bikeid, cityidBike, bx, by, px, py, available)
                     (async () => {
                         await createBikeLog(bikeid, cityidBike, bx, by, px, py, available);
                     })();
                     allCities.refresh = 0;
-                    m.route.set(`/flytt_cykel:${allCities.cityId}`);
+                    let id = `${allCities.cityId}-${userModel.currentUser}`
+                    m.route.set(`/flytt_cykel:${id}`);
                 }
             }, [
-                
                 m("select.input", {
                     onchange: function (e) {
                         moveToPark = e.target.value

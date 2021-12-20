@@ -9,7 +9,6 @@ let list = {
         return m("main.container", [
             m("a", { href: `#!/stader` }, "Visa städer"),
             m("a", { href: `#!/login` }, "login"),
-            console.log(userModel.authorized)
         ]);
     },
 };

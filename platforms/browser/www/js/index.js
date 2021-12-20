@@ -9,23 +9,25 @@ import move_bike from "./views/move_bike.js";
 import omd from "./views/omdirigering.js";
 import login from "./views/login.js";
 import customers from "./views/customer.js";
+import kund from "./views/kund.js";
 import userModel from './models/user';
+import kundModel from './models/kund';
 
 
 
 m.route(document.body, "/", {
     "/": {
         render: function() {
-            return m(list);
+            return m(login);
         }
     },
     "/stader": {
         render: function() {
-            console.log(userModel.authorized)
-            console.log(userModel.currentUser)
-
-            return m(city);
-        }
+            if (userModel.authorized == true) {
+                return m(city)
+            }
+            m.route.set('/')
+        },
     },
     "/karta:id": {
         render: function(vnode) {
@@ -41,13 +43,22 @@ m.route(document.body, "/", {
     },
     "/flytt_cykel:id": {
         render: function(vnode) {
-            return m(layout, m(omd, vnode.attrs),
-            );
+            return m(omd, vnode.attrs);
         }
     },
     "/kunder": {
         render: function() {
             return m(layout, m(customers),
+            );
+        }
+    },
+    "/kunder:id": {
+        onmatch: async function(args) {
+            let kundId = (args.id).substring(1)
+            await kundModel.getKund(kundId);
+        },
+        render: function() {
+            return m(layout, m(kund),
             );
         }
     },
@@ -59,8 +70,7 @@ m.route(document.body, "/", {
     },
     "/login": {
         render: function() {
-            return m(layout, m(login),
-            );
+            return m(login);
         }
     },
     "/success/:id": {
@@ -71,7 +81,7 @@ m.route(document.body, "/", {
     
             userModel.authorized = true;
     
-            m.route.set('/')
+            m.route.set('/stader')
         }
     },
     "/logout": {

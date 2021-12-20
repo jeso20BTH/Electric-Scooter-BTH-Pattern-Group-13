@@ -10,6 +10,7 @@ let allCustomers =
         query: `
         query { 
             customers {
+                id,
                 firstname,
                 lastname,
                 email,

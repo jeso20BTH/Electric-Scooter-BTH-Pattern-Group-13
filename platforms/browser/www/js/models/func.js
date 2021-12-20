@@ -7,7 +7,7 @@ let bikeidS;
 
 function createBikeLog(bikeid, cityid, startx, starty, endx, endy, available) {
     bikeidS = bikeid.toString()
-    console.log(available)
+    
     axios({
         url: "http://localhost:1337/graphql",
         method: 'POST',

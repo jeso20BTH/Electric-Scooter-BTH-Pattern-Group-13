@@ -15,17 +15,24 @@ try {
 const clientID = config.clientID
 
 
-const login = {
+var login = {
   view: () => {
-    return [
-      m('h1', 'Logga in'),
-      m('a.flex.row.start.allign-center.login-btn', {
-        href: `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user:email&&redirect_uri=http://localhost:666/github/callback?callback=http://localhost:8040!/success/`
-      }, [
-        m('p', 'Logga in med github'),
-        m('i.fab.fa-github')
+    return [ m("main.start", [
+      m('h1', 'Välkommen till Svenska Elsparkcyklar'),
+      m('h2.admin', 'Administrativa sida'),
+      m('p', 'Här får du överblick över alla städer, cyklar och kunder. Du har även möjlighet till att be servicepersonalen om att flytta cyklar till önskad parkering.'),
+      m('p', 'För att komma åt Svenska Elsparkcyklars administrativa sida kan du logga in med github'),
+      m('div.sign-in', [
+        m('a', {
+          href: `https://github.com/login/oauth/authorize?client_id=${clientID}&scope=user:email&&redirect_uri=http://localhost:666/github/callback?callback=http://localhost:8040!/success/`
+        }, [  
+          m('i.fab.fa-github'),
+          m('span', 'Logga in med github'),
+        ])
       ])
-    ]
+    ])
+  ]
+
   }
 }
 

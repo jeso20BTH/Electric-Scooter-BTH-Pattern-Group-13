@@ -8,9 +8,6 @@ const userModel = {
   currentUser: {},
   authorized: false,
   getLoginData: async (id) => {
-      console.log(id)
-      console.log("test")
-
     const data = await axios({
       method: 'post',
       url: 'http://localhost:666/data',
@@ -26,10 +23,9 @@ const userModel = {
   },
   login: async (id) => {
       const data = await userModel.getLoginData(id)
-      const user = [data.email, data.login, data.html_url]
+      const user = data.login
 
       userModel.currentUser = user
-
   }
 }
 
