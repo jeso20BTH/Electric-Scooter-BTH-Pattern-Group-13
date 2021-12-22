@@ -1,9 +1,9 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "Tågtrafik",
-  "short_name": "Tågtrafik",
-  "version": "se.dbwebb.trafik",
+  "name": "Pattern",
+  "short_name": "Pattern",
+  "version": "pattern.svenska-elsparkcyklar",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "author": "Apache Cordova Team",
   "icons": [],

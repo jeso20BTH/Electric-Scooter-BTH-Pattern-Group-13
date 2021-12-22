@@ -1,5 +1,4 @@
-import m from 'mithril'
-
+import 'regenerator-runtime/runtime'
 // import dbModel from './db'
 
 const axios = require('axios')
@@ -45,6 +44,7 @@ const kundModel = {
   getKund: async (id) => {
       const data = await kundModel.getKundData(id)
       kundModel.currentKunder = data.data.customer
+      return;
   }
 }
 

@@ -4,7 +4,7 @@ import allCities from '../models/city';
 import parkingspaceInCity from '../models/parkingspaces';
 import allBikes from '../models/bikes';
 import userModel from '../models/user';
-import createBikeLog from '../models/func';
+import createBikeLog from '../models/movebikes';
 
 
 
@@ -21,11 +21,10 @@ let cityidBike;
 let standard = [];
 
 
-
 let moveBike = {
     oninit: (async () => {
-        parkings = await parkingspaceInCity
-        bikes = await allBikes
+        parkings = await parkingspaceInCity.getPark()
+        bikes = await allBikes.getBikes()
         m.redraw();
         
     })(),
@@ -36,7 +35,7 @@ let moveBike = {
             p.hascharger == 0 ? [
                 ladd = "Nej"
             ] : ladd = "Ja";
-            p.city.name == allCities.cityName ? [
+            p.cityid == allCities.cityId ? [
                 !parkering.includes(`${p.name}, Laddstation: ${ladd}`) ? [
                     parkering.push(`${p.name}, Laddstation: ${ladd}`)
                 ] : null,

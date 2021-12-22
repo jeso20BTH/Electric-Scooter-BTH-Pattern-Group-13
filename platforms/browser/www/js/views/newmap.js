@@ -26,7 +26,7 @@ let locationMarker = showIcon(locationIcon)
 
 let mapViews = {
     oninit: (async () => {
-        parks = await parkingspaceInCity
+        parks = await parkingspaceInCity.getPark()
         m.redraw();
     })(),
     view: function (vnode) {

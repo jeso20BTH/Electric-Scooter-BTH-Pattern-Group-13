@@ -7,13 +7,13 @@ let response = null;
 
 let cities = {
     oninit: (async () => {
-        response = await allCities
+        response = await allCities.getCities()
     })(),
     view: function () {
         return m("main.container_city", [
             response !== null  ? [ 
                 m("h3", "Välj stad"),
-                m("div.cities_body", response.data.cities.map(function (city) {
+                m("div.cities_body", response.map(function (city) {
                     return m("div.cities", [
                         m("a.click", { href:`#!/karta:${city.id}` }, city.name)
                     ]);

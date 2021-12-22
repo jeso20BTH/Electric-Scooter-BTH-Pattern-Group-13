@@ -1,6 +1,5 @@
 "use strict";
 import m from 'mithril';
-import allCities from '../models/city';
 import allCustomers from '../models/customers';
 
 let kund;

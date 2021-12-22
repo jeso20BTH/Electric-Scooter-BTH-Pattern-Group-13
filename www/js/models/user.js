@@ -1,4 +1,4 @@
-import m from 'mithril'
+import 'regenerator-runtime/runtime'
 
 // import dbModel from './db'
 
@@ -18,14 +18,13 @@ const userModel = {
         id: id
       }
     })
-
     return data.data
   },
   login: async (id) => {
       const data = await userModel.getLoginData(id)
       const user = data.login
-
       userModel.currentUser = user
+      userModel.authorized = true;
   }
 }
 

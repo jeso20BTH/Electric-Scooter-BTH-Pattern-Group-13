@@ -1,7 +1,6 @@
 "use strict";
 import m from 'mithril';
 import { layout } from "./views/layout";
-import list from "./views/list.js";
 import mapviews from "./views/newmap";
 import park from "./views/park.js";
 import city from "./views/cities.js";
@@ -68,18 +67,12 @@ m.route(document.body, "/", {
             );
         }
     },
-    "/login": {
-        render: function() {
-            return m(login);
-        }
-    },
     "/success/:id": {
         onmatch: async function(args) {
             let userId = args.id
+            console.log(userId)
             
             await userModel.login(userId);
-    
-            userModel.authorized = true;
     
             m.route.set('/stader')
         }

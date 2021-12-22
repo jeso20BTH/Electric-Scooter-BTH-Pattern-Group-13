@@ -1,5 +1,5 @@
 "use strict";
-import m, { redraw } from 'mithril';
+import m from 'mithril';
 import kundModel from '../models/kund';
 
 let kundView = {
@@ -34,10 +34,8 @@ let kundView = {
                 ])
         ] : m("h4", "Det finns inga tidigare resor registrerade"),
         ])
-        },
-    
+    },
 };
-
 
 
 export default kundView;

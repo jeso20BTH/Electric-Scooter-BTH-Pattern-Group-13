@@ -11,7 +11,7 @@ let ladd;
 
 let park = {
     oninit: (async () => {
-        parkings = await parkingspaceInCity
+        parkings = await parkingspaceInCity.getPark()
         m.redraw();
     })(),
     view: function() {
