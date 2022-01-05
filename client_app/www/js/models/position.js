@@ -3,7 +3,7 @@
 
 import m from 'mithril'
 
-import dbModel from './db'
+const dbModel = require('./db')
 
 const position = {
   currentCity: 1,

@@ -37,6 +37,15 @@ const rent = {
               document.getElementsByClassName('qr-buttons')[0].setAttribute('style', 'visibility: visible;')
               window.QRScanner.scan(scooterModel.handleScan)
               window.QRScanner.show()
+
+              let scannerRefresh = setInterval(redraw, 1000)
+              function redraw() {
+                  if (scooterModel.id) {
+                      clearInterval(scannerRefresh);
+                  } else {
+                      m.redraw();
+                  }
+              }
             }
           },
           m(
@@ -185,6 +194,7 @@ const inRent = {
 const index = {
   onInit: async () => {
     await scooterModel.getAllScooters()
+    m.redraw();
     console.log(scooterModel.allScooters)
   },
   view: function () {

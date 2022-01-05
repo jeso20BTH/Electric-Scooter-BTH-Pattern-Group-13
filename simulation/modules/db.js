@@ -10,11 +10,10 @@ try {
   console.log(e)
 }
 const token = process.env.DBTOKEN || config.dbToken
-const dbURL = 'http://localhost:1337/graphql'
+const dbURL = 'http://localhost:69/graphql'
 
 const dbModel = {
   callDatabase: async (query) => {
-    console.log(token)
     const res = await axios({
       method: 'post',
       url: dbURL,

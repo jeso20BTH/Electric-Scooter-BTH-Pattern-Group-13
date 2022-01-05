@@ -152,6 +152,8 @@ const mapView = {
     await positionModel.getPosition()
     await scooterModel.getAllScooters()
     await scooterModel.getAllParkings()
+
+    m.redraw();
   },
   oncreate: showMap,
   view: () => {
