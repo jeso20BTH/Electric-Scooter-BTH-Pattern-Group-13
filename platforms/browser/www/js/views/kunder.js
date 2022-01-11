@@ -1,6 +1,7 @@
 "use strict";
 import m from 'mithril';
-import allCustomers from '../models/customers';
+import kundModel from '../models/kund';
+
 
 let kund;
 let open;
@@ -8,13 +9,14 @@ let text;
 
 let kunder = {
     oninit: (async () => {
-        kund = await allCustomers
+        await kundModel.getAllaKund()
     })(),
     view: function () {
         let count = 0;
         open == 1 ? [
             text = "Stäng alla kunder"
         ] : text = "Bläddra bland alla kunder";
+        kund = kundModel.allaKunder
         return m("main.container", [
             m("h1", "Kunder hos Svenska Elsparkcyklar"),
             m("h4", "Antal registrerade kunder: " + kund.length),

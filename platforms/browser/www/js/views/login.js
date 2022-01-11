@@ -2,6 +2,7 @@
 
 import m from 'mithril'
 
+
 let config
 
 try {

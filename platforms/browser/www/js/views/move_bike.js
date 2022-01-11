@@ -23,12 +23,11 @@ let standard = [];
 
 let moveBike = {
     oninit: (async () => {
-        parkings = await parkingspaceInCity.getPark()
         bikes = await allBikes.getBikes()
         m.redraw();
-        
     })(),
     view: function (vnode) {
+        parkings = parkingspaceInCity.Parkings
         let bikeid = ((vnode.attrs.id).substring(1))
         let parkering = [];
         parkings.map(function (p) {

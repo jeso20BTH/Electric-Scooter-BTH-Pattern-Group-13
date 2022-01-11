@@ -7,10 +7,10 @@ import city from "./views/cities.js";
 import move_bike from "./views/move_bike.js";
 import omd from "./views/omdirigering.js";
 import login from "./views/login.js";
-import customers from "./views/customer.js";
+import kunder from "./views/kunder.js";
 import kund from "./views/kund.js";
-import userModel from './models/user';
 import kundModel from './models/kund';
+import userModel from './models/user';
 
 
 
@@ -18,6 +18,7 @@ m.route(document.body, "/", {
     "/": {
         render: function() {
             return m(login);
+            // return m(city)
         }
     },
     "/stader": {
@@ -47,7 +48,7 @@ m.route(document.body, "/", {
     },
     "/kunder": {
         render: function() {
-            return m(layout, m(customers),
+            return m(layout, m(kunder),
             );
         }
     },
@@ -70,7 +71,6 @@ m.route(document.body, "/", {
     "/success/:id": {
         onmatch: async function(args) {
             let userId = args.id
-            console.log(userId)
             
             await userModel.login(userId);
     

@@ -1,7 +1,5 @@
 "use strict";
 import m from 'mithril';
-import axios from 'axios';
-
 import parkingspaceInCity from '../models/parkingspaces';
 import allCities from '../models/city';
 
@@ -10,11 +8,11 @@ let parkings;
 let ladd;
 
 let park = {
-    oninit: (async () => {
-        parkings = await parkingspaceInCity.getPark()
-        m.redraw();
-    })(),
+    // oninit: (async () => {
+    //     m.redraw();
+    // })(),
     view: function() {
+        parkings = parkingspaceInCity.Parkings
         return m("main.container", [
             m("h1", "Parkeringar för " + allCities.cityName),
             m("div", parkings.map(function (p) {

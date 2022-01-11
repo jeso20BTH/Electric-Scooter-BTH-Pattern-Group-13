@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime'
+import conf from './../config.json'
 
-// import dbModel from './db'
+// console.log(conf.dbToken)
 
 const axios = require('axios')
 
@@ -12,7 +13,7 @@ const userModel = {
       method: 'post',
       url: 'http://localhost:666/data',
       headers: {
-        token: 'test'
+        jwt: conf.dbToken
       },
       data: {
         id: id
@@ -21,10 +22,10 @@ const userModel = {
     return data.data
   },
   login: async (id) => {
-      const data = await userModel.getLoginData(id)
-      const user = data.login
-      userModel.currentUser = user
-      userModel.authorized = true;
+    const data = await userModel.getLoginData(id)
+    const user = data.login
+    userModel.currentUser = user
+    userModel.authorized = true;
   }
 }
 

@@ -1,13 +1,17 @@
 'use strict'
 import m from 'mithril';
 import allCities from '../models/city';
+import parkingspaceInCity from '../models/parkingspaces';
+
 
 
 let response = null;
 
 let cities = {
     oninit: (async () => {
+        await parkingspaceInCity.getPark()
         response = await allCities.getCities()
+        m.redraw()
     })(),
     view: function () {
         return m("main.container_city", [

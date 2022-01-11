@@ -1,5 +1,7 @@
 'use strict';
 import axios from 'axios';
+import conf from './../config.json'
+
 
 let parkingspaceInCity = { 
     Parkings: {},
@@ -7,6 +9,9 @@ let parkingspaceInCity = {
         const data = await axios({
         url: "http://localhost:1337/graphql",
         method: "POST",
+        headers: {
+            jwt: conf.dbToken
+          },
         data: ({
             query: `
             query {
@@ -32,7 +37,7 @@ let parkingspaceInCity = {
     getPark: async () => {
         const data = await parkingspaceInCity.getAllParks()
         parkingspaceInCity.Parkings = data.data.parkingspaces
-        return data.data.parkingspaces
+        return;
     }
 }
 
