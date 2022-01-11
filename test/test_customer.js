@@ -1,7 +1,6 @@
 let chai = require('chai')
 let expect = chai.expect;
 const kund = require('./../www/js/models/kund.js').default
-const kunder = require('./../www/js/models/customers.js')
 
 
 describe("Customer", () => {

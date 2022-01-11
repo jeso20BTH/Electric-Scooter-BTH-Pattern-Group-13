@@ -1,6 +1,7 @@
 'use strict';
-import axios from 'axios';
 import 'regenerator-runtime/runtime'
+import axios from 'axios';
+
 import conf from './../config.json'
 import allCities from '../models/city';
 

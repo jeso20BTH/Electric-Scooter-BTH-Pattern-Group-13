@@ -14,7 +14,6 @@ describe("Bikes", () => {
         before( async () =>  {
             //  Get all bikes
             await bikes.getBikes();
-
         })
         after(() => {
             bikes.Bikes = {}
