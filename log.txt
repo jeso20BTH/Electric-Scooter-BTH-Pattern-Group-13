@@ -1,1 +1,1 @@
-user, query, timestamp <br>aaaa, { cities {id, xcoord, ycoord}}, 2021-11-26T11:59:59.540Z <br>
+user | query | timestamp <br>
