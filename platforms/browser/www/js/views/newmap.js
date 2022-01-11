@@ -17,19 +17,9 @@ import { mark } from "regenerator-runtime";
 
 
 
-let marker;
-let refresh;
-let markers = [];
 let map;
-let ladd;
-let parks;
-let bikes;
-let xcoord;
-let ycoord;
-let zoom;
-let locationMarker = showIcon(locationIcon)
-
-
+let marker;
+let markers = [];
 
 let mapViews = {
     oninit: m.redraw(),
@@ -45,53 +35,46 @@ let mapViews = {
         ] : null
         return [
             m("h1", allCities.cityName),
-            m("div#map.map", ""),  
-            // setInterval(() => {
-            //     (async () => {
-            //         await allBikes.getBikesByCity()
-            //         markOut(parks)
-            //     })();
-            // }, 10000)      
-                
+            m("div#map.map", "")
         ];
     },
     oncreate: function() {
         (async () => {
-            // parks = await parkingspaceInCity.getPark()
             await allBikes.getBikesByCity()
-            // m.redraw();
             showMap()
         })(),
         map != null ? [
             map.remove()
         ] : null
-        // m.redraw();
     }
 };
 
 
 function showMap() { 
+    let parks;
+    let refresh;
+
     refresh !== null ? [
         clearInterval(refresh)
     ] : null
-    // console.log(parkingspaceInCity.Parkings)
     parks = parkingspaceInCity.Parkings
-
+    
+    let coordinates = [];
     allCities.cityId == 1 ? [
-        xcoord = 56.160817,
-        ycoord = 15.586703,
-        zoom = 14.5
+        coordinates[0] = 56.160817,
+        coordinates[1] = 15.586703,
+        coordinates[2] = 14.5
     ] : allCities.cityId == 3 ? [
-        xcoord = 65.5855652,
-        ycoord = 22.1481566,
-        zoom = 13.5
+        coordinates[0] = 65.5855652,
+        coordinates[1] = 22.1481566,
+        coordinates[2] = 13.5
     ] : allCities.cityId == 2 ? [
-        xcoord = 59.324150,
-        ycoord = 18.072689,
-        zoom = 13
+        coordinates[0] = 59.324150,
+        coordinates[1] = 18.072689,
+        coordinates[2] = 13
     ] : null
 
-    map = L.map('map').setView([xcoord, ycoord], zoom);
+    map = L.map('map').setView([coordinates[0], coordinates[1]], coordinates[2]);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',    {
         attribution: `&copy;
@@ -111,7 +94,8 @@ function showMap() {
 }
 
 function markOut(parks) {
-    // console.log("uppdatera 0")
+    let locationMarker = showIcon(locationIcon)
+
     markers != null ? [
         markers.map(function (mark) {
             map.removeLayer(mark);
@@ -135,6 +119,7 @@ function markOut(parks) {
     parks !== null  ? 
     [ 
         m("div", parks.map(function (park) {
+            let ladd;
             park.hascharger == 0 ? [
                 ladd = "Nej"
             ] : ladd = "Ja"
