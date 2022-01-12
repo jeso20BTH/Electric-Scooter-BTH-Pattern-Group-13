@@ -3,4 +3,5 @@
 # Administrative webpage
 ## Welcome page
 
-![Welcome page](/img/readme/1.png)
+![Welcome page](img/readme/1.png)
+
