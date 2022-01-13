@@ -35,14 +35,14 @@ services:
         networks:
             project13net:
     webbclient:
-        image: jeso20/bikerental-client-webbclient:1.8.3
+        image: jeso20/bikerental-client-webbclient:1.8.5
         container_name: "bikerental-client-webbclient"
         ports:
             - 8020:8020
         networks:
             project13net:
     adminclient:
-        image: hajh20/admin_bike:1.4
+        image: hajh20/admin_bike:1.5
         container_name: "bikerental-client-adminclient"
         ports:
             - 8040:8040
