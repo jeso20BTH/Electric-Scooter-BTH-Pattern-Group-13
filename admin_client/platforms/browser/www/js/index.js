@@ -1,35 +1,38 @@
 "use strict";
 import m from 'mithril';
 import { layout } from "./views/layout";
-import list from "./views/list.js";
 import mapviews from "./views/newmap";
 import park from "./views/park.js";
 import city from "./views/cities.js";
 import move_bike from "./views/move_bike.js";
 import omd from "./views/omdirigering.js";
 import login from "./views/login.js";
-import customers from "./views/customer.js";
+import kunder from "./views/customers.js";
+import kund from "./views/customer.js";
+import kundModel from './models/customer';
 import userModel from './models/user';
+import allCities from './models/city';
 
 
 
 m.route(document.body, "/", {
     "/": {
         render: function() {
-            return m(list);
+            return m(login);
         }
     },
     "/stader": {
         render: function() {
-            console.log(userModel.authorized)
-            console.log(userModel.currentUser)
-
-            return m(city);
-        }
+            if (userModel.authorized == true) {
+                return m(city)
+            }
+            m.route.set('/')
+        },
     },
     "/karta:id": {
         render: function(vnode) {
-            return m(layout, m(mapviews, vnode.attrs),
+            allCities.cityId = ((vnode.attrs.id).substring(1))
+            return m(layout, m(mapviews),
             );
         }
     },
@@ -41,13 +44,22 @@ m.route(document.body, "/", {
     },
     "/flytt_cykel:id": {
         render: function(vnode) {
-            return m(layout, m(omd, vnode.attrs),
-            );
+            return m(omd, vnode.attrs);
         }
     },
     "/kunder": {
         render: function() {
-            return m(layout, m(customers),
+            return m(layout, m(kunder),
+            );
+        }
+    },
+    "/kunder:id": {
+        onmatch: async function(args) {
+            let kundId = (args.id).substring(1)
+            await kundModel.getKund(kundId);
+        },
+        render: function() {
+            return m(layout, m(kund),
             );
         }
     },
@@ -57,21 +69,13 @@ m.route(document.body, "/", {
             );
         }
     },
-    "/login": {
-        render: function() {
-            return m(layout, m(login),
-            );
-        }
-    },
     "/success/:id": {
         onmatch: async function(args) {
             let userId = args.id
             
             await userModel.login(userId);
     
-            userModel.authorized = true;
-    
-            m.route.set('/')
+            m.route.set('/stader')
         }
     },
     "/logout": {

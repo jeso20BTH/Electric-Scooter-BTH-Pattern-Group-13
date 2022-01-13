@@ -1,39 +1,48 @@
 "use strict";
 import m from 'mithril';
-import allCities from '../models/city';
-import allCustomers from '../models/customers';
+import kundModel from '../models/customer.js';
 
-let kund;
-
-let kunder = {
-    oninit: (async () => {
-        kund = await allCustomers
-        // m.redraw();
-    })(),
+let kundView = {
     view: function () {
         return m("main.container", [
-            m("h1", allCities.cityName),
-            m("table.customer", [
-                m("tr", [
-                    m("th", "bikeid"),
-                    m("th", "batteri"),
-                    m("th", "email"),
-                    m("th", "balance"),
-                    m("th", "paymethos"),
-                ]),
-                m("div", kund.map(function (k) {
-                    return m("tr", [
-                        m("td", k.id),
-                        m("td", k.firstname),
-                        m("td", k.lastname),
-                        m("td", k.email),
-                        m("td", k.balance),
-                        m("td", k.paymentmethod),
-                    ])
-                })),
-            ])
-        ]);
+            m("h1", "Kunder hos Svenska Elsparkcyklar"),
+            m("h2", kundModel.currentKunder.firstname + " " + kundModel.currentKunder.lastname),
+            m("p", kundModel.currentKunder.email),
+            (kundModel.currentKunder.historylogs).length > 0 ? [
+                m("table.park", [
+                    m("thead", [
+                        m("tr", [
+                            m("th", "Elcykel"),
+                            m("th", "Betald"),
+                            m("th", "Startkoordinater"),
+                            m("th", "Slutkoordinater"),
+                        ])
+                    ]),
+                    m("tbody", kundModel.currentKunder.historylogs.map(function (history) {
+                        return m("tr", [
+                            m("td", {"data-title": "Elcykel"}, history.bikeid),
+                            m("td",  {"data-title": "Betald"}, [
+                                history.payed == 0 ? [
+                                    "Nej"
+                                ] : "Ja",
+                            ]),
+                            m("td",  {"data-title": "Startkoordinater"}, [
+                                history.startxcoord == null ? [
+                                    "-"
+                                ] : (history.startxcoord).toFixed(5) + ", " + (history.startycoord).toFixed(5)
+                            ]),
+                            m("td",  {"data-title": "Slutkoordinater"}, [
+                                history.endxcoord == null ? [
+                                    "-"
+                                ] : (history.endxcoord).toFixed(5) + ", " + (history.endycoord).toFixed(5),
+                            ]),
+                        ])
+                    })),
+                ])
+        ] : m("h4", "Det finns inga tidigare resor registrerade"),
+        ])
     },
 };
 
-export default kunder;
+
+export default kundView;

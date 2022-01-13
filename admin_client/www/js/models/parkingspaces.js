@@ -1,43 +1,44 @@
 'use strict';
 import axios from 'axios';
+import conf from './../config.json'
 
-let parkingspaceInCity = 
-    axios({
-    url: "http://localhost:1337/graphql",
-    method: "POST",
-    data: ({
-        query: `
-        query {
-            parkingspaces {
-                id,
-                xcoord,
-                ycoord,
-                name,
-                cityid,
-                hascharger,
-                city {
-                    id,
-                    name,
-                    startingfee,
-                    penaltyfee,
-                    fee,
-                    discount,
-                },
-                bikes {
-                    id,
-                    available,
-                    velocity,
-                    battery,
+
+let parkingspaceInCity = { 
+    Parkings: {},
+    getAllParks: async () => {
+        const data = await axios({
+        url: "http://localhost:1337/graphql",
+        method: "POST",
+        headers: {
+            jwt: conf.dbToken
+          },
+        data: ({
+            query: `
+            query {
+                parkingspaces {
                     xcoord,
-                    ycoord
+                    ycoord,
+                    name,
+                    cityid,
+                    hascharger,
+                    bikes {
+                        id,
+                        available,
+                        battery
+                    }
                 }
             }
-        }
-        `
-    })
-}).then((result) => {
-    return result.data.data.parkingspaces
-});
+            `
+            })
+
+        })
+        return data.data
+    },
+    getPark: async () => {
+        const data = await parkingspaceInCity.getAllParks()
+        parkingspaceInCity.Parkings = data.data.parkingspaces
+        return;
+    }
+}
 
 export default parkingspaceInCity;
-

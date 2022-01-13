@@ -1,24 +1,16 @@
 "use strict";
 import m from 'mithril';
 import allCities from '../models/city';
-import axios from "axios";
-
-import createBikeLog from '../models/func';
 import parkingspaceInCity from '../models/parkingspaces';
 import allBikes from '../models/bikes';
+import userModel from '../models/user';
+import createBikeLog from '../models/movebikes';
+
 
 
 let moveToPark;
-let test;
-let px;
-let py;
-let bx;
-let id;
-let by;
-let parkings;
+let coordinates = [];
 let bikes;
-
-let name;
 let ladd;
 let available = 1;
 let cityidBike;
@@ -28,27 +20,23 @@ let standard = [];
 
 let moveBike = {
     oninit: (async () => {
-        parkings = await parkingspaceInCity
-        bikes = await allBikes
+        bikes = await allBikes.getBikes()
         m.redraw();
-        
     })(),
     view: function (vnode) {
         let bikeid = ((vnode.attrs.id).substring(1))
         let parkering = [];
-        parkings.map(function (p) {
+        (parkingspaceInCity.Parkings).map(function (p) {
             p.hascharger == 0 ? [
                 ladd = "Nej"
             ] : ladd = "Ja";
-            p.city.name == allCities.cityName ? [
+            p.cityid == allCities.cityId ? [
                 !parkering.includes(`${p.name}, Laddstation: ${ladd}`) ? [
                     parkering.push(`${p.name}, Laddstation: ${ladd}`)
                 ] : null,
                 standard.length == 0 ? [
-                    console.log("hej"),
                     standard.push(`${p.name}, Laddstation: ${ladd}`)
                 ] : null,
-                // console.log(standard),
         ] : null });
 
         return m("main.container", [
@@ -57,26 +45,16 @@ let moveBike = {
             m("form", {
                 onsubmit: function(event) {
                     event.preventDefault();
-                    // console.log(moveToPark)
-                    
-
                     moveToPark == null ? [
-                        // console.log(standard),
                         moveToPark = standard.join(),
                     ] : null
-
-                    // console.log(moveToPark.slice(-1))
                     moveToPark.slice(-1) == "a" ? [
                         moveToPark = moveToPark.slice(0, -17)
                     ] : moveToPark = moveToPark.slice(0, -18)
-
-                    // console.log(moveToPark)
-
-
-                    parkings.map(function (p) {
+                    parkingspaceInCity.Parkings.map(function (p) {
                         p.name == moveToPark ? [
-                            px = p.xcoord,
-                            py = p.ycoord,
+                            coordinates[0] = p.xcoord,
+                            coordinates[1] = p.ycoord,
                             p.hascharger == 1 ? [
                                 available = 0
                             ] : null,
@@ -84,20 +62,19 @@ let moveBike = {
                     });
                     bikes.map(function (b) {
                         b.id == bikeid ? [
-                            bx = b.xcoord,
-                            by = b.ycoord,
+                            coordinates[2] = b.xcoord,
+                            coordinates[3] = b.ycoord,
                             cityidBike = b.cityid
                     ] : null;
                     });
-                    // console.log(bikeid, cityidBike, bx, by, px, py, available)
                     (async () => {
-                        await createBikeLog(bikeid, cityidBike, bx, by, px, py, available);
+                        await createBikeLog(bikeid, cityidBike, coordinates[2], coordinates[3], coordinates[0], coordinates[1], available);
                     })();
                     allCities.refresh = 0;
-                    m.route.set(`/flytt_cykel:${allCities.cityId}`);
+                    let id = `${allCities.cityId}-${userModel.currentUser}`
+                    m.route.set(`/flytt_cykel:${id}`);
                 }
             }, [
-                
                 m("select.input", {
                     onchange: function (e) {
                         moveToPark = e.target.value

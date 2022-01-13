@@ -1,21 +1,19 @@
 'use strict'
 import m from 'mithril';
 import allCities from '../models/city';
+import userModel from '../models/user';
 
 
 let cityId;
 
-
-
 let omd = {
     view: function (vnode) {
-        console.log(vnode)
-        cityId = ((vnode.attrs.id).substring(1)),
+        userModel.currentUser = (vnode.attrs.id).substring(3)
+        cityId = (vnode.attrs.id)[1]
         allCities.cityId = cityId
-
-        return m("main.container", [
+        return m("main.start", [
             m("h1", "Flytten lyckades!"),
-            m("p", "Vänligen vänta medans servicepersonalen flyttar cyklen..."),
+            m("p", "Vänligen vänta medans servicepersonalen flyttar cykeln..."),
         ])
     },
     oncreate: function() {
@@ -27,7 +25,7 @@ function refreshPage(){
     allCities.refresh == 0 ? [
         allCities.refresh++,
         window.location.reload()
-    ] : console.log("har refresh")
+    ] : null;
 } 
 
 function resolveAfter2Seconds() {
