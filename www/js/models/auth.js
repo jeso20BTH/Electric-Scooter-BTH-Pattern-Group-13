@@ -1,4 +1,4 @@
-import dbModel from './db'
+const dbModel = require('./db')
 const axios = require('axios')
 
 const authModel = {
@@ -37,4 +37,4 @@ const authModel = {
   }
 }
 
-export default authModel
+module.exports = authModel

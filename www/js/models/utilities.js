@@ -59,4 +59,4 @@ const utilities = {
   }
 }
 
-export default utilities
+module.exports = utilities

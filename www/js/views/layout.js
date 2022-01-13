@@ -2,7 +2,7 @@
 
 import m from 'mithril'
 
-import authModel from './../models/auth'
+const authModel = require('./../models/auth')
 
 const layout = {
   navElements: [

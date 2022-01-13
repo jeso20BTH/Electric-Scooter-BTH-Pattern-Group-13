@@ -13,7 +13,7 @@
     "webpack-build": "webpack --config webpack.prod.config.js",
     "start": "npm run webpack && npm run style-min && cordova run browser",
     "android": "npm run webpack && npm run style-min && cordova run android",
-    "build": "npm run webpack-build-watch && style-min-watch"
+    "build": "npm run webpack && npm run style-min"
   },
   "keywords": [
     "ecosystem:cordova"

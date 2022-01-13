@@ -1,8 +1,6 @@
-import m from 'mithril'
-
-import authModel from './auth'
-import dbModel from './db'
-import utilitiesModel from './utilities'
+const authModel = require('./auth.js')
+const dbModel = require('./db.js')
+const utilitiesModel = require('./utilities.js')
 
 const scooterModel = {
   id: '',
@@ -14,11 +12,9 @@ const scooterModel = {
   allParkings: [],
   getAllScooters: async () => {
     scooterModel.allScooters = await dbModel.getBikes()
-    m.redraw()
   },
   getAllParkings: async () => {
     scooterModel.allParkings = await dbModel.getParkings()
-    m.redraw()
   },
   rent: async (data) => {
     if (data.currentScooter && data.currentScooter.available === 1) {
@@ -125,10 +121,8 @@ const scooterModel = {
       return err
     } else {
       scooterModel.id = text
-
-      m.redraw()
     }
   }
 }
 
-export default scooterModel
+module.exports = scooterModel
