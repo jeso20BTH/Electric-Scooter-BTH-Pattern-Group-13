@@ -10,6 +10,7 @@ env:
     CLIENTID: ${{ secrets.CLIENTID}}
     DBTOKEN: ${{ secrets.DBSECRET}}
     LOCALHOST: ${{ secrets.LOCALHOST}}
+    DBURL: ${{ secrets.DBURL}}
 
 jobs:
   build:

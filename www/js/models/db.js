@@ -10,7 +10,7 @@ try {
   console.log(e)
 }
 const token = process.env.DBTOKEN || config.dbToken
-const dbURL = process.env.dbURL || config.localhost
+const dbURL = process.env.DBURL || config.localhost
 
 const dbModel = {
   callDatabase: async (query) => {
