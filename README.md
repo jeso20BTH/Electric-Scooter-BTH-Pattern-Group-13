@@ -2,9 +2,11 @@
 An complete runnable system for manage of electric scooters through docker.
 it contains the following parts
 - API [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Dundgren/bikerental-api/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/Dundgren/bikerental-api/?branch=main)[![Build Status](https://app.travis-ci.com/Dundgren/bikerental-api.svg?branch=main)](https://app.travis-ci.com/Dundgren/bikerental-api)
-- OAuth
-- Bike
-- Web-client for admin
+- OAuth [![Build](https://github.com/jeso20BTH/pattern-oauth/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-oauth/actions/workflows/testing.yml)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+- Bike [![Build](https://github.com/jeso20BTH/pattern-bike/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-bike/actions/workflows/testing.yml)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+- Web-client for admin [![Build Status](https://scrutinizer-ci.com/g/haannaj/Pattern-project-scooter/badges/build.png?b=main)](https://scrutinizer-ci.com/g/haannaj/Pattern-project-scooter/build-status/main)
 - Web client for customer[![Build](https://github.com/jeso20BTH/pattern-user-webbclient/actions/workflows/testing.yml/badge.svg)](https://github.com/jeso20BTH/pattern-user-webbclient/actions/workflows/testing.yml)
 [![codecov](https://codecov.io/gh/jeso20BTH/pattern-user-webbclient/branch/main/graph/badge.svg?token=YOSC1TFXCB)](https://codecov.io/gh/jeso20BTH/pattern-user-webbclient)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a3305e6f9efcbee72215/maintainability)](https://codeclimate.com/github/jeso20BTH/pattern-user-webbclient/maintainability)
