@@ -20,14 +20,12 @@ const historyTable = {
           )
         ),
         m('tbody', [
-          userModel.currentUser.historylogs.forEach((history) => {
-            console.log(history)
+          userModel.currentUser.historylogs.map((history) => {
             const city = cityModel.getCity(history.cityid)
             const duration = utilitiesModel.calculateDuration(
               history.starttime,
               history.endtime
             )
-            console.log(city)
             const price = utilitiesModel.calculatePrice({
               startingfee: city.startingfee,
               fee: city.fee,
@@ -42,10 +40,11 @@ const historyTable = {
             const date = utilitiesModel.formatDate(
               new Date(parseInt(history.starttime))
             )
-
-            console.log(city, duration, price)
-
-            if (history.endtime) {
+            console.log(history);
+            console.log(history.endtime);
+            console.log(history.endtime !== null);
+            if (history.endtime !== null) {
+                console.log(history);
               return m('tr', [
                 m('td',
                   m('a', { href: `#!/history/ride/${history.id}` }, date)
@@ -70,7 +69,6 @@ const invoiceTable = {
   view: () => {
     userModel.filteredHistory = userModel.filterLog(userModel.currentUser.historylogs)
     const logKeys = Object.keys(userModel.filteredHistory)
-    console.log(logKeys)
     return [
       m('table.table', [
         m('thead',
@@ -116,7 +114,6 @@ const history = {
     userModel.currentUser = await dbModel.getUser(userModel.currentUser.email)
   },
   view: function () {
-    console.log(userModel.currentUser)
     return [
       m('div.flex.between', [
         m('h1', (userModel.historyMode === 'history') ? 'Historik' : 'Fakturor'),

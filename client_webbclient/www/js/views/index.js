@@ -12,8 +12,6 @@ const index = {
     if (userModel.currentUser) {
       userModel.currentUser = await dbModel.getUser(userModel.currentUser.email)
     }
-
-    console.log(cityModel.allCities)
   },
   view: function () {
     return [

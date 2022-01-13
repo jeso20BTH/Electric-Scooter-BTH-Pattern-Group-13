@@ -1,3 +1,4 @@
+/* global process */
 import userModel from './user'
 const axios = require('axios')
 

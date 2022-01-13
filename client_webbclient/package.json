@@ -7,9 +7,9 @@
     "lint": "eslint --ext www/js/**.js www/js/**/**.js",
     "test": "nyc mocha --require setup.js --require @babel/register -r jsdom-global/register --exit",
     "webpack": "webpack --config webpack.dev.config.js",
-    "style-min": "sass client/css/base.scss www/css/style.min.css  --no-source-map --style compressed",
+    "style-min": "sass www/css/base.scss www/css/style.min.css  --no-source-map --style compressed",
     "start": "npm run webpack && npm run style-min && index.html",
-    "update": "npm run webpack&& npm run style-min",
+    "update": "npm run webpack && npm run style-min",
     "dev": "npm run style-min && npm run webpack && cordova run browser"
   },
   "keywords": [

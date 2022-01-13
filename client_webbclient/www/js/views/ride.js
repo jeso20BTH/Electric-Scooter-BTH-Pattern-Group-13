@@ -51,9 +51,6 @@ function showMap () {
 
 function addTrip (startPos, endPos) {
   const center = utilitiesModel.calculateCenter(startPos, endPos)
-
-  console.log(center)
-  console.log(map)
   if (map) {
     map.panTo(
       new L.LatLng(center[0], center[1])
@@ -114,8 +111,6 @@ const ride = {
     const rideId = m.route.param('id')
     const log = userModel.currentUser.historylogs.find(entry => entry.id === parseInt(rideId))
 
-    console.log(log)
-
     const city = cityModel.getCity(log.cityid)
     const duration = utilitiesModel.calculateDuration(
       log.starttime,
@@ -136,8 +131,6 @@ const ride = {
     const date = utilitiesModel.formatDate(
       new Date(parseInt(log.starttime))
     )
-
-    console.log(log)
     return [
       m('a.return', { href: '#!/history' }, '< Tillbaka'),
       m('h1', `Resa ${log.id}`),

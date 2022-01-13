@@ -16,7 +16,6 @@ const index = {
     const paymentMethod = bankModel.paymentMethods.find(
       method => method.value === userModel.currentUser.paymentmethod
     )
-    console.log(userModel.currentUser)
     return [
       m('h1', 'Användare'),
       m('fieldset.flex.column.start.allign-center', [
