@@ -26,8 +26,9 @@ const fs = require("fs");
 (async function () {
     const db = await connectToDatabase();
     const app = express();
+    const VERSION = 1.8;
 
-    fs.writeFile("log.txt", "user, query, timestamp <br>", { encoding: "utf-8" }, (err) => {
+    fs.writeFile("log.txt", "user | query | timestamp <br>", { encoding: "utf-8" }, (err) => {
         if (err) {
             console.log(err);
         }
@@ -443,7 +444,7 @@ const fs = require("fs");
             } else {
                 const user = jwt.decode(token).mail;
                 const currentDate = new Date().toISOString();
-                stream.write(`${user}, ${req.body.query}, ${currentDate} <br>`);
+                stream.write(`${user} | ${req.body.query} | ${currentDate} <br>`);
                 next();
             }
         });
@@ -454,5 +455,10 @@ const fs = require("fs");
         graphiql: true
     }));
 
-    app.listen(port, () => console.log(`Server is running on port ${port}`));
+    app.use("/simulation", graphqlHTTP({
+        schema: schema,
+        graphiql: true
+    }));
+
+    app.listen(port, () => console.log(`Bikerental-api version ${VERSION} is running on port ${port}`));
 })();
