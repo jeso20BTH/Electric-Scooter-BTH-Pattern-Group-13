@@ -20,7 +20,7 @@ const historyTable = {
           )
         ),
         m('tbody', [
-          userModel.currentUser.historylogs.map((history) => {
+          userModel.currentUser.historylogs.forEach((history) => {
             const city = cityModel.getCity(history.cityid)
             const duration = utilitiesModel.calculateDuration(
               history.starttime,
@@ -40,11 +40,8 @@ const historyTable = {
             const date = utilitiesModel.formatDate(
               new Date(parseInt(history.starttime))
             )
-            console.log(history);
-            console.log(history.endtime);
-            console.log(history.endtime !== null);
+
             if (history.endtime !== null) {
-                console.log(history);
               return m('tr', [
                 m('td',
                   m('a', { href: `#!/history/ride/${history.id}` }, date)

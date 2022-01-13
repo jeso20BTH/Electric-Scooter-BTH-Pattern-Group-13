@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage lines-valid="220" lines-covered="214" line-rate="0.9727" branches-valid="141" branches-covered="111" branch-rate="0.7872" timestamp="1642076548550" complexity="0" version="0.1">
+<coverage lines-valid="220" lines-covered="214" line-rate="0.9727" branches-valid="141" branches-covered="111" branch-rate="0.7872" timestamp="1642096144015" complexity="0" version="0.1">
   <sources>
     <source>C:\Users\jeppe\OneDrive\Dokument\skola\pattern\client-webbclient</source>
   </sources>
