@@ -1,0 +1,24 @@
+{
+  "name": "Main",
+  "version": "1.0.0",
+  "description": "An compeate runable system for runablesystem for manage of electric scooters through docker.",
+  "main": "index.js",
+  "scripts": {
+      "lint": "eslint --ext simulation/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeso20BTH/Electric-Scooter-BTH-Pattern-Group-13.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeso20BTH/Electric-Scooter-BTH-Pattern-Group-13/issues"
+  },
+  "homepage": "https://github.com/jeso20BTH/Electric-Scooter-BTH-Pattern-Group-13#readme",
+  "dependencies": {
+    "eslint": "^8.6.0"
+  }
+}
