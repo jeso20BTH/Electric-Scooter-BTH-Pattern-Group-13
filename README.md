@@ -11,8 +11,8 @@ An client made by a class for an bike. It is part of the system for the cours Pa
 `battery` - the percentage of battery the bicycle has, 100 is max 0 and 0 is minimum  
 `xcoord` - the latitude position of the bicycle  
 `ycoord` - the longitude position of the bicycle  
-`previousXCoord` - the previous latitude position of the bicycle
-`previousYCoord` - the previous longitude position of the bicycle
+`previousXCoord` - the previous latitude position of the bicycle  
+`previousYCoord` - the previous longitude position of the bicycle  
 `cityid` - id of the city the bicycle is in  
 `gps` - checks if the bicycle should use its GPS  
 `lightcolor` - the color of the lights on the bicycle. Green = free, red = charging, blue = riding  
