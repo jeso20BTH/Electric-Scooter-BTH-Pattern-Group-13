@@ -3,10 +3,10 @@
 import m from 'mithril'
 // var QRScanner = require('QRScanner');
 
-import scooterModel from './../models/scooter'
-import utilitiesModel from './../models/utilities'
-import authModel from './../models/auth'
-import dbModel from './../models/db'
+const scooterModel = require('./../models/scooter')
+const utilitiesModel = require('./../models/utilities')
+const authModel = require('./../models/auth')
+const dbModel = require('./../models/db')
 
 const rent = {
   view: function () {
@@ -194,8 +194,11 @@ const inRent = {
 const index = {
   onInit: async () => {
     await scooterModel.getAllScooters()
+<<<<<<< HEAD
     m.redraw();
     console.log(scooterModel.allScooters)
+=======
+>>>>>>> 5d8df943fb892635cbd74193bf2808fbc1293624
   },
   view: function () {
     return (!scooterModel.inRent) ? m(rent) : m(inRent)

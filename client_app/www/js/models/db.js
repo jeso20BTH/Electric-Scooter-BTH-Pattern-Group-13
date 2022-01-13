@@ -1,5 +1,9 @@
 /* global process */
+<<<<<<< HEAD
 const authModel = require('./auth.js')
+=======
+const authModel = require('./auth')
+>>>>>>> 5d8df943fb892635cbd74193bf2808fbc1293624
 const axios = require('axios')
 
 let config
@@ -10,11 +14,10 @@ try {
   console.log(e)
 }
 const token = process.env.DBTOKEN || config.dbToken
-const dbURL = 'http://localhost:1337/graphql'
+const dbURL = process.env.DBURL || config.localhost
 
 const dbModel = {
   callDatabase: async (query) => {
-    console.log(token)
     const res = await axios({
       method: 'post',
       url: dbURL,

@@ -2,14 +2,12 @@
 
 import m from 'mithril'
 
-import authModel from './../models/auth'
 import positionModel from './../models/position'
+const authModel = require('./../models/auth')
 
 const user = {
   oninit: async () => {
-    console.log(authModel.currentUser)
     await positionModel.getCities()
-    console.log(positionModel.allCities)
   },
   view: () => {
     const currentCity = positionModel.allCities.find(city => city.id === positionModel.currentCity)
@@ -25,7 +23,6 @@ const user = {
 
           return m(element, {
             onclick: (e) => {
-              console.log(e.target.id)
               const cityId = parseInt(e.target.id.split('-')[1])
 
               positionModel.currentCity = cityId

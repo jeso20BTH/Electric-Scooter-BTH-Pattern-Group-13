@@ -120,7 +120,11 @@ const scooterModel = {
     if (err) {
       return err
     } else {
+<<<<<<< HEAD
       scooterModel.id = text;
+=======
+      scooterModel.id = text
+>>>>>>> 5d8df943fb892635cbd74193bf2808fbc1293624
     }
   }
 }

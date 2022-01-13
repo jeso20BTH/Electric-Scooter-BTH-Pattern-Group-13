@@ -8,15 +8,15 @@ import 'leaflet/dist/images/marker-icon-2x.png'
 import 'leaflet/dist/images/marker-icon.png'
 import 'leaflet/dist/images/marker-shadow.png'
 
-import positionModel from './../models/position'
-import scooterModel from './../models/scooter'
-import utilitiesModel from './../models/utilities'
-
 import currentIcon from '../../img/location_alt.png'
 import scooterIconImage from '../../img/scooter.png'
 import scooterShadowImage from '../../img/scooter_shadow.png'
 import parkingIconImage from '../../img/parking.png'
 import chargerIconImage from '../../img/chargespot.png'
+
+import positionModel from './../models/position'
+const scooterModel = require('./../models/scooter')
+const utilitiesModel = require('./../models/utilities')
 
 let map
 
