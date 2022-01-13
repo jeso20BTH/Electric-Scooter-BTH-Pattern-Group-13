@@ -3,10 +3,19 @@ networks:
     project13net:
 services:
     server:
-        image: dundgren/bikerental-api:1.5
+        image: dundgren/bikerental-api:1.8
         container_name: "bikerental-api"
         ports:
             - 1337:1337
+        networks:
+            project13net:
+        restart:
+            "always"
+    simulation-route:
+        image: dundgren/bikerental-api:1.8.1
+        container_name: "bikerental-simulation-route"
+        ports:
+            - 1338:1338
         networks:
             project13net:
         restart:
@@ -19,16 +28,31 @@ services:
         networks:
             project13net:
     app:
-        image: jeso20/bikerental-client-app:1.3
+        image: jeso20/bikerental-client-app:1.8.2
         container_name: "bikerental-client-app"
         ports:
             - 8000:8000
         networks:
             project13net:
     webbclient:
-        image: jeso20/bikerental-client-webbclient:1.2
+        image: jeso20/bikerental-client-webbclient:1.8.3
         container_name: "bikerental-client-webbclient"
         ports:
             - 8020:8020
         networks:
             project13net:
+    adminclient:
+        image: hajh20/admin_bike:1.4
+        container_name: "bikerental-client-adminclient"
+        ports:
+            - 8040:8040
+        networks:
+            project13net:
+    simulation:
+        profiles: ["simulation"]
+        image: jeso20/bikerental-simulation:1.0.2
+        container_name: "bikerental-simulation"
+        networks:
+            project13net:
+        links:
+            - simulation-route:server

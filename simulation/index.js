@@ -4,8 +4,8 @@ const Bike = require('./modules/bike.js')
 
 let users = [];
 let bikes = [];
-let noOfBikes = 10;
-let maxdifferenceLongLat = 0.002
+let noOfBikes = 1000;
+let maxdifferenceLongLat = 0.01
 let positionUpdateFreq = 60000;
 let rentFreq = 1000;
 
@@ -84,7 +84,7 @@ async function updatePosition(bikeIndex) {
             bikes[bikeIndex].steps.shift();
 
             bikes[bikeIndex].bike.setPosition(curPosition[0], curPosition[1]);
-            console.log(`Update: ${bikeIndex}`);
+            console.log(`Update: ${bikeIndex + 1}`);
 
             if (bikes[bikeIndex].steps.length === 0) {
                 clearInterval(bikes[bikeIndex].interval)
@@ -105,17 +105,17 @@ async function updatePosition(bikeIndex) {
                     currentLog: users[userIndex].log,
                     currentUser: {
                         id: users[userIndex].id,
-                        email: 'test@test.se'
+                        email: 'bgoudy0@ucoz.com'
                     }
                 }
 
                 await scooter.unrent(data);
                 delete users[userIndex].bike
-                users[userIndex].status = 'free'
+                users[userIndex].status = 'returned'
 
                 console.log("");
                 console.log("----------RETURN------------");
-                console.log(`Return ${bikeIndex}`);
+                console.log(`Return ${bikeIndex + 1}`);
             }
 
         }, positionUpdateFreq)
@@ -144,6 +144,12 @@ function rentBike() {
             // console.log(bikes[bikeIndex].position ,endPosition);
 
             let steps = generateSteps(bikes[bikeIndex].position, endPosition);
+
+            let bike = await new Bike(bikeIndex + 1)
+            bikes[bikeIndex].bike = bike
+            bikes[bikeIndex].bike.start();
+            bikes[bikeIndex].bike.overrideGPS();
+            bikes[bikeIndex].bike.setPosition(bikes[bikeIndex].position[0], bikes[bikeIndex].position[1])
             // console.log(steps);
             bikes[bikeIndex].steps = steps;
             bikes[bikeIndex].status = 'inRent';
@@ -158,11 +164,12 @@ function rentBike() {
                     cityid: 1
                 },
                 id: users[userIndex].id,
+                email: 'bgoudy0@ucoz.com'
             }
 
             let log = await scooter.rent(data);
             users[userIndex].log = log
-            console.log(`Rent ${bikeIndex}`);
+            console.log(`Rent ${bikeIndex  + 1}`);
 
             await updatePosition(bikeIndex);
         }
@@ -203,11 +210,7 @@ async function main() {
     for (var i = 1; i <= noOfBikes; i++) {
         let startPosition = generateStartPosition()
         bikes.push({position: startPosition, status: 'free', id: i})
-        let bike = await new Bike(i)
-        bikes[i - 1].bike = bike
-        bikes[i - 1].bike.start();
-        bikes[i - 1].bike.overrideGPS();
-        bikes[i - 1].bike.setPosition(startPosition[0], startPosition[1])
+        console.log(`Created: ${i}`);
         users.push({id: i, status: 'free'});
     }
     console.log(bikes, users);

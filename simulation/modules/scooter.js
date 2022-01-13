@@ -18,6 +18,7 @@ const scooterModel = {
   },
   rent: async (data) => {
     if (data.currentScooter && data.currentScooter.available === 1) {
+        console.log('rent');
       const log = await dbModel.addLogEntry({
         scooterId: data.currentScooter.id,
         userId: data.id,

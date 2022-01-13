@@ -1,16 +1,20 @@
 const axios = require('axios')
 let config
 
+
 try {
   config = require('./config.json')
 } catch (e) {
   console.log(e)
 }
 const token = process.env.DBTOKEN || config.dbToken
-const dbURL = 'http://localhost:69/graphql'
+const dbURL = process.env.dbURL || config.localhost
+
+console.log(dbURL);
 
 class Bike {
     constructor(id) {
+        console.log(id);
         return(async () => {
             const query = `{
                 bike (id: ${id}) {
@@ -84,7 +88,7 @@ class Bike {
                 xcoord: ${this.xcoord},
                 ycoord: ${this.ycoord},
                 battery: ${this.battery},
-                velocity: ${this.velocity},
+                velocity: ${Math.round(this.velocity)},
                 columnToMatch: "id",
                 valueToMatch: "${this.id}"
             ) {
@@ -96,6 +100,7 @@ class Bike {
                 ycoord
             }
         }`
+
         let res = await axios({
             method: 'post',
             url: dbURL,
