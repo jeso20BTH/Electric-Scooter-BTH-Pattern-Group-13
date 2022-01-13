@@ -134,7 +134,6 @@ m.route(document.body, '/', {
   '/success/:id': {
     onmatch: async (args) => {
       const userId = args.id
-      console.log(userId)
 
       await userModel.login(userId)
 
