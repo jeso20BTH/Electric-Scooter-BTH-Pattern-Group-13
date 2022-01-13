@@ -3,6 +3,8 @@ import m from 'mithril';
 import userModel from '../models/user';
 import allCities from '../models/city';
 
+
+
 let layout = {
     view: function(vnode) {
         return [

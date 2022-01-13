@@ -1,11 +1,10 @@
 "use strict";
 import m from 'mithril';
-import kundModel from '../models/kund';
+import kundModel from '../models/customer.js';
 
 let kundView = {
     view: function () {
         return m("main.container", [
-            
             m("h1", "Kunder hos Svenska Elsparkcyklar"),
             m("h2", kundModel.currentKunder.firstname + " " + kundModel.currentKunder.lastname),
             m("p", kundModel.currentKunder.email),
@@ -27,8 +26,16 @@ let kundView = {
                                     "Nej"
                                 ] : "Ja",
                             ]),
-                            m("td",  {"data-title": "Startkoordinater"}, history.startxcoord + ", " + history.startycoord),
-                            m("td",  {"data-title": "Slutkoordinater"}, history.endxcoord + ", " + history.endycoord),
+                            m("td",  {"data-title": "Startkoordinater"}, [
+                                history.startxcoord == null ? [
+                                    "-"
+                                ] : (history.startxcoord).toFixed(5) + ", " + (history.startycoord).toFixed(5)
+                            ]),
+                            m("td",  {"data-title": "Slutkoordinater"}, [
+                                history.endxcoord == null ? [
+                                    "-"
+                                ] : (history.endxcoord).toFixed(5) + ", " + (history.endycoord).toFixed(5),
+                            ]),
                         ])
                     })),
                 ])

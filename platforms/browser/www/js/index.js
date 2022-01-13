@@ -7,10 +7,11 @@ import city from "./views/cities.js";
 import move_bike from "./views/move_bike.js";
 import omd from "./views/omdirigering.js";
 import login from "./views/login.js";
-import kunder from "./views/kunder.js";
-import kund from "./views/kund.js";
-import kundModel from './models/kund';
+import kunder from "./views/customers.js";
+import kund from "./views/customer.js";
+import kundModel from './models/customer';
 import userModel from './models/user';
+import allCities from './models/city';
 
 
 
@@ -18,7 +19,6 @@ m.route(document.body, "/", {
     "/": {
         render: function() {
             return m(login);
-            // return m(city)
         }
     },
     "/stader": {
@@ -31,7 +31,8 @@ m.route(document.body, "/", {
     },
     "/karta:id": {
         render: function(vnode) {
-            return m(layout, m(mapviews, vnode.attrs),
+            allCities.cityId = ((vnode.attrs.id).substring(1))
+            return m(layout, m(mapviews),
             );
         }
     },

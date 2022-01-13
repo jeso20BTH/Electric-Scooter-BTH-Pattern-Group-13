@@ -1,7 +1,5 @@
 'use strict'
-
 import m from 'mithril'
-
 
 let config
 
@@ -10,8 +8,6 @@ try {
 } catch (e) {
   console.log(e)
 }
-
-// const clientID = process.env.CLIENTID || config.clientID
 
 const clientID = config.clientID
 

@@ -4,7 +4,6 @@ import allCities from '../models/city';
 import userModel from '../models/user';
 
 
-
 let cityId;
 
 let omd = {

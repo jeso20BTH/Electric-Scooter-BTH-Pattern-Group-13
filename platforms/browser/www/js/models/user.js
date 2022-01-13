@@ -1,9 +1,6 @@
 import 'regenerator-runtime/runtime'
 import conf from './../config.json'
-
-// console.log(conf.dbToken)
-
-const axios = require('axios')
+import axios from 'axios'
 
 const userModel = {
   currentUser: {},

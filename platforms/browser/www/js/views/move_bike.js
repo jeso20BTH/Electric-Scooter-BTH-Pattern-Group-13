@@ -9,16 +9,14 @@ import createBikeLog from '../models/movebikes';
 
 
 let moveToPark;
-let px;
-let py;
-let bx;
-let by;
-let parkings;
+let coordinates = [];
+// let parkings;
 let bikes;
 let ladd;
 let available = 1;
 let cityidBike;
 let standard = [];
+
 
 
 let moveBike = {
@@ -27,10 +25,10 @@ let moveBike = {
         m.redraw();
     })(),
     view: function (vnode) {
-        parkings = parkingspaceInCity.Parkings
+        // parkings = parkingspaceInCity.Parkings
         let bikeid = ((vnode.attrs.id).substring(1))
         let parkering = [];
-        parkings.map(function (p) {
+        (parkingspaceInCity.Parkings).map(function (p) {
             p.hascharger == 0 ? [
                 ladd = "Nej"
             ] : ladd = "Ja";
@@ -55,10 +53,10 @@ let moveBike = {
                     moveToPark.slice(-1) == "a" ? [
                         moveToPark = moveToPark.slice(0, -17)
                     ] : moveToPark = moveToPark.slice(0, -18)
-                    parkings.map(function (p) {
+                    parkingspaceInCity.Parkings.map(function (p) {
                         p.name == moveToPark ? [
-                            px = p.xcoord,
-                            py = p.ycoord,
+                            coordinates[0] = p.xcoord,
+                            coordinates[1] = p.ycoord,
                             p.hascharger == 1 ? [
                                 available = 0
                             ] : null,
@@ -66,13 +64,13 @@ let moveBike = {
                     });
                     bikes.map(function (b) {
                         b.id == bikeid ? [
-                            bx = b.xcoord,
-                            by = b.ycoord,
+                            coordinates[2] = b.xcoord,
+                            coordinates[3] = b.ycoord,
                             cityidBike = b.cityid
                     ] : null;
                     });
                     (async () => {
-                        await createBikeLog(bikeid, cityidBike, bx, by, px, py, available);
+                        await createBikeLog(bikeid, cityidBike, coordinates[2], coordinates[3], coordinates[0], coordinates[1], available);
                     })();
                     allCities.refresh = 0;
                     let id = `${allCities.cityId}-${userModel.currentUser}`

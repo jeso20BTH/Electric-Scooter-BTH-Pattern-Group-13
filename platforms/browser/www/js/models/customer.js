@@ -1,8 +1,6 @@
 import 'regenerator-runtime/runtime'
-// import dbModel from './db'
-
-const axios = require('axios')
-import conf from './../config.json'
+import axios from 'axios'
+import conf from '../config.json'
 
 
 const kundModel = {

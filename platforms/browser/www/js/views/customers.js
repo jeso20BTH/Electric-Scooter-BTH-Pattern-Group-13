@@ -1,32 +1,27 @@
 "use strict";
 import m from 'mithril';
-import kundModel from '../models/kund';
+import kundModel from '../models/customer.js';
 
 
 let kund;
 let open;
-let text;
+
 
 let kunder = {
     oninit: (async () => {
         await kundModel.getAllaKund()
+        kund = kundModel.allaKunder
     })(),
     view: function () {
-        let count = 0;
+        let text;
+
         open == 1 ? [
             text = "Stäng alla kunder"
         ] : text = "Bläddra bland alla kunder";
-        kund = kundModel.allaKunder
+        
         return m("main.container", [
             m("h1", "Kunder hos Svenska Elsparkcyklar"),
             m("h4", "Antal registrerade kunder: " + kund.length),
-            kund.map(function (k) {
-                [
-                    k.paymentmethod == "Direct" ? [
-                        count ++
-                    ] : null,
-                ]
-            }),
             m("form", {
                 onsubmit: function(event) {
                     event.preventDefault();
@@ -47,7 +42,6 @@ let kunder = {
                             m("th", "Email"),
                             m("th", "Betalmetod"),
                             m("th", ""),
-
                         ])
                     ]),
                     m("tbody", kund.map(function (k) {

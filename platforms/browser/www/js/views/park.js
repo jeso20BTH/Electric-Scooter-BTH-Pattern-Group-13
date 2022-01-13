@@ -8,9 +8,6 @@ let parkings;
 let ladd;
 
 let park = {
-    // oninit: (async () => {
-    //     m.redraw();
-    // })(),
     view: function() {
         parkings = parkingspaceInCity.Parkings
         return m("main.container", [
